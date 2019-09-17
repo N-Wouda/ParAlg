@@ -50,3 +50,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Jetbrains IDEs
+.idea/
+
+# CMake
+cmake-build-debug/
+
+# These are external libraries, and likely platform-specific.
+src/lib/
