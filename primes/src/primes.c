@@ -9,7 +9,7 @@ int main()
 {
     // Example usage
     size_t numPrimes = 0;
-    struct bounds bounds = {0, 1000};
+    bounds bounds = {0, 1000};
 
     size_t *primes = sieve(&bounds, &numPrimes);
 

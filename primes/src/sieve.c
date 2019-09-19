@@ -6,14 +6,14 @@
 
 #include "primes.h"
 
-// Forward declarations for helper methods.
-size_t countPrimes(bool const *isPrime, size_t bound);
-size_t *getPrimes(bool const *isPrime, size_t bound, size_t numPrimes);
 
+size_t countPrimes(bool const *isPrime, size_t bound);
+
+size_t *getPrimes(bool const *isPrime, size_t bound, size_t numPrimes);
 
 // TODO: Parallel sieving probably requires us to consider a sieving method
 // TODO: that respects both bounds.
-size_t *sieve(struct bounds const *bounds, size_t *numPrimes)
+size_t *sieve(bounds const *bounds, size_t *numPrimes)
 {
     // Initially set all numbers to primes using a helper array.
     bool *isPrime = malloc((bounds->upperBound + 1) * sizeof(bool));
@@ -25,12 +25,15 @@ size_t *sieve(struct bounds const *bounds, size_t *numPrimes)
     {
         if (isPrime[number])
         {
-            // If this number is a prime, then its square divides by itself and
-            // so do any next multiple below the bound. Note that any multiples
-            // below the square have already been marked at this point.
-            for (size_t offset = number * number; offset <= bounds->upperBound;
-                 offset += number)
-                isPrime[offset] = false;
+            // If this number is prime, then any multiple beyond its square
+            // divides by itself. Note that any multiples less than the square
+            // have already been marked at this point.
+            for (size_t multiple = number * number;
+                 multiple <= bounds->upperBound;
+                 multiple += number)
+            {
+                isPrime[multiple] = false;
+            }
         }
     }
 
@@ -41,7 +44,6 @@ size_t *sieve(struct bounds const *bounds, size_t *numPrimes)
 
     return result;
 }
-
 
 inline size_t countPrimes(bool const *isPrime, size_t bound)
 {
@@ -55,7 +57,7 @@ inline size_t countPrimes(bool const *isPrime, size_t bound)
 
 inline size_t *getPrimes(bool const *isPrime, size_t bound, size_t numPrimes)
 {
-    size_t *primes = malloc((bound + 1) * sizeof(size_t));
+    size_t *primes = malloc(numPrimes * sizeof(size_t));
     size_t counter = 0;
 
     // Identifies the primes and inserts them into the primes list
