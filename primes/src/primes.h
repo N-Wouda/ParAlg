@@ -11,4 +11,4 @@ struct bounds {
 
 size_t *sieve(struct bounds const *bounds, size_t *numPrimes);
 
-#endif //PRIMES_H
+#endif // PRIMES_H

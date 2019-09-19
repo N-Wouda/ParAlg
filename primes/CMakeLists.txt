@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.14)
 
 project(Primes VERSION 1.0)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
 
-#add_definitions(-Wall)
+add_definitions(-Wall)
 add_executable(main
 		src/primes.c
 		src/sieve.c)
