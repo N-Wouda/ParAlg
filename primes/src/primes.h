@@ -4,21 +4,23 @@
 #include <stddef.h>
 
 
-typedef struct bounds
-{
-    size_t lowerBound;
-    size_t upperBound;
-} bounds;
+/**
+ * Sieves prime numbers below the specified bound (exclusive). Assumes the
+ * specified bound is greater than or equal to least 2.
+ *
+ * @param bound         The upper bound.
+ * @param numPrimes     After this function returns, numPrimes contains the
+ *                      number of primes in the returned array.
+ * @return              Array of primes, of length numPrimes.
+ */
+size_t *sieve(size_t bound, size_t *numPrimes);
 
 /**
- * Sieves prime numbers between the lowerBound and upperBound specified via the
- * bounds parameter. The interval is [lowerBound, upperBound).
+ * TODO
  *
- * @param bounds    The lower and upper bound, as a struct.
- * @param numPrimes After this function returns,numPrimes contains the number
- *                  of primes in the returned array.
- * @return          Array of primes, of length numPrimes.
+ * @param bound         The upper bound.
+ * @param numProcs      Number of processors.
  */
-size_t *sieve(bounds const *bounds, size_t *numPrimes);
+void bspSieve(size_t bound, size_t numProcs);
 
-#endif // PRIMES_H
+#endif //PRIMES_H

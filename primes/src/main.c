@@ -4,13 +4,12 @@
 
 #include "primes.h"
 
-
 int main()
 {
     size_t numPrimes = 0;
-    bounds bounds = {0, 1000};
+    size_t bound = 100;
 
-    size_t const *primes = sieve(&bounds, &numPrimes);
+    size_t const *primes = sieve(bound, &numPrimes);
 
     for (size_t idx = 0; idx != numPrimes; ++idx)
         printf("%zu\n", primes[idx]);

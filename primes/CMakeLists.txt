@@ -6,8 +6,9 @@ set(CMAKE_C_STANDARD 11)
 
 add_definitions(-Wall)
 add_executable(main
-		src/primes.c
-		src/sieve.c)
+		src/main.c
+		src/sieve.c
+		src/bspsieve.c)
 
 # Source directories
 target_include_directories(main
