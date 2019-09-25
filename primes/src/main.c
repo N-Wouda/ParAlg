@@ -7,9 +7,9 @@
 int main()
 {
     size_t numPrimes = 0;
-    size_t bound = 100;
+    bounds bounds = {50, 100};
 
-    size_t *primes = sieve(bound, &numPrimes);
+    size_t *primes = boundedSieve(&bounds, &numPrimes);
 
     for (size_t idx = 0; idx != numPrimes; ++idx)
         printf("%zu\n", primes[idx]);
