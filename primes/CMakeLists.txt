@@ -4,7 +4,7 @@ project(Primes VERSION 1.0)
 
 set(CMAKE_C_STANDARD 11)
 
-add_definitions(-Wall)
+add_definitions(-Wall -O2)
 add_executable(main
 		src/main.c
 		src/sieve.c
