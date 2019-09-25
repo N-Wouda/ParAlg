@@ -11,12 +11,9 @@ size_t *getPrimes_(bool const *isPrime, bounds const *bounds, size_t numPrimes)
     size_t *primes = malloc(numPrimes * sizeof(size_t));
     size_t counter = 0;
 
-    // Identifies the primes and inserts them into the primes list.
     for (size_t number = 0; number != range; ++number)
-    {
         if (isPrime[number])
             primes[counter++] = bounds->lowerBound + number;
-    }
 
     assert(counter == numPrimes);   // sanity check.
 

@@ -12,27 +12,35 @@ size_t *smallPrimes(size_t upperBound, size_t *numSmallPrimes);
 
 size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
 {
-    if (bounds->lowerBound == 0)
+    if (bounds->lowerBound == 0)            // this is the `regular' case.
         return sieve(bounds, numPrimes);
 
-    assert(bounds->upperBound > bounds->lowerBound);  // sanity check.
+    assert(bounds->upperBound >= 2);                    // sanity checks.
+    assert(bounds->upperBound > bounds->lowerBound);
 
-    bool *isPrime = init_(bounds);
+    bool *isPrime = init_(bounds);      // marks all numbers in bounds prime.
 
-    // These are all primes in the candidate region [0, sqrt(upperBound)],
+    // These are all primes in the candidate region [0, sqrt(upperBound) + 1),
     // similar to the regular sequential algorithm.
-    size_t numSmallPrimes = 0;
-    size_t *primes = smallPrimes(bounds->upperBound, &numSmallPrimes);
+    size_t numCandPrimes = 0;
+    size_t *candPrimes = smallPrimes(bounds->upperBound, &numCandPrimes);
 
     size_t range = bounds->upperBound - bounds->lowerBound;
 
-    for (size_t idx = 0; idx != numSmallPrimes; ++idx)
+    // Equipped with these primes, we unmark all their multiples within the
+    // interval.
+    for (size_t idx = 0; idx != numCandPrimes; ++idx)
     {
-        size_t prime = primes[idx];
+        size_t prime = candPrimes[idx];
 
+        // Since we unmark from the first multiple *after* the lower bound, we
+        // need to check the lower bound itself explicitly.
         if (bounds->lowerBound % prime == 0)
             isPrime[0] = false;
 
+        // Unmark all multiples of the given prime in the isPrime array. Note
+        // the unusual set-up: we translate from the data range to index range
+        // here.
         unmark_(isPrime, range, prime - bounds->lowerBound % prime, prime);
     }
 
@@ -40,7 +48,7 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
     size_t *result = getPrimes_(isPrime, bounds, *numPrimes);
 
     free(isPrime);      // clean-up helper arrays.
-    free(primes);
+    free(candPrimes);
 
     return result;
 }

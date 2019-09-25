@@ -6,17 +6,9 @@
 
 int main()
 {
-    size_t numPrimes = 0;
-    bounds bounds = {900, 1000};
+    bounds bounds = {0, 100};
 
-    size_t *primes = boundedSieve(&bounds, &numPrimes);
-
-    for (size_t idx = 0; idx != numPrimes; ++idx)
-        printf("%zu\n", primes[idx]);
-
-    printf("Total number of primes: %zu\n", numPrimes);
-
-    free(primes);
+    bspSieve(&bounds, 4);
 
     return EXIT_SUCCESS;
 }
