@@ -7,7 +7,7 @@
 int main()
 {
     size_t numPrimes = 0;
-    bounds bounds = {50, 100};
+    bounds bounds = {900, 1000};
 
     size_t *primes = boundedSieve(&bounds, &numPrimes);
 

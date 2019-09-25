@@ -9,10 +9,11 @@
 
 size_t *sieve(bounds const *bounds, size_t *numPrimes)
 {
-    assert(bounds->upperBound >= 2);             // sanity check.
+    assert(bounds->upperBound >= 2);             // sanity checks.
+    assert(bounds->lowerBound == 0);
 
     // Initially mark all numbers as primes using a helper array.
-    bool *isPrime = init_(bounds->upperBound);
+    bool *isPrime = init_(bounds);
 
     for (size_t number = 2; number * number < bounds->upperBound; ++number)
     {

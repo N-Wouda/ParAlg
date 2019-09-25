@@ -7,7 +7,7 @@
 #include "../primes.h"
 
 
-bool *init_(size_t bound);
+bool *init_(bounds const *bounds);
 
 size_t countPrimes_(bool const *isPrime, size_t bound);
 

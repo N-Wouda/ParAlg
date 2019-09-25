@@ -4,12 +4,16 @@
 #include "utils.h"
 
 
-bool *init_(size_t bound)
+bool *init_(bounds const *bounds)
 {
-    bool *isPrime = malloc(bound * sizeof(bool));
+    size_t range = bounds->upperBound - bounds->lowerBound;
 
-    memset(isPrime, true, bound * sizeof(bool));
-    memset(isPrime, false, 2 * sizeof(bool));   // {0, 1} are not prime.
+    bool *isPrime = malloc(range * sizeof(bool));
+
+    memset(isPrime, true, range * sizeof(bool));
+
+    if (bounds->lowerBound < 2)        // {0, 1} are not prime.
+        memset(isPrime, false, (2 - bounds->lowerBound) * sizeof(bool));
 
     return isPrime;
 }

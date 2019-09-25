@@ -27,4 +27,5 @@ target_include_directories(main
 target_link_libraries(main
 		${CMAKE_SOURCE_DIR}/lib/libmcbsp2.0.4.a
 		pthread
-		rt)
+		rt
+		m)
