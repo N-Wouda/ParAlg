@@ -25,7 +25,7 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
     size_t numCandPrimes = 0;
     size_t *candPrimes = smallPrimes(bounds->upperBound, &numCandPrimes);
 
-    size_t range = bounds->upperBound - bounds->lowerBound;
+    size_t const range = bounds->upperBound - bounds->lowerBound;
 
     // Equipped with these primes, we unmark all their multiples within the
     // interval.
@@ -39,7 +39,7 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
             isPrime[0] = false;
 
         // Unmark all multiples of the given prime in the isPrime array. Note
-        // the unusual set-up: we translate from the data range to index range
+        // the unusual set-up: we translate from block range to index range
         // here.
         unmark_(isPrime, range, prime - bounds->lowerBound % prime, prime);
     }
@@ -47,7 +47,7 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
     *numPrimes = countPrimes_(isPrime, range);
     size_t *result = getPrimes_(isPrime, bounds, *numPrimes);
 
-    free(isPrime);      // clean-up helper arrays.
+    free(isPrime);
     free(candPrimes);
 
     return result;
@@ -55,6 +55,6 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
 
 size_t *smallPrimes(size_t upperBound, size_t *numSmallPrimes)
 {
-    struct bounds candidateBounds = {0, sqrt(upperBound) + 1};
+    struct bounds const candidateBounds = {0, sqrt(upperBound) + 1};
     return sieve(&candidateBounds, numSmallPrimes);
 }

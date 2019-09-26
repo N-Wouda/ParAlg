@@ -16,7 +16,7 @@ add_executable(main
 		src/utils/init.c
 		src/utils/unmark.c)
 
-# TODO: Include a separate test target
+# TODO: Include a separate test target?
 
 # Source directories
 target_include_directories(main

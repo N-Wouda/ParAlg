@@ -1,63 +1,62 @@
 #include <stddef.h>
 #include <assert.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "bsp/bsp.h"
 
 #include "primes.h"
 
-size_t _NUM_PROCS;          // TODO: Mutable global state. This is so ugly I
-bounds const *_BOUNDS;      // TODO: want to claw my eyes out.
+
+// TODO: Mutable global state, fairly ugly. Does this work across machines?
+bounds const *BSP_BOUNDS_;
+size_t BSP_NUM_PROCS_;
 
 void bspSieve_();
 
-bounds blockBounds_(bounds const *bounds, size_t numProcs, size_t pid);
+bounds const blockBounds_(bounds const *bounds, size_t numProcs, size_t pid);
 
 void bspSieve(bounds const *bounds, size_t numProcs)
 {
-    assert(numProcs > 0);
+    assert(numProcs > 0);   // sanity check.
 
-    // TODO: Temp. requirement until we have fixed the block allocation below.
-    assert((bounds->upperBound - bounds->lowerBound) % numProcs == 0);
+    BSP_BOUNDS_ = bounds;
+    BSP_NUM_PROCS_ = numProcs;
 
     bsp_init(bspSieve_, 0, 0);  // not sure if this is needed.
-
-    _NUM_PROCS = numProcs;
-    _BOUNDS = bounds;
-
     bspSieve_();
 }
 
 void bspSieve_()
 {
-    bsp_begin(_NUM_PROCS);
+    bsp_begin(BSP_NUM_PROCS_);
 
-    bounds bounds = blockBounds_(_BOUNDS, _NUM_PROCS, bsp_pid());
+    bounds const bounds = blockBounds_(
+        BSP_BOUNDS_,
+        BSP_NUM_PROCS_,
+        bsp_pid());
 
     size_t numPrimes = 0;
-    size_t * primes = boundedSieve(&bounds, &numPrimes);
-
-    printf("Primes in process %u: %zu.\n", bsp_pid(), numPrimes);
-
-    for (size_t idx = 0; idx != numPrimes; ++idx)
-        printf("Process %u: prime %zu.\n", bsp_pid(), primes[idx]);
+    size_t *primes = boundedSieve(&bounds, &numPrimes);
 
     free(primes);
 
+    bsp_sync();
     bsp_end();
 }
 
-bounds blockBounds_(bounds const *bounds, size_t numProcs, size_t pid)
+bounds const blockBounds_(bounds const *bounds, size_t numProcs, size_t pid)
 {
-    size_t offset = bounds->lowerBound;
-    size_t range = bounds->upperBound - bounds->lowerBound;
+    size_t const range = bounds->upperBound - bounds->lowerBound;
+    size_t const blockSize = range / numProcs + 1;
 
-    // TODO: Get this to play nice with the edge cases.
-    size_t blockSize = range / numProcs;
+    size_t const blockLowerBound = bounds->lowerBound + pid * blockSize;
 
-    return (struct bounds) {
-        offset + pid * blockSize,
-        offset + (pid + 1) * blockSize
-    };
+    // For the last block, we need to make sure the overall upper bound is
+    // respected. If this is not the last block, the upper bound is the start
+    // of the next block, as the sieve operates on a half-open interval.
+    size_t const blockUpperBound = pid == numProcs - 1
+        ? bounds->upperBound
+        : bounds->lowerBound + (pid + 1) * blockSize;
+
+    return (struct bounds) {blockLowerBound, blockUpperBound};
 }

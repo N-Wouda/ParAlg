@@ -1,12 +1,10 @@
 #include <stdlib.h>
-#include <stdio.h>
-#include <stddef.h>
 
 #include "primes.h"
 
 int main()
 {
-    bounds bounds = {0, 100};
+    bounds const bounds = {0, 50};
 
     bspSieve(&bounds, 4);
 

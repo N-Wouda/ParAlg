@@ -6,7 +6,7 @@
 
 bool *init_(bounds const *bounds)
 {
-    size_t range = bounds->upperBound - bounds->lowerBound;
+    size_t const range = bounds->upperBound - bounds->lowerBound;
 
     bool *isPrime = malloc(range * sizeof(bool));
 

@@ -6,7 +6,7 @@
 
 size_t *getPrimes_(bool const *isPrime, bounds const *bounds, size_t numPrimes)
 {
-    size_t range = bounds->upperBound - bounds->lowerBound;
+    size_t const range = bounds->upperBound - bounds->lowerBound;
 
     size_t *primes = malloc(numPrimes * sizeof(size_t));
     size_t counter = 0;
