@@ -54,6 +54,6 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
 
 size_t *smallPrimes(size_t upperBound, size_t *numSmallPrimes)
 {
-    struct bounds const candidateBounds = {0, sqrt(upperBound) + 1};
+    bounds const candidateBounds = {0, sqrt(upperBound) + 1};
     return sieve(&candidateBounds, numSmallPrimes);
 }
