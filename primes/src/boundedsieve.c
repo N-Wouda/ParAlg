@@ -39,8 +39,7 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
             isPrime[0] = false;
 
         // Unmark all multiples of the given prime in the isPrime array. Note
-        // the unusual set-up: we translate from block range to index range
-        // here.
+        // the unusual set-up as we translate from block range to index range.
         unmark_(isPrime, range, prime - bounds->lowerBound % prime, prime);
     }
 
