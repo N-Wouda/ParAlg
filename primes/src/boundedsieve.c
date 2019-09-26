@@ -40,7 +40,11 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
 
         // Unmark all multiples of the given prime in the isPrime array. Note
         // the unusual set-up as we translate from block range to index range.
-        unmark_(isPrime, range, prime - bounds->lowerBound % prime, prime);
+        size_t from = prime * prime > bounds->lowerBound
+            ? prime * prime - bounds->lowerBound    // same as sequential.
+            : prime - bounds->lowerBound % prime;   // first multiple.
+
+        unmark_(isPrime, range, from, prime);
     }
 
     *numPrimes = countPrimes_(isPrime, range);
