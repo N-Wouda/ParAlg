@@ -11,7 +11,7 @@ size_t oddCount_(bounds const *bounds)
         half++;
 
     if (bounds->upperBound % 2)     // since the interval is half-open, we
-        half--;                     // the upper bound.
+        half--;                     // should correct for the upper bound.
 
     return half;
 }
