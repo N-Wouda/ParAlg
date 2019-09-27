@@ -6,6 +6,7 @@
 
 #include "primes.h"
 #include "utils/utils.h"
+#include "par/par.h"
 
 
 size_t *smallPrimes(size_t upperBound, size_t *numSmallPrimes);
@@ -48,7 +49,7 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
     }
 
     *numPrimes = countPrimes_(isPrime, range);
-    size_t *result = getPrimes_(isPrime, bounds, *numPrimes);
+    size_t *result = getParPrimes_(isPrime, bounds, *numPrimes);
 
     free(isPrime);
     free(candPrimes);
