@@ -1,10 +1,12 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "utils.h"
+#include "par.h"
 
 
-size_t *getPrimes_(bool const *isPrime, bounds const *bounds, size_t numPrimes)
+size_t *getParPrimes_(bool const *isPrime,
+                      bounds const *bounds,
+                      size_t numPrimes)
 {
     size_t const range = bounds->upperBound - bounds->lowerBound;
 

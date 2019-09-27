@@ -12,8 +12,10 @@ add_executable(main
 		src/bspsieve.c
 		src/boundedsieve.c
 		src/utils/countprimes.c
-		src/utils/getprimes.c
+		src/par/getparprimes.c
+		src/seq/getseqprimes.c
 		src/utils/init.c
+		src/seq/oddcount.c
 		src/utils/unmark.c)
 
 # TODO: Include a separate test target?
@@ -27,5 +29,4 @@ target_include_directories(main
 target_link_libraries(main
 		${CMAKE_SOURCE_DIR}/lib/libmcbsp2.0.4.a
 		pthread
-		rt
 		m)
