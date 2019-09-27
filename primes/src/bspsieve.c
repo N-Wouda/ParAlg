@@ -9,24 +9,15 @@
 
 // TODO: Mutable global state, fairly ugly. Does this work across machines?
 bounds const *BSP_BOUNDS_;
-size_t BSP_NUM_PROCS_;
+long BSP_NUM_PROCS_;
 
-void bspSieve_();
+
 
 bounds const blockBounds_(bounds const *bounds, size_t numProcs, size_t pid);
 
-void bspSieve(bounds const *bounds, size_t numProcs)
-{
-    assert(numProcs > 0);   // sanity check.
 
-    BSP_BOUNDS_ = bounds;
-    BSP_NUM_PROCS_ = numProcs;
 
-    bsp_init(bspSieve_, 0, 0);  // not sure if this is needed.
-    bspSieve_();
-}
-
-void bspSieve_()
+void bspSieve()
 {
     bsp_begin(BSP_NUM_PROCS_);
 
@@ -37,7 +28,9 @@ void bspSieve_()
 
     size_t numPrimes = 0;
     size_t *primes = boundedSieve(&bounds, &numPrimes);
-
+    //printf("Primes    = %zu lower and upper %zu - %zu \n",  numPrimes ,bounds.lowerBound, bounds.upperBound);
+//    for (size_t idx = 0; idx != numPrimes; ++idx)
+//        printf("P %lu found: %zu\n", bsp_pid(), primes[idx]);
     free(primes);
 
     bsp_sync();

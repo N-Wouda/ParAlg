@@ -41,9 +41,7 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes);
  *
  * Note: see also function `boundedSieve`.
  *
- * @param bounds        The half-open interval [lowerBound, upperBound).
- * @param numProcs      Number of processors.
  */
-void bspSieve(bounds const *bounds, size_t numProcs);
+void bspSieve();
 
 #endif // PRIMES_H
