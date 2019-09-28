@@ -12,10 +12,9 @@ add_executable(main
 		src/bspsieve.c
 		src/boundedsieve.c
 		src/utils/countprimes.c
-		src/par/getparprimes.c
-		src/seq/getseqprimes.c
+		src/utils/getprimes.c
 		src/utils/init.c
-		src/seq/oddcount.c
+		src/utils/oddcount.c
 		src/utils/unmark.c)
 
 # TODO: Include a separate test target?

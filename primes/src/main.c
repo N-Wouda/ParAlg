@@ -6,7 +6,7 @@
 
 int main()
 {
-    bounds const bounds = {0, 100};
+    bounds const bounds = {5, 1000};
 
     size_t numPrimes = 0;
     size_t *primes = boundedSieve(&bounds, &numPrimes);
@@ -14,7 +14,7 @@ int main()
     for (size_t idx = 0; idx != numPrimes; ++idx)
         printf("Prime %zu\n", primes[idx]);
 
-    printf("Number of primes %zu", numPrimes);
+    printf("Number of primes %zu\n", numPrimes);
 
     free(primes);
 

@@ -26,6 +26,27 @@ bool *init_(bounds const *bounds);
 size_t countPrimes_(bool const *isPrime, size_t bound);
 
 /**
+ * Obtains the primes flagged in the isPrime array.
+ *
+ * @param isPrime   Array of booleans.
+ * @param bounds    The half-open interval [lowerBound, upperBound).
+ * @param numPrimes The number of primes in the array, as determined by
+ *                  `countPrimes_`.
+ * @return          Array of primes, of length numPrimes.
+ */
+size_t *getPrimes_(bool const *isPrime,
+                   bounds const *bounds,
+                   size_t numPrimes);
+
+/**
+ * Counts the odd numbers in the given interval.
+ *
+ * @param bounds    The half-open interval [lowerBound, upperBound).
+ * @return          Odd number count.
+ */
+size_t oddCount_(bounds const *bounds);
+
+/**
  * Crosses-out multiples of a given prime, from a specific starting point.
  *
  * @param isPrime   Array of booleans.
@@ -34,5 +55,27 @@ size_t countPrimes_(bool const *isPrime, size_t bound);
  * @param step      Step size, or multiple.
  */
 void unmark_(bool *isPrime, size_t bound, size_t from, size_t step);
+
+/**
+ * Inline helper method to index the isPrime representation. This method takes
+ * a regular number, and returns an index.
+ */
+inline size_t num2idx_(size_t number, size_t offset)
+{
+    // This maps a number down into a reduced memory space storing only odd
+    // numbers. If the offset is even, we need to add one.
+    return (number - offset) / 2 + (offset % 2 == 0);
+}
+
+/**
+ * Inline helper method to index the isPrime representation. This method takes
+ * an index, and returns a regular number.
+ */
+inline size_t idx2num_(size_t idx, size_t offset)
+{
+    // This returns a number from a reduced memory space storing only odd
+    // numbers. If the offset is even, we need to subtract one.
+    return 2 * idx + offset - (offset % 2 == 0);
+}
 
 #endif // UTILS_H
