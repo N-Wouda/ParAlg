@@ -2,9 +2,9 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "bsp/bsp.h"
+#include "bsp.h"
 
-#include "primes.h"
+#include "../include/primes.h"
 
 
 // TODO: Mutable global state, fairly ugly. Does this work across machines?

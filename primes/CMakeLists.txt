@@ -3,29 +3,13 @@ cmake_minimum_required(VERSION 3.14)
 project(Primes VERSION 1.0)
 
 set(CMAKE_C_STANDARD 11)
-
 add_definitions(-Wall -O2)
 
-add_executable(main
-		src/main.c
-		src/sieve.c
-		src/bspsieve.c
-		src/boundedsieve.c
-		src/utils/countprimes.c
-		src/utils/getprimes.c
-		src/utils/init.c
-		src/utils/oddcount.c
-		src/utils/unmark.c)
+set(PRIMES_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+set(PRIMES_INSTALL_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 
-# TODO: Include a separate test target?
+include_directories(${PRIMES_INSTALL_INCLUDE_DIR})
 
-# Source directories
-target_include_directories(main
-		PRIVATE "external"
-		PRIVATE "src")
-
-# This is needed for BSPLib to work properly
-target_link_libraries(main
-		${CMAKE_SOURCE_DIR}/lib/libmcbsp2.0.4.a
-		pthread
-		m)
+add_subdirectory(src)
+add_subdirectory(external)
+add_subdirectory(test)

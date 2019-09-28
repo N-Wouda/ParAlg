@@ -4,8 +4,8 @@
 #include <assert.h>
 #include <math.h>
 
-#include "primes.h"
-#include "utils/utils.h"
+#include "../include/primes.h"
+#include "../include/utils.h"
 
 
 size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)

@@ -4,7 +4,7 @@
 #include <assert.h>
 
 #include "primes.h"
-#include "utils/utils.h"
+#include "utils.h"
 
 
 size_t *sieve(bounds const *bounds, size_t *numPrimes)

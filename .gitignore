@@ -58,4 +58,4 @@ dkms.conf
 cmake-build-debug/
 
 # These are external libraries, and likely platform-specific.
-src/lib/
+external/

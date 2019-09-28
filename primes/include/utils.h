@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#include "../primes.h"
+#include "primes.h"
 
 
 /**
