@@ -4,7 +4,7 @@
 
 #include "bsp.h"
 
-#include "../include/primes.h"
+#include "primes.h"
 
 
 // TODO: Mutable global state, fairly ugly. Does this work across machines?
