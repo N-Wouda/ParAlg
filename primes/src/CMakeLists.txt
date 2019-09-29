@@ -24,7 +24,7 @@ if (NOT bsp)
 	endif()
 endif()
 
-add_subdirectory(primes)
+add_subdirectory(sieve)
 add_subdirectory(utils)
 
 set(SOURCE_FILES
@@ -33,4 +33,4 @@ set(SOURCE_FILES
 
 add_executable(primes ${SOURCE_FILES})
 
-target_link_libraries(primes primes_lib ${bsp} pthread)
+target_link_libraries(primes sieve ${bsp} pthread)

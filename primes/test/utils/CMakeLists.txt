@@ -9,4 +9,4 @@ set(SOURCE_FILES
 
 add_executable(test_utils ${SOURCE_FILES})
 
-target_link_libraries(test_utils utils_lib unity)
+target_link_libraries(test_utils utils unity)

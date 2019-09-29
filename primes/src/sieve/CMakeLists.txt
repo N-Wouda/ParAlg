@@ -5,7 +5,7 @@ set(SOURCE_FILES
 		bspsieve.c
 		sieve.c)
 
-add_library(primes_lib
+add_library(sieve
 		SHARED STATIC ${SOURCE_FILES})
 
-target_link_libraries(primes_lib m utils_lib)
+target_link_libraries(sieve m utils)
