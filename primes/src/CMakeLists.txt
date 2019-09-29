@@ -7,7 +7,10 @@ if (NOT bsp)
 
 	find_path(bsp_path
 			NAMES bsp.h
-			PATHS ~/MulticoreBSP-for-C/)
+			PATHS ~/MulticoreBSP-for-C/
+			NO_DEFAULT_PATH)
+
+	message(${bsp_path})
 
 	if (bsp_path)
 		message("Recovered.")
