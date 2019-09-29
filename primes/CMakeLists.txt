@@ -5,10 +5,11 @@ project(Primes VERSION 1.0)
 set(CMAKE_C_STANDARD 11)
 add_definitions(-Wall -O2)
 
-set(PRIMES_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-set(PRIMES_INSTALL_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include_directories(${PRIMES_INSTALL_INCLUDE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_subdirectory(src)
 add_subdirectory(test)

@@ -9,5 +9,3 @@ set(SOURCE_FILES
 
 add_library(utils
 		SHARED STATIC ${SOURCE_FILES})
-
-install(TARGETS utils DESTINATION ${PRIMES_INSTALL_LIB_DIR})
