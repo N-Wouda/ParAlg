@@ -16,7 +16,7 @@ if (NOT bsp)
 
 		find_library(bsp REQUIRED
 				NAMES libmcbsp2.0.4.a
-				PATHS ${bsp_path})
+				PATHS ${bsp_path}/lib)
 	else()
 		message("Could not recover.")
 	endif()

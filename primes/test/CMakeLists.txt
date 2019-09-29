@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 find_library(unity REQUIRED)
 
 if (NOT unity)
-	message("Could not find Unity!")
+	message("Could not find Unity! Tests are unavailable.")
 endif()
 
 add_subdirectory(primes)
