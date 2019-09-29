@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "bsp.h"
+#include <bsp.h>
 
 #include "primes.h"
 

@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "test_primes.h"
 
 
@@ -10,7 +12,7 @@ size_t *sieveTestHelper(size_t upperBound, size_t *numPrimes)
 void test_sieve_upperBound_100()
 {
     size_t numPrimes = 0;
-    sieveTestHelper(100, &numPrimes);
+    free(sieveTestHelper(100, &numPrimes));
 
     // There are 25 primes in [0, 100) according to WolframAlpha.
     TEST_ASSERT_TRUE(numPrimes == 25);
@@ -19,7 +21,7 @@ void test_sieve_upperBound_100()
 void test_sieve_upperBound_1000()
 {
     size_t numPrimes = 0;
-    sieveTestHelper(1000, &numPrimes);
+    free(sieveTestHelper(1000, &numPrimes));
 
     // There are 168 primes in [0, 1000) according to WolframAlpha.
     TEST_ASSERT_TRUE(numPrimes == 168);
@@ -35,6 +37,8 @@ void test_sieve_primes_upperBound_10()
 
     TEST_ASSERT_TRUE(numPrimes == 4);
     TEST_ASSERT_EQUAL_UINT_ARRAY(primes, candPrimes, 4);
+
+    free(candPrimes);
 }
 
 // TODO add more test cases

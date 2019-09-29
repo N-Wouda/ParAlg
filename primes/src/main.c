@@ -1,22 +1,16 @@
 #include <stdlib.h>
-#include <stdio.h>
 
-#include "primes.h"
+#include "main.h"
 
 
-int main()
+int main(int argc, char **argv)
 {
-    bounds const bounds = {5, 1000};
+    bounds bounds;
+    size_t numProcs;
 
-    size_t numPrimes = 0;
-    size_t *primes = boundedSieve(&bounds, &numPrimes);
+    arguments(argc, argv, &bounds, &numProcs);
 
-    for (size_t idx = 0; idx != numPrimes; ++idx)
-        printf("Prime %zu\n", primes[idx]);
-
-    printf("Number of primes %zu\n", numPrimes);
-
-    free(primes);
+    bspSieve(&bounds, numProcs);
 
     return EXIT_SUCCESS;
 }

@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "test_primes.h"
 
 
@@ -16,12 +18,14 @@ void test_boundedSieve_interval_5_10()
 
     TEST_ASSERT_TRUE(numPrimes == 2)
     TEST_ASSERT_EQUAL_UINT_ARRAY(primes, candPrimes, 2);
+
+    free(candPrimes);
 }
 
 void test_boundedSieve_interval_50_100()
 {
     size_t numPrimes = 0;
-    boundTestHelper(50, 100, &numPrimes);
+    free(boundTestHelper(50, 100, &numPrimes));
 
     // There are 10 primes in [50, 100) according to WolframAlpha.
     TEST_ASSERT_TRUE(numPrimes == 10)
@@ -30,7 +34,7 @@ void test_boundedSieve_interval_50_100()
 void test_boundedSieve_interval_48_97()
 {
     size_t numPrimes = 0;
-    boundTestHelper(48, 97, &numPrimes);
+    free(boundTestHelper(48, 97, &numPrimes));
 
     // There are 9 primes in [48, 97) according to WolframAlpha.
     TEST_ASSERT_TRUE(numPrimes == 9)
@@ -39,7 +43,7 @@ void test_boundedSieve_interval_48_97()
 void test_boundedSieve_interval_53_97()
 {
     size_t numPrimes = 0;
-    boundTestHelper(53, 97, &numPrimes);
+    free(boundTestHelper(53, 97, &numPrimes));
 
     // There are 9 primes in [53, 97) according to WolframAlpha. The first is
     // 53, which should be included.
@@ -49,7 +53,7 @@ void test_boundedSieve_interval_53_97()
 void test_boundedSieve_interval_53_98()
 {
     size_t numPrimes = 0;
-    boundTestHelper(53, 98, &numPrimes);
+    free(boundTestHelper(53, 98, &numPrimes));
 
     // There are 10 primes in [53, 98) according to WolframAlpha. The last is
     // 97, which should be included.
@@ -59,7 +63,7 @@ void test_boundedSieve_interval_53_98()
 void test_boundedSieve_interval_1000_10000()
 {
     size_t numPrimes = 0;
-    boundTestHelper(1000, 10000, &numPrimes);
+    free(boundTestHelper(1000, 10000, &numPrimes));
 
     // There are 1061 primes in [1000, 10000) according to WolframAlpha.
     TEST_ASSERT_TRUE(numPrimes == 1061)
@@ -87,6 +91,9 @@ void test_boundedSieve_same_output_sieve_from_zero()
             sievePrimes,
             boundedPrimes,
             sieveNumPrimes);
+
+        free(boundedPrimes);
+        free(sievePrimes);
     }
 }
 

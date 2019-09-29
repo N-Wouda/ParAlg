@@ -10,6 +10,6 @@ add_library(primes
 
 find_library(bsp REQUIRED)
 
-target_link_libraries(primes m bsp utils)
+target_link_libraries(primes m bsp pthread utils)
 
 install(TARGETS primes DESTINATION ${PRIMES_INSTALL_LIB_DIR})
