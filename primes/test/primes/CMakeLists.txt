@@ -7,4 +7,4 @@ set(SOURCE_FILES
 
 add_executable(test_primes ${SOURCE_FILES})
 
-target_link_libraries(test_primes primes unity)
+target_link_libraries(test_primes primes_lib unity)

@@ -31,6 +31,6 @@ set(SOURCE_FILES
 		main.c
 		arguments.c)
 
-add_executable(main ${SOURCE_FILES})
+add_executable(primes ${SOURCE_FILES})
 
-target_link_libraries(main primes ${bsp} pthread)
+target_link_libraries(primes primes_lib ${bsp} pthread)

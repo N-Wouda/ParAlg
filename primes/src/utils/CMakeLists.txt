@@ -7,5 +7,5 @@ set(SOURCE_FILES
 		oddcount.c
 		unmark.c)
 
-add_library(utils
+add_library(utils_lib
 		SHARED STATIC ${SOURCE_FILES})
