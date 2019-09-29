@@ -26,12 +26,12 @@ void arguments(int argc, char **argv, bounds *bounds, size_t *numProcs)
     {
         switch (option)
         {
-        case 'l':
-            bounds->lowerBound = strtoull(optarg, NULL, 10);
-            break;
-        case 'p':
-            *numProcs = strtoull(optarg, NULL, 10);
-            break;
+            case 'l':
+                bounds->lowerBound = strtoull(optarg, NULL, 10);
+                break;
+            case 'p':
+                *numProcs = strtoull(optarg, NULL, 10);
+                break;
         }
     }
 }
