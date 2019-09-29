@@ -7,7 +7,7 @@ size_t *sieveTestHelper(size_t upperBound, size_t *numPrimes)
     return sieve(&bounds, numPrimes);
 }
 
-void test_sieve_100()
+void test_sieve_upperBound_100()
 {
     size_t numPrimes = 0;
     sieveTestHelper(100, &numPrimes);
@@ -16,7 +16,7 @@ void test_sieve_100()
     TEST_ASSERT_TRUE(numPrimes == 25);
 }
 
-void test_sieve_1000()
+void test_sieve_upperBound_1000()
 {
     size_t numPrimes = 0;
     sieveTestHelper(1000, &numPrimes);
@@ -25,7 +25,7 @@ void test_sieve_1000()
     TEST_ASSERT_TRUE(numPrimes == 168);
 }
 
-void test_sieve_primes_10()
+void test_sieve_primes_upperBound_10()
 {
     size_t numPrimes = 0;
     size_t *candPrimes = sieveTestHelper(10, &numPrimes);
@@ -36,3 +36,5 @@ void test_sieve_primes_10()
     TEST_ASSERT_TRUE(numPrimes == 4);
     TEST_ASSERT_EQUAL_UINT_ARRAY(primes, candPrimes, 4);
 }
+
+// TODO add more test cases

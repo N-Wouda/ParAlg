@@ -6,10 +6,13 @@
 
 size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
 {
-    size_t *primes = malloc(numPrimes * sizeof(size_t));
-
-    size_t size = oddCount(bounds);    // regular size of isPrime
+    size_t size = oddCount(bounds);     // regular size of isPrime
     size_t counter = 0;
+
+    if (size == 0)                      // there are no numbers in this
+        return NULL;                    // interval, let alone primes.
+
+    size_t *primes = malloc(numPrimes * sizeof(size_t));
 
     if (bounds->lowerBound == 0)        // Since two is the only even prime,
     {                                   // it is not regularly in isPrime and
