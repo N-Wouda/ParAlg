@@ -7,4 +7,4 @@ set(SOURCE_FILES main.c)
 
 add_executable(main ${SOURCE_FILES})
 
-target_link_libraries(main primes utils)
+target_link_libraries(main primes)

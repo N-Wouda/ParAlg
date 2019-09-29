@@ -11,5 +11,4 @@ set(PRIMES_INSTALL_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 include_directories(${PRIMES_INSTALL_INCLUDE_DIR})
 
 add_subdirectory(src)
-add_subdirectory(external)
 add_subdirectory(test)

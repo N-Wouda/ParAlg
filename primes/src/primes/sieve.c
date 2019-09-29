@@ -13,20 +13,20 @@ size_t *sieve(bounds const *bounds, size_t *numPrimes)
     assert(bounds->lowerBound == 0);
 
     // This represents all odd numbers in the given interval, *and* two.
-    size_t const size = 1 + oddCount_(bounds);
+    size_t const size = 1 + oddCount(bounds);
 
-    bool *isPrime = init_(bounds);          // marks all numbers prime.
+    bool *isPrime = init(bounds);          // marks all numbers prime.
 
     for (size_t number = 3; number * number < bounds->upperBound; number += 2)
-        if (isPrime[num2idx_(number, 0)])
+        if (isPrime[num2idx(number, 0)])
             // If this number is prime, then it is a proper divisor for any of
             // its multiples. Note that any multiples less than the square have
             // already been unmarked at this point.
-            unmark_(isPrime, size, num2idx_(number * number, 0), number);
+            unmark(isPrime, size, num2idx(number * number, 0), number);
 
     // All the odd primes, and two (which we did not sieve above).
-    *numPrimes = 1 + countPrimes_(isPrime, size);
-    size_t *result = getPrimes_(isPrime, bounds, *numPrimes);
+    *numPrimes = 1 + countPrimes(isPrime, size);
+    size_t *result = getPrimes(isPrime, bounds, *numPrimes);
 
     free(isPrime);
 

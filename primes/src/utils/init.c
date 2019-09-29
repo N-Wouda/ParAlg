@@ -4,9 +4,9 @@
 #include "utils.h"
 
 
-bool *init_(bounds const *bounds)
+bool *init(bounds const *bounds)
 {
-    size_t const size = (bounds->lowerBound == 0) + oddCount_(bounds);
+    size_t const size = (bounds->lowerBound == 0) + oddCount(bounds);
 
     bool *isPrime = malloc(size * sizeof(bool));
 

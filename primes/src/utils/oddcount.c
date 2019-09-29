@@ -1,7 +1,7 @@
 #include "utils.h"
 
 
-size_t oddCount_(bounds const *bounds)
+size_t oddCount(bounds const *bounds)
 {
     size_t half = (bounds->upperBound - bounds->lowerBound) / 2;
 
