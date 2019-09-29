@@ -1,5 +1,27 @@
 cmake_minimum_required(VERSION 3.2)
 
+find_library(bsp REQUIRED)
+
+if (NOT bsp)
+	message("Could not find BSP! Attempting to recover..")
+
+	find_path(bsp_path
+			NAMES bsp.h
+			PATHS ~/MulticoreBSP-for-C/)
+
+	if (bsp_path)
+		message("Recovered.")
+
+		include_directories(${bsp_path}/include)
+
+		find_library(bsp REQUIRED
+				NAMES libmcbsp2.0.4.a
+				PATHS ${bsp_path})
+	else()
+		message("Could not recover.")
+	endif()
+endif()
+
 add_subdirectory(primes)
 add_subdirectory(utils)
 
@@ -9,4 +31,4 @@ set(SOURCE_FILES
 
 add_executable(main ${SOURCE_FILES})
 
-target_link_libraries(main primes)
+target_link_libraries(main primes bsp)
