@@ -13,7 +13,7 @@ void arguments(int argc, char **argv, bounds *bounds, size_t *numProcs)
         bounds->upperBound = strtoull(argv[1], NULL, 10);
     else
     {
-        printf("Missing upper bound.");
+        printf("Missing upper bound.\n");
         exit(EXIT_FAILURE);
     }
 

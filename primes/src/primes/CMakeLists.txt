@@ -9,5 +9,3 @@ add_library(primes
 		SHARED STATIC ${SOURCE_FILES})
 
 target_link_libraries(primes m utils)
-
-install(TARGETS primes DESTINATION ${PRIMES_INSTALL_LIB_DIR})
