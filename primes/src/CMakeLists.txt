@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
+# TODO all this should probably be moved to a separate function.
 find_library(bsp REQUIRED)
 
 if (NOT bsp)
@@ -9,8 +10,6 @@ if (NOT bsp)
 			NAMES bsp.h
 			PATHS ~/MulticoreBSP-for-C/
 			NO_DEFAULT_PATH)
-
-	message(${bsp_path})
 
 	if (bsp_path)
 		message("Recovered.")
@@ -34,4 +33,4 @@ set(SOURCE_FILES
 
 add_executable(main ${SOURCE_FILES})
 
-target_link_libraries(main primes bsp)
+target_link_libraries(main primes ${bsp} pthread)
