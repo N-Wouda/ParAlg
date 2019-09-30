@@ -4,6 +4,10 @@ project(Primes VERSION 1.0)
 
 set(CMAKE_C_STANDARD 11)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 add_definitions(-Wall -O2)
 
 find_library(bsp REQUIRED)
@@ -40,10 +44,6 @@ add_executable(primes
 		src/utils/unmark.c)
 
 # TODO: Include a separate test target?
-
-# Source directories
-target_include_directories(primes
-		PRIVATE "src")
 
 # This is needed for BSPLib to work properly
 target_link_libraries(primes
