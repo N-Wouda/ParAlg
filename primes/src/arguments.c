@@ -7,14 +7,14 @@
 #include "main.h"
 
 
-void arguments(int argc, char **argv, bounds *bounds, size_t *numProcs)
+bool arguments(int argc, char **argv, bounds *bounds, size_t *numProcs)
 {
     if (argc > 1)
         bounds->upperBound = strtoull(argv[1], NULL, 10);
     else
     {
-        printf("Missing upper bound.\n");
-        exit(EXIT_FAILURE);
+        printf("%s: missing upper bound.\n", argv[0]);
+        return false;
     }
 
     bounds->lowerBound = 0;         // some default values.
@@ -26,12 +26,14 @@ void arguments(int argc, char **argv, bounds *bounds, size_t *numProcs)
     {
         switch (option)
         {
-            case 'l':
+            case 'l':       // `l' for lowerBound.
                 bounds->lowerBound = strtoull(optarg, NULL, 10);
                 break;
-            case 'p':
+            case 'p':       // `p' for processors.
                 *numProcs = strtoull(optarg, NULL, 10);
                 break;
         }
     }
+
+    return true;
 }

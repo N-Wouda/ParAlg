@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdbool.h>
+
 #include "primes.h"
 
 
@@ -18,7 +20,9 @@
  * @param numProcs  Will be populated with the number of processor cores to
  *                  use. If the option is missing, this will be set to the
  *                  maximum number of cores available.
+ * @return          Boolean status flag: true when all variables are set
+ *                  appropriately, false otherwise.
  */
-void arguments(int argc, char **argv, bounds *bounds, size_t *numProcs);
+bool arguments(int argc, char **argv, bounds *bounds, size_t *numProcs);
 
 #endif // MAIN_H

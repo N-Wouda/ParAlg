@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 
 set(SOURCE_FILES
 		main.c
+		test_blockbounds.c
 		test_countprimes.c
 		test_getprimes.c
 		test_oddcount.c

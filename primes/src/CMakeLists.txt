@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-# TODO all this should probably be moved to a separate function.
+# TODO all this library finding should be moved to a separate function.
 find_library(bsp REQUIRED)
 
 if (NOT bsp)

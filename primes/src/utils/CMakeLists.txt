@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
 set(SOURCE_FILES
+		blockbounds.c
 		countprimes.c
 		getprimes.c
 		init.c

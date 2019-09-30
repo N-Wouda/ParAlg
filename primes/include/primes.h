@@ -3,10 +3,14 @@
 
 #include <stddef.h>
 
-typedef struct bounds {         // sieve bounds, as a half-open interval.
+
+typedef struct bounds {     // sieve bounds, as a half-open interval.
     size_t lowerBound;
     size_t upperBound;
 } bounds;
+
+bounds const *BSP_BOUNDS;   // Bounds for the parallel sieve.
+size_t BSP_NUM_PROCS;       // Number of processors to use.
 
 /**
  * Sieves prime numbers below the specified bound (exclusive). The specified
@@ -36,14 +40,11 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes);
 
 /**
  * Bulk synchronous parallel implementation of the prime number sieve. Uses a
- * block distribution over the indicated number of processors, and the bounded
- * sieve.
+ * block distribution over the number of processors (program argument), and the
+ * bounded sieve.
  *
  * Note: see also function `boundedSieve`.
- *
- * @param bounds        The half-open interval [lowerBound, upperBound).
- * @param numProcs      Number of processors.
  */
-void bspSieve(bounds const *bounds, size_t numProcs);
+void bspSieve();
 
 #endif // PRIMES_H

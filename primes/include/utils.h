@@ -8,6 +8,17 @@
 
 
 /**
+ * Divides the work implied by the given bounds into fair sub-intervals, and
+ * returns the sub-interval associated with the given processor ID.
+ *
+ * @param bounds    The overall interval, for the entire programme.
+ * @param numProcs  The number of processors to be used.
+ * @param pid       The processor for which to compute a sub-interal.
+ * @return          Sub-interval associated with processor `pid`.
+ */
+bounds const blockBounds(bounds const *bounds, size_t numProcs, size_t pid);
+
+/**
  * Initialises memory for numbers in the given half-open interval.
  *
  * @param bounds    The half-open interval [lowerBound, upperBound).
@@ -31,7 +42,7 @@ size_t countPrimes(bool const *isPrime, size_t bound);
  * @param isPrime   Array of booleans.
  * @param bounds    The half-open interval [lowerBound, upperBound).
  * @param numPrimes The number of primes in the array, as determined by
- *                  `countPrimes_`.
+ *                  `countPrimes`.
  * @return          Array of primes, of length numPrimes.
  */
 size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes);
