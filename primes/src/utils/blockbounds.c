@@ -4,7 +4,11 @@
 bounds const blockBounds(bounds const *bounds, size_t numProcs, size_t pid)
 {
     size_t const range = bounds->upperBound - bounds->lowerBound;
-    size_t const blockSize = range / numProcs + 1;
+
+    // With this block size and the adjustment below, the final processor has
+    // at most numProcs more elements to process. When the range is large,
+    // this difference is negligible.
+    size_t const blockSize = range / numProcs;
 
     size_t const blockLowerBound = bounds->lowerBound + pid * blockSize;
 

@@ -38,4 +38,18 @@ void test_blockBounds_contiguous_blocks()
     TEST_ASSERT_TRUE(first.upperBound == second.lowerBound);
 }
 
+void test_blockBounds_upperBound_bug()
+{
+    // This test ensures an annoying boundary bug does not resurface.
+    bounds const interval = {0, 24};
+    bounds const preLast = blockBounds(&interval, 6, 4);
+    bounds const last = blockBounds(&interval, 6, 5);
+
+    TEST_ASSERT_EQUAL_UINT(16, preLast.lowerBound);
+    TEST_ASSERT_EQUAL_UINT(20, preLast.upperBound);
+
+    TEST_ASSERT_EQUAL_UINT(20, last.lowerBound);
+    TEST_ASSERT_EQUAL_UINT(24, last.upperBound);
+}
+
 // TODO add more test cases
