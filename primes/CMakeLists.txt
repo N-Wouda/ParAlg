@@ -29,7 +29,7 @@ if (NOT bsp)
 	endif()
 endif()
 
-add_executable(main
+add_executable(primes
 		src/main.c
 		src/sieve.c
 		src/bspsieve.c
@@ -42,11 +42,11 @@ add_executable(main
 # TODO: Include a separate test target?
 
 # Source directories
-target_include_directories(main
+target_include_directories(primes
 		PRIVATE "src")
 
 # This is needed for BSPLib to work properly
-target_link_libraries(main
+target_link_libraries(primes
 		${bsp}
 		pthread
 		m)
