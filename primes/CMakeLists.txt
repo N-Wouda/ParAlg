@@ -1,10 +1,33 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.2)
 
 project(Primes VERSION 1.0)
 
 set(CMAKE_C_STANDARD 11)
 
 add_definitions(-Wall -O2)
+
+find_library(bsp REQUIRED)
+
+if (NOT bsp)
+	message("Could not find BSP! Attempting to recover..")
+
+	find_path(bsp_path
+			NAMES bsp.h
+			PATHS ~/MulticoreBSP-for-C/
+			NO_DEFAULT_PATH)
+
+	if (bsp_path)
+		message("Recovered.")
+
+		include_directories(${bsp_path}/include)
+
+		find_library(bsp REQUIRED
+				NAMES libmcbsp2.0.4.a
+				PATHS ${bsp_path}/lib)
+	else()
+		message("Could not recover.")
+	endif()
+endif()
 
 add_executable(main
 		src/main.c
@@ -20,11 +43,10 @@ add_executable(main
 
 # Source directories
 target_include_directories(main
-		PRIVATE "external"
 		PRIVATE "src")
 
 # This is needed for BSPLib to work properly
 target_link_libraries(main
-		${CMAKE_SOURCE_DIR}/lib/libmcbsp2.0.4.a
+		${bsp}
 		pthread
 		m)
