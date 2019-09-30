@@ -10,7 +10,7 @@ int main()
 
     RUN_TEST(test_blockBounds_single_processor);    // for blockbounds.c
     RUN_TEST(test_blockBounds_contiguous_blocks);
-    RUN_TEST(test_blockBounds_upperBound_bug);
+    RUN_TEST(test_blockBounds_upper_bound_bug);
 
     RUN_TEST(test_oddCount_interval_0_5);           // for oddcount.c
     RUN_TEST(test_oddCount_interval_0_6);

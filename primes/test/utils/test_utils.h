@@ -10,7 +10,7 @@ void test_blockBounds_single_processor();
 
 void test_blockBounds_contiguous_blocks();
 
-void test_blockBounds_upperBound_bug();
+void test_blockBounds_upper_bound_bug();
 
 void test_oddCount_interval_0_5();
 

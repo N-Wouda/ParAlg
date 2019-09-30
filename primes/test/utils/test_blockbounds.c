@@ -38,7 +38,7 @@ void test_blockBounds_contiguous_blocks()
     TEST_ASSERT_TRUE(first.upperBound == second.lowerBound);
 }
 
-void test_blockBounds_upperBound_bug()
+void test_blockBounds_upper_bound_bug()
 {
     // This test ensures an annoying boundary bug does not resurface.
     bounds const interval = {0, 24};
