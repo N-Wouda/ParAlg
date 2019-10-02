@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <assert.h>
 
 #include <bsp.h>
 
@@ -13,8 +12,6 @@ int main(int argc, char **argv)
 
     if (!arguments(argc, argv, &bounds, &numProcs))
         return EXIT_FAILURE;
-
-    assert(numProcs > 0);       // sanity check.
 
     BSP_BOUNDS = &bounds;
     BSP_NUM_PROCS = numProcs;

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "test_primes.h"
+#include "test_sieve.h"
 
 
 size_t *sieveTestHelper(size_t upperBound, size_t *numPrimes)

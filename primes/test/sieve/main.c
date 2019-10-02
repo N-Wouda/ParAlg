@@ -1,4 +1,4 @@
-#include "test_primes.h"
+#include "test_sieve.h"
 
 
 void setUp() {};            // we do not use these but the compiler expects

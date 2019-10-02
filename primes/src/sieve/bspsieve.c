@@ -1,8 +1,9 @@
 #include <stdlib.h>
 
 #include <bsp.h>
+#include <assert.h>
 
-#include "primes.h"
+#include "sieve.h"
 #include "utils.h"
 
 
@@ -11,13 +12,15 @@ static void stepComputePrimes();    // into separate functions.
 
 void bspSieve()
 {
+    assert(BSP_NUM_PROCS > 0);      // sanity check.
+
     bsp_begin(BSP_NUM_PROCS);
 
     stepAssignBounds();     // First we compute the bounds for each processor
     bsp_sync();             // task, and distribute those.
 
     stepComputePrimes();    // After receiving the bounds, each processor
-    bsp_sync();             // computes primes within this sub-interval.
+    bsp_sync();             // computes primes within its sub-interval.
 
     bsp_end();
 }
@@ -53,6 +56,8 @@ static void stepComputePrimes()
 
     size_t numPrimes = 0;   // ..and compute primes.
     size_t *primes = boundedSieve(&bounds, &numPrimes);
+
+    // TODO: Here you would, presumably, want to use these prime numbers.
 
     free(primes);
 }

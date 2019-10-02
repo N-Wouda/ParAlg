@@ -1,10 +1,10 @@
-#ifndef PRIMES_H
-#define PRIMES_H
+#ifndef SIEVE_H
+#define SIEVE_H
 
 #include <stddef.h>
 
 
-typedef struct bounds {     // sieve bounds, as a half-open interval.
+typedef struct bounds {     // Sieve bounds, as a half-open interval.
     size_t lowerBound;
     size_t upperBound;
 } bounds;
@@ -47,4 +47,4 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes);
  */
 void bspSieve();
 
-#endif // PRIMES_H
+#endif // SIEVE_H

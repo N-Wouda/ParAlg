@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#include "primes.h"
+#include "sieve.h"
 
 
 /**
@@ -66,6 +66,22 @@ size_t oddCount(bounds const *bounds);
 void unmark(bool *isPrime, size_t bound, size_t from, size_t step);
 
 /**
+ * Inline helper method to determine if the argument is odd.
+ */
+inline bool isOdd(size_t number)
+{
+    return number & 1;
+}
+
+/**
+ * Inline helper method to determine if the argument is even.
+ */
+inline bool isEven(size_t number)
+{
+    return !isOdd(number);
+}
+
+/**
  * Inline helper method to index the isPrime representation. This method takes
  * a regular number, and returns an index.
  */
@@ -73,7 +89,7 @@ inline size_t num2idx(size_t number, size_t offset)
 {
     // This maps a number down into a reduced memory space storing only odd
     // numbers. If the offset is even, we need to add one.
-    return (number - offset) / 2 + (offset % 2 == 0);
+    return (number - offset) / 2 + isEven(offset);
 }
 
 /**
@@ -84,7 +100,7 @@ inline size_t idx2num(size_t idx, size_t offset)
 {
     // This returns a number from a reduced memory space storing only odd
     // numbers. If the offset is even, we need to subtract one.
-    return 2 * idx + offset - (offset % 2 == 0);
+    return 2 * idx + offset - isEven(offset);
 }
 
 #endif // UTILS_H

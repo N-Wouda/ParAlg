@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <math.h>
 
-#include "primes.h"
+#include "sieve.h"
 #include "utils.h"
 
 
@@ -31,23 +31,26 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
     size_t *candPrimes = sieve(&candidateBounds, &numCandPrimes);
 
     // Equipped with these primes, we unmark all their multiples within the
-    // interval. Observe that we must skip two, the first prime.
+    // interval. Observe that we must skip two, the first prime at index 0,
+    // as we do not store even numbers.
     for (size_t idx = 1; idx != numCandPrimes; ++idx)
     {
         size_t const prime = candPrimes[idx];
 
-        if (bounds->lowerBound != prime && bounds->lowerBound % prime == 0)
+        // Since below we never start directly *at* the lower bound, this
+        // explicit check is needed also. TODO merge this with from? How?
+        if (bounds->lowerBound % prime == 0)
             isPrime[0] = false;
 
         // Unmark all multiples of the given prime in the isPrime array. We can
         // start marking off from the first multiple of the prime in isPrime,
-        // or its square, whichever is highest.
+        // or its square, if it exceeds the lower bound.
         size_t from = prime * prime > bounds->lowerBound
             ? prime * prime
             : bounds->lowerBound + prime - bounds->lowerBound % prime;
 
-        if (from % 2 == 0)  // from is even so the next multiple is odd, and we
-            from += prime;  // start there, as we do not store even numbers.
+        if (isEven(from))           // from is even so the next multiple
+            from += prime;          // is odd, and we may start there.
 
         unmark(isPrime, size, num2idx(from, bounds->lowerBound), prime);
     }

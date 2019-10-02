@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#include "primes.h"
+#include "sieve.h"
 
 
 /**

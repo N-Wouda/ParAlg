@@ -6,6 +6,6 @@ find_path(unity_path
 if (NOT unity_path)
 	message("Could not find Unity! Tests are unavailable.")
 else()
-	add_subdirectory(primes)
+	add_subdirectory(sieve)
 	add_subdirectory(utils)
 endif()

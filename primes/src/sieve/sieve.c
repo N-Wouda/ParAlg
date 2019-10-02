@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "primes.h"
+#include "sieve.h"
 #include "utils.h"
 
 

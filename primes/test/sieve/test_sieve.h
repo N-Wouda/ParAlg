@@ -1,9 +1,9 @@
-#ifndef TEST_PRIMES_H
-#define TEST_PRIMES_H
+#ifndef TEST_SIEVE_H
+#define TEST_SIEVE_H
 
 #include <unity.h>
 
-#include "primes.h"
+#include "sieve.h"
 
 
 void test_sieve_upperBound_100();
@@ -26,4 +26,4 @@ void test_boundedSieve_interval_1000_10000();
 
 void test_boundedSieve_same_output_sieve_from_zero();
 
-#endif // TEST_PRIMES_H
+#endif // TEST_SIEVE_H

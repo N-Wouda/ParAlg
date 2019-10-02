@@ -17,7 +17,7 @@ bool *init(bounds const *bounds)
 
     // This is a bit tricky, but when lowerBound is even, isPrime[0] is hit
     // by lowerBound - 1, which is obviously outside the interval.
-    if (bounds->lowerBound % 2 == 0)
+    if (isEven(bounds->lowerBound))
         isPrime[0] = false;
 
     return isPrime;
