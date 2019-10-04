@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdbool.h>
-
+#include <stdio.h>
 #include "sieve.h"
 
 
@@ -55,6 +55,8 @@ size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes);
  */
 size_t oddCount(bounds const *bounds);
 
+size_t sixkCount(size_t upperBound);
+
 /**
  * Crosses-out multiples of a given prime, from a specific starting point.
  *
@@ -63,7 +65,7 @@ size_t oddCount(bounds const *bounds);
  * @param from      Starting point in the array.
  * @param step      Step size, or multiple.
  */
-void unmark(bool *isPrime, size_t bound, size_t from, size_t step);
+void unmark(bool *isPrime, size_t bound, size_t from, size_t step, size_t offset);
 
 /**
  * Inline helper method to determine if the argument is odd.
@@ -102,5 +104,37 @@ inline size_t idx2num(size_t idx, size_t offset)
     // numbers. If the offset is even, we need to subtract one.
     return 2 * idx + offset - isEven(offset);
 }
+
+/**
+ * Inline helper method to index the isPrime representation. This method takes
+ * an index, and returns a regular number.
+ */
+inline size_t idx2numA(size_t idx, size_t offset)
+{
+    // This returns a number from a reduced memory space storing only numbers
+    // of the form 6k +-1. If the offset falls between 6k+1 and 6k-1, we need to
+    // turn the order of + - around.
+    if (offset == 0) return ((idx + 1)/2*6 - 2*(idx%2) + 1);
+    size_t kOffsetOdds = ((offset % 6)== 0 || (offset % 6)== 5);
+    size_t kOffset = (offset + 1)/6;
+    //return (((idx + 1+kOffsetOdds)/2 + kOffset -kOffsetOdds)*6 + pow(-1,idx+kOffsetOdds) );
+    return (((idx + 1+kOffsetOdds)/2 + kOffset -kOffsetOdds)*6 - 2*((idx + kOffsetOdds)%2) + 1);
+}
+
+/**
+ * Inline helper method to index the isPrime representation. This method takes
+ * a regular number, and returns an index.
+ */
+inline size_t num2idxA(size_t number, size_t offset)
+{
+    // This maps a number down into a reduced memory space storing only numbers
+    // of the form 6k+-1.
+
+    int minusOne = number % 6 ==5;
+    int skip = sixkCount(offset) + ( (offset%6 == 5) || (offset%6 == 1));
+    //printf("\t minus %d skip %d", minusOne, skip);
+    return ((number+1)/6*2 -  minusOne) - skip;
+}
+
 
 #endif // UTILS_H
