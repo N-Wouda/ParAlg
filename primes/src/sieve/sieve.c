@@ -27,12 +27,12 @@ size_t *sieve(bounds const *bounds, size_t *numPrimes)
         //printf("id: %d\n", idA);
 
 
-        printf("id: %d with number: %zu \n", idA, number);
+        //printf("id: %d with number: %zu \n", idA, number);
         //printf("here");
         //printf("id: %d with number:  \n", idA);
         if (isPrime[num2idxA(number, 0)])
         {
-            printf("prime!");
+            //printf("prime!");
             // If this number is prime, then it is a proper divisor for any of
             // its multiples. Note that any multiples less than the square have
             // already been unmarked at this point.

@@ -9,7 +9,8 @@
 size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
 {
 
-    size_t size = oddCount(bounds);     // regular size of isPrime
+    size_t size = oddCount(bounds) + (bounds->lowerBound>2);     // regular size of isPrime
+    //printf("last size: %zu\n", size);
     size_t counter = 0;
 
     if (size == 0)                      // there are no numbers in this
@@ -28,20 +29,24 @@ size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
     }
 
     for (size_t idx = 0; idx != size; ++idx)
+    {
+        //printf("prime at %zu:  %zu, value:  ", idx, idx2numA(idx, bounds->lowerBound));
         if (isPrime[idx])
         {
+            //printf("real prime at %zu:  %zu ", idx, idx2numA(idx, bounds->lowerBound));
             primes[counter++] = idx2numA(idx, bounds->lowerBound);
 
         }
+    }
 
     //printf("new prime %zu, with value %d\n", idx2numA(3, bounds->lowerBound), isPrime[3]);
-    printf("\nnumprimes: %d and counter: %zu\n", numPrimes, counter);
+    //printf("\nPID %zu found numprimes: %d and counter: %zu\n", bsp_pid(),numPrimes, counter);
 
 
-    for (size_t alexC = 0; alexC< numPrimes; alexC++)
-    {
-        printf("proc %zu found: %zu\n", bsp_pid(),primes[alexC]);
-    }
+//    for (size_t alexC = 0; alexC< numPrimes; alexC++)
+//    {
+//        printf("proc %zu found: %zu\n", bsp_pid(),primes[alexC]);
+//    }
     assert(counter == numPrimes);       // sanity check.
 
     return primes;
