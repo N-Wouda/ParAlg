@@ -8,7 +8,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_definitions(-Wall -O2)
+add_definitions(-Wall -O3)
 
 find_library(bsp REQUIRED)
 
@@ -34,6 +34,7 @@ if (NOT bsp)
 endif()
 
 add_executable(primes
+		src/arguments.c
 		src/main.c
 		src/sieve.c
 		src/bspsieve.c

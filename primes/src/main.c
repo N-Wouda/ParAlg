@@ -1,35 +1,29 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include <stddef.h>
+#include <assert.h>
+
 #include <bsp.h>
 
-#include "primes.h"
+#include "main.h"
+
 
 long BSP_NUM_PROCS;
 bounds const *BSP_BOUNDS;
 
 int main(int argc, char **argv)
 {
-    bsp_init(bspSieve, argc, argv);
-
     bounds bounds;
+    size_t numProcs;
 
-    if (argc > 1)
-    {
-        size_t upperBound = (size_t) atol(argv[1]);
-        bounds = (struct bounds) {0, upperBound};
-        BSP_BOUNDS = &bounds;
-    }
-    else
-    {
-        printf("Argument n not supplied\n");
+    if (!arguments(argc, argv, &bounds, &numProcs))
         return EXIT_FAILURE;
-    }
 
-    if (argc > 2)
-        BSP_NUM_PROCS = strtoull(argv[2], NULL, 10);
-    else
-        BSP_NUM_PROCS = bsp_nprocs();
+    assert(numProcs > 0);       // sanity check.
+
+    BSP_BOUNDS = &bounds;
+    BSP_NUM_PROCS = numProcs;
+
+    bsp_init(bspSieve, argc, argv);
 
     bspSieve();
 
