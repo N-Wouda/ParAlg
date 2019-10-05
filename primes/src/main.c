@@ -12,6 +12,8 @@ bounds const *BSP_BOUNDS;
 
 int main(int argc, char **argv)
 {
+    bsp_init(bspSieve, argc, argv);
+
     bounds bounds;
     size_t numProcs;
 
@@ -23,7 +25,6 @@ int main(int argc, char **argv)
     BSP_BOUNDS = &bounds;
     BSP_NUM_PROCS = numProcs;
 
-    bsp_init(bspSieve, argc, argv);
 
     bspSieve();
 
