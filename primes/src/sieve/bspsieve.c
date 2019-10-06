@@ -13,6 +13,8 @@ static void stepComputeGoldbach();
 
 _Thread_local bounds BSP_PROC_BOUNDS;
 
+#define GOLDBACH
+
 void bspSieve()
 {
     assert(BSP_NUM_PROCS > 0);      // sanity check.
@@ -66,7 +68,7 @@ static void stepComputePrimes()
     size_t *primes = boundedSieve(&BSP_PROC_BOUNDS, &numPrimes);
 
 #ifdef GOLDBACH
-    for (size_t processor = 0; processor != bsp_nprocs(); ++processor)
+    for (size_t processor = bsp_pid(); processor != bsp_nprocs(); ++processor)
         bsp_send(processor, NULL, primes, sizeof(size_t) * numPrimes);
 #endif
 
@@ -88,17 +90,17 @@ static void stepComputeGoldbach()
     size_t qSize;
     bsp_qsize(&messages, &qSize);
 
-    if (messages != bsp_nprocs())   // we expect a message from each processor.
+    if (messages != bsp_pid() + 1)   // we expect a message from each processor.
         bsp_abort("Processor %u expected %u sets of primes, got %u.",
                   bsp_pid(),
-                  bsp_nprocs(),
+                  bsp_pid(),
                   messages);
 
     size_t const numPrimes = qSize / sizeof(size_t);
     size_t *primes = malloc(qSize);
     size_t offset = 0;
 
-    for (size_t message = 0; message != bsp_nprocs(); ++message)
+    for (size_t message = 0; message != messages; ++message)
     {
         size_t mSize;
         bsp_get_tag(&mSize, NULL);
@@ -143,7 +145,8 @@ static void stepComputeGoldbach()
 
         if (!decomposes)
             printf(
-                "Candidate %zu cannot be expressed as the sum of two primes!\n",
+                ""
+                "%zu cannot be expressed as the sum of two primes!\n",
                 candidate);
     }
 
