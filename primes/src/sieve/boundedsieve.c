@@ -8,8 +8,10 @@
 #include "utils.h"
 
 
-size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
+size_t *boundedSieve(bounds *bounds, size_t *numPrimes)
 {
+    bounds->lowerBound -=  (((bounds->lowerBound % 6)== 1 || (bounds->lowerBound % 6)== 5));
+    bounds->upperBound -=  (((bounds->upperBound % 6)== 1 || (bounds->upperBound % 6)== 5));
     if (bounds->lowerBound <= 2)            // this is the `regular' case.
     {
         struct bounds const zeroBound = {0, bounds->upperBound};

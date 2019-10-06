@@ -115,6 +115,7 @@ inline size_t idx2numA(size_t idx, size_t offset)
     // of the form 6k +-1. If the offset falls between 6k+1 and 6k-1, we need to
     // turn the order of + - around.
     if (offset == 0) return ((idx + 1)/2*6 - 2*(idx%2) + 1);
+    //if ((idx == 1) && ((offset % 6)== 1 || (offset % 6)== 5)) return offset;
     size_t kOffsetOdds = ((offset % 6)== 0 || (offset % 6)== 5);
     size_t kOffset = (offset + 1)/6;
     //return (((idx + 1+kOffsetOdds)/2 + kOffset -kOffsetOdds)*6 + pow(-1,idx+kOffsetOdds) );

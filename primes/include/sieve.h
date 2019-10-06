@@ -36,7 +36,7 @@ size_t *sieve(bounds const *bounds, size_t *numPrimes);
  *                      number of primes in the returned array.
  * @return              Array of primes, of length numPrimes.
  */
-size_t *boundedSieve(bounds const *bounds, size_t *numPrimes);
+size_t *boundedSieve(bounds *bounds, size_t *numPrimes);
 
 /**
  * Bulk synchronous parallel implementation of the prime number sieve. Uses a
