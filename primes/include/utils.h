@@ -56,6 +56,15 @@ size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes);
 size_t oddCount(bounds const *bounds);
 
 /**
+ * Comparison function for size_t arguments.
+ *
+ * @param a         First number to compare.
+ * @param b         Second number to compare.
+ * @return          Negative if a < b, positive if a > b, 0 otherwise.
+ */
+int size_t_cmp(void const *a, void const *b);
+
+/**
  * Crosses-out multiples of a given prime, from a specific starting point.
  *
  * @param isPrime   Array of booleans.

@@ -6,6 +6,7 @@ set(SOURCE_FILES
 		getprimes.c
 		init.c
 		oddcount.c
+		size_t_cmp.c
 		unmark.c)
 
 add_library(utils

@@ -1,9 +1,10 @@
 #include <stdlib.h>
-
-#include <bsp.h>
 #include <assert.h>
 #include <stdio.h>
 
+#include <bsp.h>
+
+#include "defines.h"
 #include "sieve.h"
 #include "utils.h"
 
@@ -12,8 +13,6 @@ static void stepComputePrimes();    // into separate functions.
 static void stepComputeGoldbach();
 
 _Thread_local bounds BSP_PROC_BOUNDS;
-
-#define GOLDBACH
 
 void bspSieve()
 {
@@ -28,8 +27,8 @@ void bspSieve()
     bsp_sync();             // computes primes within its sub-interval.
 
 #ifdef GOLDBACH
-    stepComputeGoldbach();
-    bsp_sync();
+    stepComputeGoldbach();  // If defined, each processor verifies Goldbach's
+    bsp_sync();             // conjecture within its sub-interval.
 #endif
 
     bsp_end();
@@ -68,20 +67,13 @@ static void stepComputePrimes()
     size_t *primes = boundedSieve(&BSP_PROC_BOUNDS, &numPrimes);
 
 #ifdef GOLDBACH
+    // Sends this processor's primes to all subsequent processors (and
+    // ourselves), as they will need them to determine Goldbach's conjecture.
     for (size_t processor = bsp_pid(); processor != bsp_nprocs(); ++processor)
         bsp_send(processor, NULL, primes, sizeof(size_t) * numPrimes);
 #endif
 
     free(primes);
-}
-
-int size_tComp(void const *a, void const *b)
-{
-    size_t const first = *(size_t *) a;
-    size_t const second = *(size_t *) b;
-
-    // See e.g. here https://stackoverflow.com/a/10996555/4316405
-    return (first < second) ? -1 : (first > second);
 }
 
 static void stepComputeGoldbach()
@@ -90,64 +82,70 @@ static void stepComputeGoldbach()
     size_t qSize;
     bsp_qsize(&messages, &qSize);
 
-    if (messages != bsp_pid() + 1)   // we expect a message from each processor.
+    // We expect a message from each prior processor (and ourselves).
+    if (messages != bsp_pid() + 1)
         bsp_abort("Processor %u expected %u sets of primes, got %u.",
                   bsp_pid(),
                   bsp_pid(),
                   messages);
 
-    size_t const numPrimes = qSize / sizeof(size_t);
     size_t *primes = malloc(qSize);
     size_t offset = 0;
 
+    // Receive all primes into the primes array.
     for (size_t message = 0; message != messages; ++message)
     {
         size_t mSize;
         bsp_get_tag(&mSize, NULL);
 
+        // After receiving mSize bytes, we must update the offset to just
+        // beyond these, such that the next message may be received properly.
         bsp_move(primes + offset, mSize);
         offset += mSize / sizeof(size_t);
     }
 
-    qsort(primes, numPrimes, sizeof(size_t), size_tComp);
+    size_t const numPrimes = qSize / sizeof(size_t);
 
+    // Sorts the received primes, using a comparison helper method.
+    qsort(primes, numPrimes, sizeof(size_t), size_t_cmp);
+
+    // We only need to iterate over even candidate numbers, starting from four
+    // (or the first even number after the lower bound, whichever is largest).
     size_t const from = BSP_PROC_BOUNDS.lowerBound >= 4
         ? BSP_PROC_BOUNDS.lowerBound + isOdd(BSP_PROC_BOUNDS.lowerBound)
         : 4;
 
-    for (size_t candidate = from;
-         candidate < BSP_PROC_BOUNDS.upperBound;
-         candidate += 2)
+    for (size_t cand = from; cand < BSP_PROC_BOUNDS.upperBound; cand += 2)
     {
-        bool decomposes = false;
+        bool isPrimeSum = false;
 
+        // For the candidate number, we iterate over the primes array and
+        // search for a complementary prime. If at any point we find the
+        // complement, their sum equals the candidate and we may terminate.
         for (size_t idx = 0; idx != numPrimes; ++idx)
         {
-            size_t const prime = primes[idx];
+            size_t const first = primes[idx];
+            size_t const second = cand - first;
 
-            if (2 * prime > candidate)
-                break;
+            if (first > second)         // at this point, we have already seen
+                break;                  // the complement as first.
 
-            size_t const otherPrime = candidate - prime;
+            void *found = bsearch(&second,  // efficiently searches for second
+                                  primes,   // in the primes array.
+                                  numPrimes,
+                                  sizeof(size_t),
+                                  size_t_cmp);
 
-            size_t *found = (size_t *) bsearch(&otherPrime,
-                                               primes,
-                                               numPrimes,
-                                               sizeof(size_t),
-                                               size_tComp);
-
-            if (found != NULL)
-            {
-                decomposes = true;
+            if (found != NULL)  // if the complement exists as a prime, we have
+            {                   // found two primes that sum to the candidate.
+                isPrimeSum = true;
                 break;
             }
         }
 
-        if (!decomposes)
-            printf(
-                ""
-                "%zu cannot be expressed as the sum of two primes!\n",
-                candidate);
+        if (!isPrimeSum)        // If this happens, I claim first authorship!
+            printf("%zu cannot be expressed as the sum of two primes!\n",
+                   cand);
     }
 
     free(primes);
