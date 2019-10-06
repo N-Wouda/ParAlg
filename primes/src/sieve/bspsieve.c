@@ -13,6 +13,7 @@ static void stepComputePrimes();    // into separate functions.
 static void stepComputeGoldbach();
 
 _Thread_local bounds BSP_PROC_BOUNDS;
+_Thread_local size_t ops = 0;
 
 void bspSieve()
 {
@@ -147,6 +148,8 @@ static void stepComputeGoldbach()
             printf("%zu cannot be expressed as the sum of two primes!\n",
                    cand);
     }
+
+    printf("Ops: %zu\n", ops);
 
     free(primes);
 }
