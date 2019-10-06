@@ -36,10 +36,20 @@ size_t *sieve(bounds const *bounds, size_t *numPrimes)
             // If this number is prime, then it is a proper divisor for any of
             // its multiples. Note that any multiples less than the square have
             // already been unmarked at this point.
-            unmark(isPrime, bounds->upperBound, number*number, number,0);
+            //size_t from = number * number;
+            //unmark(isPrime, size, num2idxA(from, bounds->lowerBound), 2*number);
+
+            size_t from = 5*number;
+            //printf("1. prime %zu from %zu with idx %zu \n", number, from, num2idxA(from, bounds->lowerBound));
+            unmark(isPrime, size, num2idxA(from, bounds->lowerBound), 2*number);
+            from = 7*number;
+            //printf("1. prime %zu from %zu with idx %zu \n", prime, from, num2idxA(from, bounds->lowerBound));
+            unmark(isPrime, size, num2idxA(from, bounds->lowerBound), 2*number);
+            //unmark(isPrime, bounds->upperBound, number*number, number,0);
         }
         number = ((idA + 2)/2*6 - 2*((idA+1)%2) + 1);
     }
+
 
 
     // All the odd primes, and two (which we did not sieve above).

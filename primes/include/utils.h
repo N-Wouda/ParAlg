@@ -65,7 +65,7 @@ size_t sixkCount(size_t upperBound);
  * @param from      Starting point in the array.
  * @param step      Step size, or multiple.
  */
-void unmark(bool *isPrime, size_t bound, size_t from, size_t step, size_t offset);
+void unmark(bool *isPrime, size_t bound, size_t from, size_t step);
 
 /**
  * Inline helper method to determine if the argument is odd.
