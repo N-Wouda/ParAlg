@@ -25,7 +25,6 @@ int main(int argc, char **argv)
     BSP_BOUNDS = &bounds;
     BSP_NUM_PROCS = numProcs;
 
-
     bspSieve();
 
     return EXIT_SUCCESS;

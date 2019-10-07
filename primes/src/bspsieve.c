@@ -3,15 +3,13 @@
 #include <bsp.h>
 
 #include "primes.h"
-
+#include "utils/utils.h"
 
 extern long BSP_NUM_PROCS;
 extern bounds const *BSP_BOUNDS;
 
 static void stepAssignBounds();     // these neatly decouple the super-steps
 static void stepComputePrimes();    // into separate functions.
-
-bounds const blockBounds_(bounds const *bounds, size_t numProcs, size_t pid);
 
 void bspSieve()
 {
@@ -32,7 +30,7 @@ static void stepAssignBounds()
     {                       // all others.
         for (size_t processor = 0; processor != bsp_nprocs(); ++processor)
         {
-            bounds const bounds = blockBounds_(
+            bounds const bounds = blockBounds(
                 BSP_BOUNDS,
                 BSP_NUM_PROCS,
                 processor);
@@ -58,22 +56,7 @@ static void stepComputePrimes()
     size_t numPrimes = 0;   // ..and compute primes.
     size_t *primes = boundedSieve(&bounds, &numPrimes);
 
+    // TODO: Here you would, presumably, want to use these prime numbers.
+
     free(primes);
-}
-
-bounds const blockBounds_(bounds const *bounds, size_t numProcs, size_t pid)
-{
-    size_t const range = bounds->upperBound - bounds->lowerBound;
-    size_t const blockSize = range / numProcs;
-
-    size_t const blockLowerBound = bounds->lowerBound + pid * blockSize;
-
-    // For the last block, we need to make sure the overall upper bound is
-    // respected. If this is not the last block, the upper bound is the start
-    // of the next block, as the sieve operates on a half-open interval.
-    size_t const blockUpperBound = pid == numProcs - 1
-                                   ? bounds->upperBound
-                                   : bounds->lowerBound + (pid + 1) * blockSize;
-
-    return (struct bounds) {blockLowerBound, blockUpperBound};
 }

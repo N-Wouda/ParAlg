@@ -4,7 +4,7 @@
 #include "utils.h"
 
 
-bool *init_(bounds const *bounds)
+bool *init(bounds const *bounds)
 {
     size_t const range = bounds->upperBound - bounds->lowerBound;
 

@@ -7,12 +7,14 @@
 #include "../primes.h"
 
 
-bool *init_(bounds const *bounds);
+bool *init(bounds const *bounds);
 
-size_t countPrimes_(bool const *isPrime, size_t bound);
+bounds const blockBounds(bounds const *bounds, size_t numProcs, size_t pid);
 
-size_t *getPrimes_(bool const *isPrime, bounds const *bounds, size_t numPrimes);
+size_t countPrimes(bool const *isPrime, size_t bound);
 
-void unmark_(bool *isPrime, size_t bound, size_t from, size_t step);
+size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes);
+
+void unmark(bool *isPrime, size_t bound, size_t from, size_t step);
 
 #endif // UTILS_H

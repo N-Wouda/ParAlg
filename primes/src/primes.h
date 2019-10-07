@@ -40,7 +40,6 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes);
  * sieve.
  *
  * Note: see also function `boundedSieve`.
- *
  */
 void bspSieve();
 

@@ -4,7 +4,7 @@
 #include "utils.h"
 
 
-size_t *getPrimes_(bool const *isPrime, bounds const *bounds, size_t numPrimes)
+size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
 {
     size_t const range = bounds->upperBound - bounds->lowerBound;
 

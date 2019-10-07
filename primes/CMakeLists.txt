@@ -39,6 +39,7 @@ add_executable(primes
 		src/sieve.c
 		src/bspsieve.c
 		src/boundedsieve.c
+		src/utils/blockbounds.c
 		src/utils/countprimes.c
 		src/utils/getprimes.c
 		src/utils/init.c
