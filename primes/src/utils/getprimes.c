@@ -9,7 +9,7 @@
 size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
 {
 
-    size_t size = oddCount(bounds) + (bounds->lowerBound>2); // size of isPrime
+    size_t size = oddCount(bounds) + (bounds->lowerBound>2) - (bounds->lowerBound<=3); // size of isPrime
 
     size_t counter = 0;
 
@@ -26,22 +26,21 @@ size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
         counter = 2;
     }
 
-    for (size_t idx = 0; idx != size; ++idx)
+    for (size_t idx = 2; idx < size; idx += 2)
     {
-        if (isPrime[idx])
+        if (isPrime[idx] && isPrime[idx -1])
         {
+            primes[counter++] = idx2num(idx-1, bounds->lowerBound);
             primes[counter++] = idx2num(idx, bounds->lowerBound);
         }
     }
 
-    printf("numprimes: %zu and counter: %zu\n", numPrimes, counter);
-
+    numPrimes = counter; //TODO: wordt numPrimes hier aangepast? of alleen lokaal?
 
 //    for (size_t alexC = 0; alexC< numPrimes; alexC++)
 //    {
 //        printf("proc %d found: %zu\n", bsp_pid(),primes[alexC]);
 //    }
-    assert(counter == numPrimes);       // sanity check.
 
     return primes;
 }
