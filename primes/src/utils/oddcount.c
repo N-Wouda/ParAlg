@@ -4,7 +4,6 @@ size_t sixkCount(size_t upperBound);
 size_t oddCount(bounds const *bounds)
 {
     size_t half = sixkCount(bounds->upperBound) - sixkCount(bounds->lowerBound);
-//    printf("bound [%zu - %zu), upper: %zu lower: %zu\n",bounds->lowerBound, bounds->upperBound, sixkCount( bounds->upperBound), sixkCount( bounds->lowerBound));
 
     return half;
 }

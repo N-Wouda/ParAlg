@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
+
 #include "sieve.h"
 
 
@@ -66,22 +66,6 @@ size_t sixkCount(size_t upperBound);
  * @param step      Step size, or multiple.
  */
 void unmark(bool *isPrime, size_t bound, size_t from, size_t step);
-
-/**
- * Inline helper method to determine if the argument is odd.
- */
-inline bool isOdd(size_t number)
-{
-    return number & 1;
-}
-
-/**
- * Inline helper method to determine if the argument is even.
- */
-inline bool isEven(size_t number)
-{
-    return !isOdd(number);
-}
 
 /**
  * Inline helper method to index the isPrime representation. This method takes

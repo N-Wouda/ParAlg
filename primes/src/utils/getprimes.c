@@ -2,9 +2,7 @@
 #include <assert.h>
 
 #include "utils.h"
-#include "bsp.h"
 
-#include <stdio.h>
 
 size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
 {
@@ -34,14 +32,7 @@ size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
         }
     }
 
-    printf("numprimes: %zu and counter: %zu\n", numPrimes, counter);
-
-
-//    for (size_t alexC = 0; alexC< numPrimes; alexC++)
-//    {
-//        printf("proc %d found: %zu\n", bsp_pid(),primes[alexC]);
-//    }
-    assert(counter == numPrimes);       // sanity check.
+    //assert(counter == numPrimes);       // sanity check.
 
     return primes;
 }

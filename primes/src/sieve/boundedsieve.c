@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
+
 #include "sieve.h"
 #include "utils.h"
 
