@@ -10,18 +10,21 @@ bounds const blockBounds(bounds const *bounds, size_t numProcs, size_t pid)
     // this difference is negligible.
     size_t const blockSize = range / numProcs;
 
-    size_t const blockLowerBound = bounds->lowerBound + pid * blockSize - (((bounds->lowerBound + pid * blockSize % 6)== 1 || (bounds->lowerBound + pid * blockSize % 6)== 5));
+    size_t lowerBound = bounds->lowerBound + pid * blockSize;
 
-    //printf("adapt blockLowerBound: %d", (((blockLowerBound % 6)== 1 || (blockLowerBound % 6)== 5)));
+    // The edgeCase determines if the bounds
+    size_t edgeCase = ((lowerBound % 6)== 1 || (lowerBound % 6)== 5);
+    size_t const blockLowerBound =  lowerBound - edgeCase;
+
     // For the last block, we need to make sure the overall upper bound is
     // respected. If this is not the last block, the upper bound is the start
     // of the next block, as the sieve operates on a half-open interval.
+
+    size_t upperBound = bounds->lowerBound + (pid + 1) * blockSize;
+    edgeCase = ((upperBound % 6) == 1 || (upperBound % 6) == 5);
     size_t const blockUpperBound = pid == numProcs - 1
                                    ? bounds->upperBound
-                                   : bounds->lowerBound + (pid + 1) * blockSize - (((bounds->lowerBound + (pid + 1) * blockSize % 6)== 1 || (bounds->lowerBound + (pid + 1) * blockSize % 6)== 5));
-    //if (((bounds->lowerBound % 6)== 1 || (bounds->lowerBound % 6)== 5)) blockUpperBound += 1;
-    //if (((bounds->upperBound % 6)== 1 || (bounds->upperBound % 6)== 5)) blockUpperBound += 1;
-    //printf("blockLowerBound: %zu, blockUpperBound%zu \n",blockLowerBound, blockUpperBound);
+                                   : upperBound - edgeCase;
 
     return (struct bounds) {blockLowerBound, blockUpperBound};
 }

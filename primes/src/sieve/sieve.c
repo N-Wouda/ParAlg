@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h>
 #include "sieve.h"
 #include "utils.h"
 
@@ -19,40 +18,24 @@ size_t *sieve(bounds const *bounds, size_t *numPrimes)
 
     int idA;
     size_t number = 5;
-    for (idA=1 ; number*number < bounds->upperBound; idA += 1) //number*number < bounds->upperBound
+    for (idA=1 ; number*number < bounds->upperBound; idA += 1)
     {
 
-        //printf("id: %d", idA);
-        //printf("here");
-        //printf("id: %d\n", idA);
-
-
-        //printf("id: %d with number: %zu \n", idA, number);
-        //printf("here");
-        //printf("id: %d with number:  \n", idA);
-        if (isPrime[num2idxA(number, 0)])
+        if (isPrime[num2idx(number, 0)])
         {
-            //printf("prime!");
             // If this number is prime, then it is a proper divisor for any of
             // its multiples. Note that any multiples less than the square have
             // already been unmarked at this point.
-            //size_t from = number * number;
-            //unmark(isPrime, size, num2idxA(from, bounds->lowerBound), 2*number);
 
             size_t from = 5*number;
-            //printf("1. prime %zu from %zu with idx %zu \n", number, from, num2idxA(from, bounds->lowerBound));
-            unmark(isPrime, size, num2idxA(from, bounds->lowerBound), 2*number);
+            unmark(isPrime, size, num2idx(from, bounds->lowerBound), 2*number);
             from = 7*number;
-            //printf("1. prime %zu from %zu with idx %zu \n", prime, from, num2idxA(from, bounds->lowerBound));
-            unmark(isPrime, size, num2idxA(from, bounds->lowerBound), 2*number);
-            //unmark(isPrime, bounds->upperBound, number*number, number,0);
+            unmark(isPrime, size, num2idx(from, bounds->lowerBound), 2*number);
         }
-        number = ((idA + 2)/2*6 - 2*((idA+1)%2) + 1);
+        number = idx2num(idA + 1,0);
     }
 
-
-
-    // All the odd primes, and two (which we did not sieve above).
+    // All the primes, and two (which we did not sieve above).
     *numPrimes = 1 + countPrimes(isPrime, size);
     size_t *result = getPrimes(isPrime, bounds, *numPrimes);
 

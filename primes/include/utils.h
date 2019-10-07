@@ -85,56 +85,37 @@ inline bool isEven(size_t number)
 
 /**
  * Inline helper method to index the isPrime representation. This method takes
- * a regular number, and returns an index.
- */
-inline size_t num2idx(size_t number, size_t offset)
-{
-    // This maps a number down into a reduced memory space storing only odd
-    // numbers. If the offset is even, we need to add one.
-    return (number - offset) / 2 + isEven(offset);
-}
-
-/**
- * Inline helper method to index the isPrime representation. This method takes
  * an index, and returns a regular number.
  */
 inline size_t idx2num(size_t idx, size_t offset)
 {
-    // This returns a number from a reduced memory space storing only odd
-    // numbers. If the offset is even, we need to subtract one.
-    return 2 * idx + offset - isEven(offset);
-}
-
-/**
- * Inline helper method to index the isPrime representation. This method takes
- * an index, and returns a regular number.
- */
-inline size_t idx2numA(size_t idx, size_t offset)
-{
     // This returns a number from a reduced memory space storing only numbers
     // of the form 6k +-1. If the offset falls between 6k+1 and 6k-1, we need to
     // turn the order of + - around.
-    if (offset == 0) return ((idx + 1)/2*6 - 2*(idx%2) + 1);
-    //if ((idx == 1) && ((offset % 6)== 1 || (offset % 6)== 5)) return offset;
-    size_t kOffsetOdds = ((offset % 6)== 0 || (offset % 6)== 5);
-    size_t kOffset = (offset + 1)/6;
-    //return (((idx + 1+kOffsetOdds)/2 + kOffset -kOffsetOdds)*6 + pow(-1,idx+kOffsetOdds) );
-    return (((idx + 1+kOffsetOdds)/2 + kOffset -kOffsetOdds)*6 - 2*((idx + kOffsetOdds)%2) + 1);
+    if (offset == 0) return ((idx + 1) / 2 * 6 - 2 * (idx % 2) + 1);
+    size_t kOffsetOdds = ((offset % 6) == 0 || (offset % 6) == 5);
+    size_t kOffset = (offset + 1) / 6;
+    size_t k = ((idx + 1 + kOffsetOdds)/2 + kOffset - kOffsetOdds);
+
+    // plusMinus is 0 for 6k +1 and 1 for 6k -1.
+    size_t plusMinus = ((idx + kOffsetOdds) % 2);
+    return (k * 6 - 2 * plusMinus + 1);
 }
 
 /**
  * Inline helper method to index the isPrime representation. This method takes
  * a regular number, and returns an index.
  */
-inline size_t num2idxA(size_t number, size_t offset)
+inline size_t num2idx(size_t number, size_t offset)
 {
     // This maps a number down into a reduced memory space storing only numbers
-    // of the form 6k+-1.
+    // of the form 6k+-1. For every k there are two places in the list.
+    // minusOne is one for numbers of the form 6k-1 and zero for 6k+1.
 
-    int minusOne = number % 6 ==5;
-    int skip = sixkCount(offset) + ( (offset%6 == 5) || (offset%6 == 1));
-    //printf("\t minus %d skip %d", minusOne, skip);
-    return ((number+1)/6*2 -  minusOne) - skip;
+    size_t minusOne = number % 6 == 5;
+    size_t skip = sixkCount(offset) + ((offset % 6 == 5) || (offset % 6 == 1));
+    size_t k = (number + 1) / 6;
+    return (k * 2 -  minusOne) - skip;
 }
 
 
