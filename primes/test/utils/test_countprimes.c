@@ -9,7 +9,7 @@ void test_countPrimes_all_false()
     bool isPrime[] = {false, false, false};
 
     // There are no 'primes' in isPrime, so the count should return zero.
-    TEST_ASSERT_TRUE(countPrimes(isPrime, 3) == 0);
+    TEST_ASSERT_EQUAL_UINT(0, countPrimes(isPrime, 3));
 }
 
 void test_countPrimes_all_true()
@@ -18,7 +18,7 @@ void test_countPrimes_all_true()
 
     // There are only 'primes' in isPrime, so the count should equal the
     // length.
-    TEST_ASSERT_TRUE(countPrimes(isPrime, 3) == 3);
+    TEST_ASSERT_EQUAL_UINT(3, countPrimes(isPrime, 3));
 }
 
 void test_countPrimes_empty()
@@ -26,7 +26,7 @@ void test_countPrimes_empty()
     bool isPrime[] = {};
 
     // There are no values, so the count should return zero.
-    TEST_ASSERT_TRUE(countPrimes(isPrime, 0) == 0);
+    TEST_ASSERT_EQUAL_UINT(0,  countPrimes(isPrime, 0));
 }
 
 void test_countPrimes_varying_values()
@@ -41,7 +41,7 @@ void test_countPrimes_varying_values()
 
         // There are now idx + 1 'primes' in the array, so the count should
         // reflect this.
-        TEST_ASSERT_TRUE(countPrimes(isPrime, 100) == idx + 1);
+        TEST_ASSERT_EQUAL_UINT(idx + 1, countPrimes(isPrime, 100));
     }
 
     free(isPrime);

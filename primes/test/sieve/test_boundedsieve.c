@@ -5,7 +5,7 @@
 
 size_t *boundTestHelper(size_t lowerBound, size_t upperBound, size_t *numPrimes)
 {
-    bounds const bounds = {lowerBound, upperBound};
+    bounds bounds = {lowerBound, upperBound};
     return boundedSieve(&bounds, numPrimes);
 }
 
@@ -75,12 +75,12 @@ void test_boundedSieve_same_output_sieve_from_zero()
 
     for (size_t idx = 0; idx != 4; ++idx)
     {
-        bounds const bounds = {0, upperBounds[idx]};
+        bounds bounds = {0, upperBounds[idx]};
 
         size_t boundedNumPrimes = 0;
-        size_t sieveNumPrimes = 0;
-
         size_t *boundedPrimes = boundedSieve(&bounds, &boundedNumPrimes);
+
+        size_t sieveNumPrimes = 0;
         size_t *sievePrimes = sieve(&bounds, &sieveNumPrimes);
 
         // These should be equivalent, as the lowerBound is zero for both.

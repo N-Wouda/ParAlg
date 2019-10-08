@@ -48,14 +48,13 @@ size_t countPrimes(bool const *isPrime, size_t bound);
 size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes);
 
 /**
- * Counts the odd numbers in the given interval.
+ * Counts numbers of the form 6k +- 1 in the given interval. This may be used
+ * to determine the size of the isPrime array.
  *
  * @param bounds    The half-open interval [lowerBound, upperBound).
- * @return          Odd number count.
+ * @return          Number count.
  */
-size_t oddCount(bounds const *bounds);
-
-size_t sixkCount(size_t upperBound);
+size_t candidateCount(bounds const *bounds);
 
 /**
  * Crosses-out multiples of a given prime, from a specific starting point.
@@ -70,37 +69,48 @@ void unmark(bool *isPrime, size_t bound, size_t from, size_t step);
 /**
  * Inline helper method to index the isPrime representation. This method takes
  * an index, and returns a regular number.
+ *
+ * See also function num2idx.
  */
 inline size_t idx2num(size_t idx, size_t offset)
 {
     // This returns a number from a reduced memory space storing only numbers
-    // of the form 6k +-1. If the offset falls between 6k+1 and 6k-1, we need to
-    // turn the order of + - around.
-    if (offset == 0) return ((idx + 1) / 2 * 6 - 2 * (idx % 2) + 1);
-    size_t kOffsetOdds = ((offset % 6) == 0 || (offset % 6) == 5);
-    size_t kOffset = (offset + 1) / 6;
-    size_t k = ((idx + 1 + kOffsetOdds)/2 + kOffset - kOffsetOdds);
+    // of the form 6k +- 1.
+    if (offset == 0)    // this is the regular case.
+        return (idx + 1) / 2 * 6 - 2 * (idx % 2) + 1;
 
-    // plusMinus is 0 for 6k +1 and 1 for 6k -1.
-    size_t plusMinus = ((idx + kOffsetOdds) % 2);
-    return (k * 6 - 2 * plusMinus + 1);
+    bool const kOffsetOdds = (offset % 6) == 0 || (offset % 6) == 5;
+    size_t const kOffset = (offset + 1) / 6;
+
+    size_t const k = (idx + 1 + kOffsetOdds) / 2 + kOffset - kOffsetOdds;
+
+    // The modulo part here determines whether we deal with a number 6k - 1,
+    // or 6k + 1. See also num2idx.
+    return 6 * k - 2 * ((idx + kOffsetOdds) % 2) + 1;
 }
 
 /**
  * Inline helper method to index the isPrime representation. This method takes
  * a regular number, and returns an index.
+ *
+ * See also function idx2num.
  */
 inline size_t num2idx(size_t number, size_t offset)
 {
     // This maps a number down into a reduced memory space storing only numbers
-    // of the form 6k+-1. For every k there are two places in the list.
-    // minusOne is one for numbers of the form 6k-1 and zero for 6k+1.
+    // of the form 6k +- 1.
+    bounds const bounds = {0, offset};
 
-    size_t minusOne = number % 6 == 5;
-    size_t skip = sixkCount(offset) + ((offset % 6 == 5) || (offset % 6 == 1));
-    size_t k = (number + 1) / 6;
-    return (k * 2 -  minusOne) - skip;
+    size_t const skip = candidateCount(&bounds)
+        + ((offset % 6 == 5) || (offset % 6 == 1));
+
+    size_t const k = (number + 1) / 6;
+
+    // For each candidate around 6k, we have an index into the isPrime array.
+    // 6k + 1 is stored at 2k (minus some skips due to the offset), whereas
+    // 6k - 1 is stored at 2k - 1 (again the same about the offsets). Which
+    // number we face here is easily determined, as 6k - 1 mod 6 == 5.
+    return 2 * k - (number % 6 == 5) - skip;
 }
-
 
 #endif // UTILS_H

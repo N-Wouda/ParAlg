@@ -5,7 +5,7 @@ set(SOURCE_FILES
 		countprimes.c
 		getprimes.c
 		init.c
-		oddcount.c
+		candidatecount.c
 		unmark.c)
 
 add_library(utils

@@ -12,13 +12,17 @@ void test_blockBounds_contiguous_blocks();
 
 void test_blockBounds_upper_bound_bug();
 
-void test_oddCount_interval_0_5();
+void test_candidateCount_interval_0_5();
 
-void test_oddCount_interval_0_6();
+void test_candidateCount_interval_0_6();
 
-void test_oddCount_interval_1_6();
+void test_candidateCount_interval_5_7();
 
-void test_oddCount_interval_1_1();
+void test_candidateCount_interval_5_8();
+
+void test_candidateCount_interval_5_19();
+
+void test_candidateCount_interval_5_6();
 
 void test_countPrimes_all_false();
 

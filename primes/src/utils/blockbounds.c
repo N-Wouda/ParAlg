@@ -10,21 +10,20 @@ bounds const blockBounds(bounds const *bounds, size_t numProcs, size_t pid)
     // this difference is negligible.
     size_t const blockSize = range / numProcs;
 
-    size_t lowerBound = bounds->lowerBound + pid * blockSize;
-
-    // The edgeCase determines if the bounds
-    size_t edgeCase = ((lowerBound % 6)== 1 || (lowerBound % 6)== 5);
-    size_t const blockLowerBound =  lowerBound - edgeCase;
+    // For both interval bounds, we should ensure we do not split at exactly
+    // a bound of the form 6k +- 1. This is done by subtracting one from the
+    // bound, if needed.
+    size_t const lowerBound = bounds->lowerBound + pid * blockSize;
+    size_t const blockLowerBound =  lowerBound
+        - ((lowerBound % 6) == 1 || (lowerBound % 6) == 5);
 
     // For the last block, we need to make sure the overall upper bound is
     // respected. If this is not the last block, the upper bound is the start
     // of the next block, as the sieve operates on a half-open interval.
-
-    size_t upperBound = bounds->lowerBound + (pid + 1) * blockSize;
-    edgeCase = ((upperBound % 6) == 1 || (upperBound % 6) == 5);
+    size_t const upperBound = bounds->lowerBound + (pid + 1) * blockSize;
     size_t const blockUpperBound = pid == numProcs - 1
-                                   ? bounds->upperBound
-                                   : upperBound - edgeCase;
+        ? bounds->upperBound
+        : upperBound - ((upperBound % 6) == 1 || (upperBound % 6) == 5);
 
     return (struct bounds) {blockLowerBound, blockUpperBound};
 }

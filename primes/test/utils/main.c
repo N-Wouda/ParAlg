@@ -12,10 +12,12 @@ int main()
     RUN_TEST(test_blockBounds_contiguous_blocks);
     RUN_TEST(test_blockBounds_upper_bound_bug);
 
-    RUN_TEST(test_oddCount_interval_0_5);           // for oddcount.c
-    RUN_TEST(test_oddCount_interval_0_6);
-    RUN_TEST(test_oddCount_interval_1_6);
-    RUN_TEST(test_oddCount_interval_1_1);
+    RUN_TEST(test_candidateCount_interval_0_5);     // for candidatecount.c
+    RUN_TEST(test_candidateCount_interval_0_6);
+    RUN_TEST(test_candidateCount_interval_5_7);
+    RUN_TEST(test_candidateCount_interval_5_8);
+    RUN_TEST(test_candidateCount_interval_5_19);
+    RUN_TEST(test_candidateCount_interval_5_6);
 
     RUN_TEST(test_countPrimes_all_false);           // for countprimes.c
     RUN_TEST(test_countPrimes_all_true);

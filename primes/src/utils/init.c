@@ -6,7 +6,7 @@
 
 bool *init(bounds const *bounds)
 {
-    size_t const size = 1 + oddCount(bounds) ;
+    size_t const size = 1 + candidateCount(bounds) ;
 
     bool *isPrime = malloc(size * sizeof(bool));
 

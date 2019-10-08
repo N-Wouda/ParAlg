@@ -5,7 +5,7 @@ set(SOURCE_FILES
 		test_blockbounds.c
 		test_countprimes.c
 		test_getprimes.c
-		test_oddcount.c
+		test_candidatecount.c
 		test_unmark.c)
 
 add_executable(test_utils ${SOURCE_FILES})
