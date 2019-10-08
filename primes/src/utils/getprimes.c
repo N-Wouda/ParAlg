@@ -6,8 +6,7 @@
 
 size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
 {
-
-    size_t size = oddCount(bounds) + (bounds->lowerBound>2); // size of isPrime
+    size_t size = oddCount(bounds) + (bounds->lowerBound>2) - (bounds->lowerBound<=3); // size of isPrime
 
     size_t counter = 0;
 
@@ -32,7 +31,15 @@ size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
         }
     }
 
-    //assert(counter == numPrimes);       // sanity check.
+
+
+//    for (size_t alexC = 0; alexC< numPrimes; alexC++)
+//    {
+//        printf("proc %d found: %zu\n", bsp_pid(),primes[alexC]);
+//    }
+    assert(counter == numPrimes);       // sanity check.
 
     return primes;
 }
+
+
