@@ -48,6 +48,18 @@ size_t countPrimes(bool const *isPrime, size_t bound);
 size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes);
 
 /**
+ * Obtains the primes flagged in the isPrime array.
+ *
+ * @param isPrime   Array of booleans.
+ * @param bounds    The half-open interval [lowerBound, upperBound).
+ * @param numPrimes The number of primes in the array, as determined by
+ *                  `countPrimes`.
+ * @return          Array of twin primes, of length numPrimes.
+ */
+size_t *getTwinPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes);
+
+
+/**
  * Counts the odd numbers in the given interval.
  *
  * @param bounds    The half-open interval [lowerBound, upperBound).

@@ -20,9 +20,11 @@ size_t BSP_NUM_PROCS;       // Number of processors to use.
  *                      lowerBound must be zero.
  * @param numPrimes     After this function returns, numPrimes contains the
  *                      number of primes in the returned array.
+ * @param twins         if true, twin primes are returned, else all pairs in
+ *                      the interval.
  * @return              Array of primes, of length numPrimes.
  */
-size_t *sieve(bounds const *bounds, size_t *numPrimes);
+size_t *sieve(bounds const *bounds, size_t *numPrimes, size_t twins);
 
 /**
  * Sieves prime numbers in the specified interval bounds. The specified
