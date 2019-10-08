@@ -11,7 +11,8 @@ size_t *sieve(bounds const *bounds, size_t *numPrimes)
     assert(bounds->upperBound >= 2);            // sanity checks.
     assert(bounds->lowerBound == 0);
 
-    // This represents all odd numbers in the given interval, *and* two.
+    // This represents all candidates in the given interval. We skip over
+    // index zero, so we reserve a little extra space.
     size_t const size = 1 + candidateCount(bounds);
 
     bool *isPrime = init(bounds);          // marks all numbers prime.

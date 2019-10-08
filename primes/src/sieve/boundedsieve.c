@@ -28,6 +28,8 @@ size_t *boundedSieve(bounds *bounds, size_t *numPrimes)
     assert(bounds->upperBound >= 2);    // sanity checks.
     assert(bounds->upperBound > bounds->lowerBound);
 
+    // This represents all candidates in the given interval. We skip over
+    // index zero, so we reserve a little extra space.
     size_t const size = 1 + candidateCount(bounds);
 
     bool *isPrime = init(bounds);       // marks all numbers in bounds prime.
