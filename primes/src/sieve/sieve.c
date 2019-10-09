@@ -23,11 +23,10 @@ size_t *sieve(bounds const *bounds, size_t *numPrimes)
     {
         if (isPrime[num2idx(number, 0)])
         {
-            // If this number is prime, then it is a proper divisor for any of
-            // its multiples. Here we know that any prime number is of the form
-            // 6k +- 1, and thus its next multiple having the same remainder
-            // (mod 6) is 4 * number (for mod 6 == 5), respectively 6 * number
-            // (for mod 6 == 1) integers ahead. This works out to 5 * number,
+            // Here we know that any prime number is of the form 6k +- 1, and
+            // thus its next multiple having the same remainder (mod 6) is
+            // 4 * number (for mod 6 == 5), respectively 6 * number (for
+            // mod 6 == 1) integers ahead. This works out to 5 * number,
             // respectively 7 * number. For a stride, we observe there are
             // 2 * number integers of the form 6k +- 1 between each successive
             // number of this form.
