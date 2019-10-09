@@ -79,9 +79,12 @@ inline size_t idx2num(size_t idx, size_t offset)
     if (offset == 0)    // this is the regular case.
         return (idx + 1) / 2 * 6 - 2 * (idx % 2) + 1;
 
+    // Determines the number of multiples of six in the offset, respecting
+    // a boundary case where the offset excludes 6k + 1.
     bool const kOffsetOdds = (offset % 6) == 0 || (offset % 6) == 5;
     size_t const kOffset = (offset + 1) / 6;
 
+    // Number of multiples of six.
     size_t const k = (idx + 1 + kOffsetOdds) / 2 + kOffset - kOffsetOdds;
 
     // The modulo part here determines whether we deal with a number 6k - 1,
@@ -101,10 +104,12 @@ inline size_t num2idx(size_t number, size_t offset)
     // of the form 6k +- 1.
     bounds const bounds = {0, offset};
 
+    // Number of indices to `skip' due to the offset. Observe that we should
+    // skip one more if the offset is directly *at* a candidate number.
     size_t const skip = candidateCount(&bounds)
         + ((offset % 6 == 5) || (offset % 6 == 1));
 
-    size_t const k = (number + 1) / 6;
+    size_t const k = (number + 1) / 6;  // number of multiples of six.
 
     // For each candidate around 6k, we have an index into the isPrime array.
     // 6k + 1 is stored at 2k (minus some skips due to the offset), whereas
