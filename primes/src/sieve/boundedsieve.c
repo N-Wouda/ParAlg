@@ -37,7 +37,7 @@ size_t *boundedSieve(bounds *bounds, size_t *numPrimes)
     // These are all primes in the candidate region [0, sqrt(upperBound)),
     // similar to the regular sequential algorithm.
     size_t numCandPrimes = 0;
-    struct bounds candidateBounds = {0, sqrt(bounds->upperBound) + 1 };
+    struct bounds candidateBounds = {0, sqrt(bounds->upperBound) + 1};
 
     // This modification has the same motivation as the one above for the
     // overall bounds.
@@ -60,7 +60,7 @@ size_t *boundedSieve(bounds *bounds, size_t *numPrimes)
         size_t const modFrom = from % 6;
 
         // If the current multiple is not yet of the form 6k +- 1, we need to
-        // iterate ahead until it is.
+        // jump ahead to where it is.
         if (modFrom != 5 && modFrom != 1)
         {
             if (prime % 6 == 5)
@@ -79,9 +79,9 @@ size_t *boundedSieve(bounds *bounds, size_t *numPrimes)
         unmark(isPrime, size, num2idx(from, bounds->lowerBound), 2 * prime);
 
         // After unmarking the first form, the other remains. The other case is
-        // either at distance two if we jump over a multiple of six, as
-        // 5 -> 0 -> 1, or 1 -> 0 -> 5, or four, when we do not, as
-        // 1 -> 2 -> .. -> 5, or 5 -> 4 -> .. -> 1.
+        // either at distance two if we jump over a multiple of six, as either
+        // 5 -> 0 -> 1 or 1 -> 0 -> 5, or four when we do not, as either
+        // 1 -> 2 -> .. -> 5 or 5 -> 4 -> .. -> 1.
         if ((prime % 6 == 5 && from % 6 == 5)
                 || (prime % 6 == 1 && from % 6 == 1))
             from += 4 * prime;
