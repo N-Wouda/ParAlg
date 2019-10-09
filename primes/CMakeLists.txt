@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 project(Primes VERSION 1.0)
 
 set(CMAKE_C_STANDARD 11)
-add_definitions(-Wall -O2)
+add_definitions(-Wall -O3)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
