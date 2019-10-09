@@ -84,9 +84,9 @@ size_t *boundedSieve(bounds *bounds, size_t *numPrimes)
         // 1 -> 2 -> .. -> 5, or 5 -> 4 -> .. -> 1.
         if ((prime % 6 == 5 && from % 6 == 5)
                 || (prime % 6 == 1 && from % 6 == 1))
+            from += 4 * prime;
+        else
             from += 2 * prime;
-
-        from += 2 * prime;
 
         unmark(isPrime, size, num2idx(from, bounds->lowerBound), 2 * prime);
     }
