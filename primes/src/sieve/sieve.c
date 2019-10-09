@@ -31,6 +31,8 @@ size_t *sieve(bounds const *bounds, size_t *numPrimes)
             // respectively 7 * number. For a stride, we observe there are
             // 2 * number integers of the form 6k +- 1 between each successive
             // number of this form.
+
+            // TODO start from number * number
             unmark(isPrime,
                    size,
                    num2idx(5 * number, bounds->lowerBound),

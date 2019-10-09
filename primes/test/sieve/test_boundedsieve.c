@@ -16,7 +16,7 @@ void test_boundedSieve_interval_5_10()
     size_t numPrimes = 0;
     size_t *candPrimes = boundTestHelper(5, 10, &numPrimes);
 
-    TEST_ASSERT_TRUE(numPrimes == 2)
+    TEST_ASSERT_EQUAL_UINT(2, numPrimes);
     TEST_ASSERT_EQUAL_UINT_ARRAY(primes, candPrimes, 2);
 
     free(candPrimes);
@@ -28,7 +28,7 @@ void test_boundedSieve_interval_50_100()
     free(boundTestHelper(50, 100, &numPrimes));
 
     // There are 10 primes in [50, 100) according to WolframAlpha.
-    TEST_ASSERT_TRUE(numPrimes == 10)
+    TEST_ASSERT_EQUAL_UINT(10, numPrimes);
 }
 
 void test_boundedSieve_interval_48_97()
@@ -37,7 +37,7 @@ void test_boundedSieve_interval_48_97()
     free(boundTestHelper(48, 97, &numPrimes));
 
     // There are 9 primes in [48, 97) according to WolframAlpha.
-    TEST_ASSERT_TRUE(numPrimes == 9)
+    TEST_ASSERT_EQUAL_UINT(9, numPrimes);
 }
 
 void test_boundedSieve_interval_53_97()
@@ -47,7 +47,7 @@ void test_boundedSieve_interval_53_97()
 
     // There are 9 primes in [53, 97) according to WolframAlpha. The first is
     // 53, which should be included.
-    TEST_ASSERT_TRUE(numPrimes == 9)
+    TEST_ASSERT_EQUAL_UINT(9, numPrimes);
 }
 
 void test_boundedSieve_interval_53_98()
@@ -57,7 +57,7 @@ void test_boundedSieve_interval_53_98()
 
     // There are 10 primes in [53, 98) according to WolframAlpha. The last is
     // 97, which should be included.
-    TEST_ASSERT_TRUE(numPrimes == 10)
+    TEST_ASSERT_EQUAL_UINT(10, numPrimes);
 }
 
 void test_boundedSieve_interval_1000_10000()
@@ -66,7 +66,7 @@ void test_boundedSieve_interval_1000_10000()
     free(boundTestHelper(1000, 10000, &numPrimes));
 
     // There are 1061 primes in [1000, 10000) according to WolframAlpha.
-    TEST_ASSERT_TRUE(numPrimes == 1061)
+    TEST_ASSERT_EQUAL_UINT(1061, numPrimes);
 }
 
 void test_boundedSieve_same_output_sieve_from_zero()
