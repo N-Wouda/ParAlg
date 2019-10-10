@@ -3,4 +3,4 @@
 # Installs Unity, our testing framework.
 cd ~/
 git clone "https://github.com/ThrowTheSwitch/Unity.git"
-cp Unity/src/*.h -t /usr/local/include
+sudo cp Unity/src/*.h -t /usr/include
