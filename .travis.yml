@@ -9,15 +9,11 @@ compiler:
   - gcc
 
 before_script:
-  - cd ~/
-  - wget http://www.multicorebsp.com/downloads/c/2.0.4/MulticoreBSP-for-C.tar.xz
-  - tar xvfJ MulticoreBSP-for-C.tar.xz
-  - cd MulticoreBSP-for-C
-  - make
+  - scripts/install_bsp.sh
 
 script:
   # First, we make and test the /primes code.
   - cmake primes && make
-  - ./primes/bin/test_sieve && ./primes/bin/test_utils
+  - primes/bin/test_sieve && primes/bin/test_utils
 
   # TODO: The final project
