@@ -2,6 +2,19 @@ dist: xenial
 
 language: c
 
+
+
+compiler:
+  - clang
+  - gcc
+
+before_script:
+  - cd ~/
+  - wget http://www.multicorebsp.com/downloads/c/2.0.4/MulticoreBSP-for-C.tar.xz
+  - tar -xcfJ MulticoreBSP-for-C.tar.xz
+  - cd MulticoreBSP-for-C
+  - make
+
 script:
   # First, we make and test the /primes code.
   - cmake primes && make
