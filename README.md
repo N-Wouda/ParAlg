@@ -1,5 +1,7 @@
 # ParAlg19
 
+[![Build Status](https://travis-ci.com/N-Wouda/ParAlg.svg?branch=master)](https://travis-ci.com/N-Wouda/ParAlg)
+
 Assignments for the Parallel Algorithms course, taken in Fall 2019. This
 repository consists of two parts, an initial assignment `primes` where we 
 develop a parallel prime number sieve, and a larger project of our own 
