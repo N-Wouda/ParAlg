@@ -34,5 +34,3 @@ set(SOURCE_FILES
 add_executable(primes ${SOURCE_FILES})
 
 target_link_libraries(primes sieve ${bsp} pthread)
-
-export(TARGETS primes FILE primes.cmake)
