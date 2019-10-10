@@ -13,6 +13,7 @@ before_install:
 script:
   # First, we make and test the /primes code.
   - cmake primes && make
-  - primes/bin/test_sieve && primes/bin/test_utils
+  - ls
+  - bin/test_sieve && bin/test_utils
 
   # TODO: The final project
