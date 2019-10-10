@@ -2,7 +2,10 @@ dist: xenial
 
 language: c
 
-
+addons:
+  apt:
+    packages:
+      - cmake
 
 compiler:
   - gcc
