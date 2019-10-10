@@ -4,4 +4,4 @@
 git clone "https://github.com/ThrowTheSwitch/Unity.git"
 git pull
 
-
+mv "Unity/src/*.h" "/usr/local/include"
