@@ -10,6 +10,7 @@ compiler:
 
 before_script:
   - scripts/install_bsp.sh
+  - scripts/install_unity.sh
 
 script:
   # First, we make and test the /primes code.
