@@ -2,15 +2,11 @@ dist: xenial
 
 language: c
 
-addons:
-  apt:
-    packages:
-      - cmake
-
 compiler:
   - gcc
 
-before_script:
+before_install:
+  - scripts/upgrade_cmake.sh
   - scripts/install_bsp.sh
   - scripts/install_unity.sh
 
