@@ -6,4 +6,5 @@ git clone "https://github.com/ThrowTheSwitch/Unity.git"
 
 cmake Unity
 
-sudo make && make install
+sudo make
+sudo make install
