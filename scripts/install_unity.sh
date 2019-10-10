@@ -7,5 +7,5 @@ cmake Unity && make
 
 # Unity's `make install` installs this stuff in an odd place, so better we just
 # do this ourselves.
-cp Unity/src/*.h -t /usr/include
-cp src/libunity.a -t /usr/lib
+sudo cp Unity/src/*.h -t /usr/include
+sudo cp src/libunity.a -t /usr/lib
