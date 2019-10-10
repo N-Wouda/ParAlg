@@ -1,0 +1,19 @@
+dist: xenial
+
+language: c
+
+compiler:
+  - gcc
+  - clang
+
+before_install:
+  - scripts/upgrade_cmake.sh
+  - scripts/install_bsp.sh
+  - scripts/install_unity.sh
+
+script:
+  # First, we make and test the /primes code.
+  - cmake primes && make
+  - bin/test_sieve && bin/test_utils
+
+  # TODO: The final project
