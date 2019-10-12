@@ -22,10 +22,6 @@ script:
   - bin/test_sieve
   - bin/test_utils
 
-  - oclint -version
-
-  - echo $PATH
-
-  - oclint-json-compilation-database
+  - ~/oclint/bin/oclint-json-compilation-database
 
   # TODO: The final project
