@@ -1,6 +1,8 @@
-dist: xenial
+dist:
+  bionic
 
-language: c
+language:
+  c
 
 compiler:
   - gcc
@@ -9,11 +11,20 @@ compiler:
 before_install:
   - scripts/upgrade_cmake.sh
   - scripts/install_bsp.sh
+  - scripts/install_oclint.sh
   - scripts/install_unity.sh
 
 script:
   # First, we make and test the /primes code.
-  - cmake primes && make
-  - bin/test_sieve && bin/test_utils
+  - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON primes
+  - make
+
+  - bin/test_sieve
+  - bin/test_utils
+
+  - find -name "*.json"
+
+  - cp bin/compile_commands.json .
+  - oclint-json-compilation-database
 
   # TODO: The final project
