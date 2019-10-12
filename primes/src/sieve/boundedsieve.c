@@ -16,8 +16,8 @@ size_t *boundedSieve(bounds const *bounds, size_t *numPrimes)
         return sieve(&zeroBound, numPrimes);
     }
 
-    assert(bounds->upperBound >= 2);                    //!OCLint
-    assert(bounds->upperBound > bounds->lowerBound);    //!OCLint
+    assert(bounds->upperBound >= 2);        // sanity checks.
+    assert(bounds->upperBound > bounds->lowerBound);
 
     size_t const size = oddCount(bounds);
 
