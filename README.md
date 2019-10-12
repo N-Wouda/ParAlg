@@ -1,7 +1,6 @@
 # ParAlg19
 
 [![Build Status](https://travis-ci.com/N-Wouda/ParAlg.svg?branch=master)](https://travis-ci.com/N-Wouda/ParAlg)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c839ab5541964bf381063e3101657d6a)](https://www.codacy.com/manual/N-Wouda/ParAlg)
 
 Assignments for the Parallel Algorithms course, taken in Fall 2019. This
 repository consists of two parts, an initial assignment `primes` where we 
