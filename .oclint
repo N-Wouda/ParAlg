@@ -6,6 +6,6 @@ rule-configurations:
   - key: LONG_METHOD            # Maximum number of lines for a method or
     value: 60                   # function.
 
-max-priority-1: 0               # We're going to be very strict.
-max-priority-2: 0
-max-priority-3: 0
+max-priority-1: 0               # We are going to be very strict on all
+max-priority-2: 0               # violations. Should some be allowed, they
+max-priority-3: 0               # must explicitly be silenced.
