@@ -22,6 +22,6 @@ script:
   - bin/test_sieve
   - bin/test_utils
 
-  - "${TRAVIS_BUILD_DIR}"/oclint/bin/oclint-json-compilation-database
+  - oclint-json-compilation-database
 
   # TODO: The final project
