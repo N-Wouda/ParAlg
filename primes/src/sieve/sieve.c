@@ -9,8 +9,8 @@
 
 size_t *sieve(bounds const *bounds, size_t *numPrimes)
 {
-    assert(bounds->upperBound >= 2);        // !OCLint
-    assert(bounds->lowerBound == 0);        // !OCLint
+    assert(bounds->upperBound >= 2);        //!OCLint
+    assert(bounds->lowerBound == 0);        //!OCLint
 
     // This represents all odd numbers in the given interval, *and* two.
     size_t const size = 1 + oddCount(bounds);

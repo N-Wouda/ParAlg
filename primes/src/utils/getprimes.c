@@ -25,7 +25,7 @@ size_t *getPrimes(bool const *isPrime, bounds const *bounds, size_t numPrimes)
         if (isPrime[idx])
             primes[counter++] = idx2num(idx, bounds->lowerBound);
 
-    assert(counter == numPrimes);       // !OCLint
+    assert(counter == numPrimes);       //!OCLint
 
     return primes;
 }
