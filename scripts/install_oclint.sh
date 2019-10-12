@@ -10,3 +10,5 @@ rm oclint-0.13-x86_64-linux-3.13.0-125-generic.tar.gz
 
 export OCLINT_HOME="$HOME/oclint"
 export PATH="$OCLINT_HOME/bin:$PATH"
+
+oclint -version

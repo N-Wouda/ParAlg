@@ -22,9 +22,6 @@ script:
   - bin/test_sieve
   - bin/test_utils
 
-  - find -name "*.json"
-
-  - cp bin/compile_commands.json .
   - oclint-json-compilation-database
 
   # TODO: The final project
