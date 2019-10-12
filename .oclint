@@ -1,0 +1,5 @@
+rule-configurations:
+  - key: LONG_LINE              # Maximum line length of 80 characters.
+    value: 80
+  - key: TOO_MANY_PARAMETERS    # Maximum number of parameters for a function
+    value: 5

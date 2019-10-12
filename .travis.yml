@@ -16,7 +16,7 @@ before_install:
 
 script:
   # First, we make and test the /primes code.
-  - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON primes
+  - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=DEBUG primes
   - make
 
   - bin/test_sieve
