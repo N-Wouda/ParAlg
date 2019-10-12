@@ -12,7 +12,7 @@ static void stepComputePrimes();    // into separate functions.
 
 void bspSieve()
 {
-    assert(BSP_NUM_PROCS > 0);      // sanity check.
+    assert(BSP_NUM_PROCS > 0);        // sanity check.
 
     bsp_begin(BSP_NUM_PROCS);
 

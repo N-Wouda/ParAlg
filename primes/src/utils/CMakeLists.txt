@@ -4,6 +4,7 @@ set(SOURCE_FILES
 		blockbounds.c
 		countprimes.c
 		getprimes.c
+		includes.c
 		init.c
 		oddcount.c
 		unmark.c)

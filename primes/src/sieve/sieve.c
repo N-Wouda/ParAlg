@@ -9,13 +9,13 @@
 
 size_t *sieve(bounds const *bounds, size_t *numPrimes)
 {
-    assert(bounds->upperBound >= 2);            // sanity checks.
+    assert(bounds->upperBound >= 2);        // sanity checks.
     assert(bounds->lowerBound == 0);
 
     // This represents all odd numbers in the given interval, *and* two.
     size_t const size = 1 + oddCount(bounds);
 
-    bool *isPrime = init(bounds);          // marks all numbers prime.
+    bool *isPrime = init(bounds);           // marks all numbers prime.
 
     for (size_t number = 3; number * number < bounds->upperBound; number += 2)
         if (isPrime[num2idx(number, 0)])

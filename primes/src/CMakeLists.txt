@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.2)
 find_library(bsp REQUIRED)
 
 if (NOT bsp)
-	message("Could not find BSP! Attempting to recover..")
+	message("-- Could not find BSP! Attempting to recover..")
 
 	find_path(bsp_path
 			NAMES bsp.h
@@ -12,7 +12,7 @@ if (NOT bsp)
 			NO_DEFAULT_PATH)
 
 	if (bsp_path)
-		message("Recovered.")
+		message("-- Recovered.")
 
 		include_directories(${bsp_path}/include)
 
@@ -20,7 +20,7 @@ if (NOT bsp)
 				NAMES libmcbsp2.0.4.a
 				PATHS ${bsp_path}/lib)
 	else()
-		message("Could not recover.")
+		message("-- Could not recover.")
 	endif()
 endif()
 
