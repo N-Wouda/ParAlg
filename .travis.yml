@@ -23,6 +23,6 @@ script:
   - bin/test_utils
 
   # See e.g. https://github.com/oclint/oclint/issues/200
-  - ${TRAVIS_BUILD_DIR}/oclint/bin/oclint-json-compilation-database
+  - ${TRAVIS_BUILD_DIR}/oclint/bin/oclint-json-compilation-database -e primes/test
 
   # TODO: The final project
