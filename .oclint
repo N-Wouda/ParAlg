@@ -3,9 +3,9 @@ rule-configurations:
     value: 80
   - key: TOO_MANY_PARAMETERS    # Maximum number of parameters for a function.
     value: 5
+  - key: LONG_METHOD            # Maximum number of lines for a method or
+    value: 60                   # function.
 
 max-priority-1: 0               # We're going to be very strict.
 max-priority-2: 0
 max-priority-3: 0
-
-enable-clang-static-analyzer: true
