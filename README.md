@@ -3,9 +3,13 @@
 [![Build Status](https://travis-ci.com/N-Wouda/ParAlg.svg?branch=master)](https://travis-ci.com/N-Wouda/ParAlg)
 
 Assignments for the Parallel Algorithms course, taken in Fall 2019. This
-repository consists of two parts, an initial assignment `primes` where we 
-develop a parallel prime number sieve, and a larger project of our own 
-choosing. TODO
+repository consists of two parts,
+ 
+1. An initial assignment `primes` where we develop a parallel prime number
+   sieve.
+2. A final assignment `cat`, where we develop a parallel algorithm for 
+   detecting connected components in a 3D image (obtained from, e.g., a CAT 
+   scan).
 
 ## Primes
 
@@ -30,7 +34,7 @@ sieve of Eratosthenes. Several branches relate to this, as follows,
 Finally, we refer the reader to the paper in `primes/report.pdf`, which
 explains the various algorithms in considerably more detail.
 
-## Project
+## CAT
 
 TODO
 
@@ -66,6 +70,6 @@ must be called with positive integer argument: the upper bound for the sieve
 Thus, ```bin/primes 100 -l 20 -p 3``` would run the parallel sieve over the 
 interval `[20, 100)`, dividing the work between three processors.
 
-### Project
+### CAT
 
 TODO
