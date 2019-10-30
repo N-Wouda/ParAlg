@@ -42,8 +42,9 @@ TODO
 
 Regarding development,
 
-  * There is not really any one code style, but be reasonable. You might want
-    to consider adopting the `Qt` style.
+  * For `primes`, there was not really any one code style, though an attempt
+    was certainly made to be reasonable. For `cat`, the style is enforced by
+    `clang-format` - and a Travis check.
       
   * `CMake` is used as a build tool.
     
