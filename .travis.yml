@@ -27,7 +27,7 @@ script:
   - bin/test_utils
 
   # Clean-up previous build files before next assignment runs.
-  - git -f clean
+  - git clean -f
 
   # Make and test the /cat code.
   - cmake -DCMAKE_BUILD_TYPE=DEBUG cat
