@@ -8,21 +8,32 @@ compiler:
   - gcc
   - clang
 
+addons:
+  apt:
+    packages:
+      - clang-format
+
 before_install:
   - scripts/upgrade_cmake.sh
   - scripts/install_bsp.sh
-  - scripts/install_oclint.sh
   - scripts/install_unity.sh
 
 script:
-  # First, we make and test the /primes code.
-  - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=DEBUG primes
+  # Make and test the /primes code.
+  - cmake -DCMAKE_BUILD_TYPE=DEBUG primes
   - make
 
   - bin/test_sieve
   - bin/test_utils
 
-  # See e.g. https://github.com/oclint/oclint/issues/200
-  - ${TRAVIS_BUILD_DIR}/oclint/bin/oclint-json-compilation-database -e primes/test
+  # Clean-up previous build files before next assignment runs.
+  - git clean -f
 
-  # TODO: The final project
+  # Make and test the /cat code.
+  - cmake -DCMAKE_BUILD_TYPE=DEBUG cat
+  - make
+
+  # TODO tests
+
+  # Format check for all code under /cat.
+  - scripts/format.sh
