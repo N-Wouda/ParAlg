@@ -26,6 +26,9 @@ script:
   - bin/test_sieve
   - bin/test_utils
 
+  # Clean-up previous build files before next assignment runs.
+  - git -f clean
+
   # Make and test the /cat code.
   - cmake -DCMAKE_BUILD_TYPE=DEBUG cat
   - make
