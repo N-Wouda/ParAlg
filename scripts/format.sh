@@ -10,4 +10,5 @@ if [[ $dirty ]];
 then
   echo "Files with unexpected source code formatting:"
   echo $dirty
+  exit 1
 fi
