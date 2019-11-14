@@ -29,11 +29,11 @@ script:
   # Clean-up previous build files before next assignment runs.
   - git clean -f
 
-  # Make and test the /cat code.
-  - cmake -DCMAKE_BUILD_TYPE=DEBUG cat
+  # Make and test the /ccl code.
+  - cmake -DCMAKE_BUILD_TYPE=DEBUG ccl
   - make
 
   # TODO tests
 
-  # Format check for all code under /cat.
+  # Format check for all code under /ccl.
   - scripts/format.sh
