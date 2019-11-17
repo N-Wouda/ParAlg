@@ -3,27 +3,13 @@
 
 #include <stddef.h>
 
-
 /**
- * A 3D coordinate, with members x, y, z (all size_t). These together index
- * some 3D matrix.
- */
-struct coordinate
-{
-    size_t x;
-    size_t y;
-    size_t z;
-};
-
-typedef struct coordinate coordinate_t;
-
-/**
- * A one-dimensional line segment, with a start and end coordinate.
+ * A one-dimensional line segment, with a start and end position (inclusive).
  */
 struct segment
 {
-    coordinate_t start;
-    coordinate_t end;
+    size_t start;
+    size_t end;
 };
 
 typedef struct segment segment_t;

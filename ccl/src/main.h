@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include "ccltypes.h"
+#include "segment.h"
 
 #include <stdbool.h>
 

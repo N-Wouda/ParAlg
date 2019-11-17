@@ -13,7 +13,7 @@ matrix_t readMatrix(char *location)
                            {{1, 0, 0}, {0, 0, 0}, {1, 0, 0}},
                            {{1, 0, 0}, {0, 0, 0}, {1, 1, 0}}};
 
-    for (size_t zIdx = 0; zIdx != 3; ++zIdx)    // z indexes the layers.
+    for (size_t zIdx = 0; zIdx != 3; ++zIdx)  // z indexes the layers.
     {
         data[zIdx] = (short **) malloc(3 * sizeof(short *));
 

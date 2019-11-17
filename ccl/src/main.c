@@ -11,20 +11,7 @@ int main(int argc, char **argv)
 
     matrix_t mat = readMatrix("somewhere");
 
-    printf("x = %zu, y = %zu, z = %zu\n", mat.xDim, mat.yDim, mat.zDim);
-
-    for (size_t zIdx = 0; zIdx != mat.zDim; ++zIdx)
-    {
-        printf("z = %zu\n", zIdx);
-
-        for (size_t xIdx = 0; xIdx != mat.xDim; ++xIdx)
-        {
-            for (size_t yIdx = 0; yIdx != mat.yDim; ++yIdx)
-                printf("%d ", mat.data[zIdx][xIdx][yIdx]);
-
-            printf("\n");
-        }
-    }
+    segment(&mat);
 
     return EXIT_SUCCESS;
 }
