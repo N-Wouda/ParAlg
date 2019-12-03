@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 
-matrix_t readMatrix(char *location, bool *status)
+matrix_t readMatrix(char const *location, bool *status)
 {
     matrix_t mat = {NULL, NULL, NULL, 0};
 
@@ -16,6 +16,9 @@ matrix_t readMatrix(char *location, bool *status)
     }
 
     // TODO
+
+    fclose(file);
+    *status = true;
 
     return mat;
 }

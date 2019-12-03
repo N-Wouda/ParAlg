@@ -25,6 +25,6 @@ typedef struct matrix matrix_t;
  * @param status    True if the matrix was correctly read, false otherwise.
  * @return          The matrix read from the passed-in location.
  */
-matrix_t readMatrix(char *location, bool *status);
+matrix_t readMatrix(char const *location, bool *status);
 
 #endif  // SPARSE_H
