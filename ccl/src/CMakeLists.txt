@@ -29,7 +29,7 @@ add_subdirectory(sparse)
 
 set(SOURCE_FILES
 		main.c
-		arguments.c)
+		arguments.c ../include/segment.h segment/matrixToSeg.c)
 
 add_executable(ccl ${SOURCE_FILES})
 
