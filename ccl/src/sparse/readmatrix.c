@@ -18,7 +18,7 @@ matrix_t readMatrix(char const *location, bool *status)
 
     // TODO: this is a bit too large for a single function - should perhaps be
     // factored into multiple smaller ones.
-    char buffer[20];    // is this sufficient for a buffer?
+    char buffer[20];  // is this sufficient for a buffer?
     size_t idx = 0;
 
     while (fgets(buffer, sizeof(buffer), file) != NULL)
@@ -33,7 +33,7 @@ matrix_t readMatrix(char const *location, bool *status)
 
         // First line contains only the number of non-zeroes; all others x y z
         // triplets.
-        assert(numRead == (idx == 0) ? 1 : 3);
+        assert(numRead == ((idx == 0) ? 1 : 3));
 
         if (idx == 0)
         {

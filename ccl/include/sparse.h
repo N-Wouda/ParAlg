@@ -21,7 +21,7 @@ typedef struct matrix matrix_t;
 /**
  * Reads a binary, sparse 3D matrix from the file system.
  *
- * @param location  Location to read the matrix from on the file system.
+ * @param location  File system location to read the matrix from.
  * @param status    True if the matrix was correctly read, false otherwise.
  * @return          The matrix read from the passed-in location.
  */
