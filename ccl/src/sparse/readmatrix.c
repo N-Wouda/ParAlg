@@ -1,5 +1,6 @@
 #include "sparse.h"
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,16 +38,12 @@ matrix_t readMatrix(char const *location, bool *status)
 
         int numRead = sscanf(line, "%d %d %d", &x, &y, &z);
 
-        if ((numRead != 1 && idx == 0) || (numRead != 3 && idx != 0))
-        {
-            printf("Read line %zu: insufficient coordinates.\n", idx);
-
-            *status = false;
-            return mat;
-        }
+        assert(numRead == (idx == 0) ? 1 : 3);
 
         if (idx == 0)
         {
+            // Only the first number was read (as there is just one), which is
+            // stored in 'x'. This is the number of non-zeroes.
             mat.length = x;
 
             mat.x = malloc(mat.length * sizeof(size_t));
@@ -62,6 +59,8 @@ matrix_t readMatrix(char const *location, bool *status)
 
         idx++;
     }
+
+    assert(idx == mat.length + 1);
 
     fclose(file);
     *status = true;
