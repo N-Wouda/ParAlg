@@ -21,5 +21,9 @@ int main(int argc, char **argv)
 
     // TODO
 
+    free(mat.x);
+    free(mat.y);
+    free(mat.z);
+
     return EXIT_SUCCESS;
 }
