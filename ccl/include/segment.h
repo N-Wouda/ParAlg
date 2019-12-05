@@ -1,12 +1,10 @@
-//
-// Created by Alexandra Vegelien on 04/12/2019.
-//
-
 #ifndef SEGMENT_H
 #define SEGMENT_H
+
+#include "sparse.h"
+
 #include <stdbool.h>
 #include <stddef.h>
-#include "sparse.h"
 
 /**
  * segment type. TODO
@@ -17,7 +15,6 @@ struct segment
     size_t y;
     size_t z1;
     size_t z2;
-
 };
 
 typedef struct segment segment_t;
@@ -31,6 +28,4 @@ typedef struct segment segment_t;
  */
 segment_t getSegments(matrix_t mat);
 
-#endif //SEGMENT_H
-
-
+#endif  // SEGMENT_H

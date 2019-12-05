@@ -1,6 +1,6 @@
 #include "main.h"
 
-//#include <bsp.h>
+#include <bsp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -15,7 +15,7 @@ bool arguments(int argc, char **argv, char **location, size_t *numProcs)
         return false;
     }
 
-    *numProcs = 0;//bsp_nprocs();  // default value.
+    *numProcs = bsp_nprocs();  // default value.
 
     int option;
 

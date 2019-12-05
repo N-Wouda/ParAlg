@@ -26,11 +26,12 @@ if (NOT bsp)
 endif()
 
 add_subdirectory(sparse)
+add_subdirectory(segment)
 
 set(SOURCE_FILES
 		main.c
-		arguments.c ../include/segment.h segment/matrixToSeg.c)
+		arguments.c)
 
 add_executable(ccl ${SOURCE_FILES})
 
-target_link_libraries(ccl sparse ${bsp} pthread)
+target_link_libraries(ccl sparse segment ${bsp} pthread)
