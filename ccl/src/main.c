@@ -2,6 +2,7 @@
 
 #include "segment.h"
 #include "sparse.h"
+#include "component.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,6 +34,8 @@ int main(int argc, char **argv)
                segments[idx].zLast,
                segments + idx,
                segments[idx].parent);
+
+    makeComponents(segments, numSegments);
 
     free(mat.x);
     free(mat.y);

@@ -25,8 +25,9 @@ if (NOT bsp)
 	endif()
 endif()
 
-add_subdirectory(sparse)
+add_subdirectory(component)
 add_subdirectory(segment)
+add_subdirectory(sparse)
 
 set(SOURCE_FILES
 		main.c
@@ -34,4 +35,4 @@ set(SOURCE_FILES
 
 add_executable(ccl ${SOURCE_FILES})
 
-target_link_libraries(ccl sparse segment ${bsp} pthread)
+target_link_libraries(ccl sparse segment component ${bsp} pthread)
