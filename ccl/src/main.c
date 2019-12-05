@@ -17,7 +17,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
 
     bool status = true;
-    matrix_t mat = readMatrix(location, &status);
+    matrix_t const mat = readMatrix(location, &status);
 
     if (!status)
         return EXIT_FAILURE;

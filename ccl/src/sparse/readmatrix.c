@@ -29,7 +29,7 @@ matrix_t readMatrix(char const *location, bool *status)
         char *line = buffer;
         int x, y, z;
 
-        int numRead = sscanf(line, "%d %d %d", &x, &y, &z);
+        int const numRead = sscanf(line, "%d %d %d", &x, &y, &z);
 
         // First line contains only the number of non-zeroes; all others x y z
         // triplets.
