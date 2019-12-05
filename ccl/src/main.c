@@ -1,10 +1,10 @@
 #include "main.h"
 
 #include "component.h"
+#include "io.h"
 #include "segment.h"
 #include "sparse.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 
@@ -25,29 +25,13 @@ int main(int argc, char **argv)
     size_t numSegments;
     segment_t *segments = computeSegments(&mat, &numSegments);
 
-    for (size_t idx = 0; idx != numSegments; ++idx)
-        printf("SEGMENT: x=%zu, y=%zu, zFirst=%zu, zLast=%zu,"
-               " self=%zu, parent=%zu\n",
-               segments[idx].x,
-               segments[idx].y,
-               segments[idx].zFirst,
-               segments[idx].zLast,
-               idx,
-               segments[idx].parent);
-
     makeComponents(segments, numSegments);
 
-    printf("--Components--\n");
+    // TODO make the output name link to the passed-in location
+    writeSegments("example.ccl", segments, numSegments, mat.length, &status);
 
-    for (size_t idx = 0; idx != numSegments; ++idx)
-        printf("SEGMENT: x=%zu, y=%zu, zFirst=%zu, zLast=%zu,"
-               " self=%zu, parent=%zu\n",
-               segments[idx].x,
-               segments[idx].y,
-               segments[idx].zFirst,
-               segments[idx].zLast,
-               idx,
-               segments[idx].parent);
+    if (!status)
+        return EXIT_FAILURE;
 
     free(mat.x);
     free(mat.y);

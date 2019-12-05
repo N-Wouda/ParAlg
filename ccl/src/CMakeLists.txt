@@ -27,7 +27,7 @@ endif()
 
 add_subdirectory(component)
 add_subdirectory(segment)
-add_subdirectory(sparse)
+add_subdirectory(io)
 
 set(SOURCE_FILES
 		main.c
@@ -35,4 +35,4 @@ set(SOURCE_FILES
 
 add_executable(ccl ${SOURCE_FILES})
 
-target_link_libraries(ccl sparse segment component ${bsp} pthread)
+target_link_libraries(ccl io segment component ${bsp} pthread)

@@ -15,22 +15,15 @@ segment_t *computeSegments(matrix_t const *mat, size_t *numSegments)
     size_t segIdx = 0;
 
     // The very first segment is a bit unique, as it cannot be determined by
-    // element-wise comparison like the others.
-    segments[segIdx]
-        = (segment_t){mat->x[0], mat->y[0], mat->z[0], mat->z[0], segIdx, 0};
+    // element-wise comparison like the others. Initially, each segment points
+    // to itself (same below for other segments).
+    segments[segIdx] = makeSegment(mat, 0, segIdx);
 
     for (size_t matIdx = 1; matIdx != mat->length; ++matIdx)
         if (isNewSegment(mat, matIdx))
         {
             segIdx++;
-
-            // Initially each segment points to itself.
-            segments[segIdx] = (segment_t){mat->x[matIdx],
-                                           mat->y[matIdx],
-                                           mat->z[matIdx],
-                                           mat->z[matIdx],
-                                           segIdx,
-                                           0};
+            segments[segIdx] = makeSegment(mat, matIdx, segIdx);
         }
         else
             segments[segIdx].zLast++;

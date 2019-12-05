@@ -56,4 +56,14 @@ size_t countSegments(matrix_t const *mat);
  */
 bool isNewSegment(matrix_t const *mat, size_t idx);
 
+/**
+ * Construct a new segment pointing to the indexed element in the 3D matrix.
+ *
+ * @param mat       Sparse 3D matrix.
+ * @param idx       Index into the matrix.
+ * @param parent    Index to the segment's parent.
+ * @return          Segment.
+ */
+segment_t makeSegment(matrix_t const *mat, size_t idx, size_t parent);
+
 #endif  // SEGMENT_H
