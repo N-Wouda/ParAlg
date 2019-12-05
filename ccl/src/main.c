@@ -2,9 +2,8 @@
 
 #include "segment.h"
 #include "sparse.h"
-#include <stdio.h>
+
 #include <stdlib.h>
-#include <segment.h>
 
 
 int main(int argc, char **argv)
@@ -22,6 +21,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
 
     getSegments(mat);
+
     free(mat.x);
     free(mat.y);
     free(mat.z);
