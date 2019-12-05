@@ -1,4 +1,5 @@
 #include "segment.h"
+
 #include <assert.h>
 
 

@@ -3,8 +3,8 @@
 #include "segment.h"
 #include "sparse.h"
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 
 int main(int argc, char **argv)
@@ -26,8 +26,10 @@ int main(int argc, char **argv)
 
     for (size_t idx = 0; idx != numSegments; ++idx)
         printf("SEGMENT: x=%zu, y=%zu, z1=%zu, z2=%zu\n",
-            segments[idx].x, segments[idx].y, segments[idx].z1,
-            segments[idx].z2);
+               segments[idx].x,
+               segments[idx].y,
+               segments[idx].z1,
+               segments[idx].z2);
 
     free(mat.x);
     free(mat.y);
