@@ -7,12 +7,13 @@
 #include <stddef.h>
 
 /**
- * segment type. TODO
+ * Segment type. TODO
  */
 struct segment
 {
     size_t x;
     size_t y;
+
     size_t z1;
     size_t z2;
 };
@@ -21,11 +22,29 @@ typedef struct segment segment_t;
 
 
 /**
- * Reads a sparse 3D matrix, and outputs all segments in it.
+ * TODO
  *
- * @param matrix    Input matrix: must be sorted.
- * @return          a segment? which? TODO.
+ * @param mat
+ * @param numSegments
+ * @return
  */
-segment_t getSegments(matrix_t mat);
+segment_t *computeSegments(matrix_t const *mat, size_t *numSegments);
+
+/**
+ * TODO
+ *
+ * @param mat
+ * @return
+ */
+size_t countSegments(matrix_t const *mat);
+
+/**
+ * TODO
+ *
+ * @param mat
+ * @param idx
+ * @return
+ */
+bool isNewSegment(matrix_t const *mat, size_t idx);
 
 #endif  // SEGMENT_H
