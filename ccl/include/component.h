@@ -16,10 +16,10 @@ void makeComponents(segment_t *segments, size_t numSegments);
  * TODO
  *
  * @param segments
- * @param segment
+ * @param candidate
  * @return
  */
-segment_t *findSet(segment_t *segments, segment_t segment);
+segment_t *findSet(segment_t *segments, segment_t *candidate);
 
 /**
  * TODO
