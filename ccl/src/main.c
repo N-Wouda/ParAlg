@@ -25,11 +25,14 @@ int main(int argc, char **argv)
     segment_t *segments = computeSegments(&mat, &numSegments);
 
     for (size_t idx = 0; idx != numSegments; ++idx)
-        printf("SEGMENT: x=%zu, y=%zu, z1=%zu, z2=%zu\n",
+        printf("SEGMENT: x=%zu, y=%zu, zFirst=%zu, zLast=%zu,"
+               " self=%p, parent=%p\n",
                segments[idx].x,
                segments[idx].y,
-               segments[idx].z1,
-               segments[idx].z2);
+               segments[idx].zFirst,
+               segments[idx].zLast,
+               segments + idx,
+               segments[idx].parent);
 
     free(mat.x);
     free(mat.y);

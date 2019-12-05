@@ -7,43 +7,50 @@
 #include <stddef.h>
 
 /**
- * Segment type. TODO
+ * Segment structure. A segment is a single contiguous block of ones in the
+ * z-dimension of the matrix. The contained elements are [zFirst, zLast]
+ * (inclusive).
  */
 struct segment
 {
     size_t x;
     size_t y;
 
-    size_t z1;
-    size_t z2;
+    size_t zFirst;
+    size_t zLast;
+
+    // Determines which component this segment belongs to. TODO
+    struct segment *parent;
 };
 
 typedef struct segment segment_t;
 
 
 /**
- * TODO
+ * Computes all segments in the given sparse matrix.
  *
- * @param mat
- * @param numSegments
- * @return
+ * @param mat           Sparse 3D matrix.
+ * @param numSegments   Once computeSegments returns, this stores the number of
+ *                      segments.
+ * @return              Pointer to an array of segments of length numSegments.
  */
 segment_t *computeSegments(matrix_t const *mat, size_t *numSegments);
 
 /**
- * TODO
+ * Counts the number of segments in the given sparse matrix.
  *
- * @param mat
- * @return
+ * @param mat   Sparse 3D matrix.
+ * @return      Number of segments.
  */
 size_t countSegments(matrix_t const *mat);
 
 /**
- * TODO
+ * Determines if idx marks the start of a new segment, relative to idx - 1.
+ * Assumes the matrix has at least two elements.
  *
- * @param mat
- * @param idx
- * @return
+ * @param mat   Sparse 3D matrix.
+ * @param idx   Index into the matrix.
+ * @return      True if idx marks a new segment, false if not.
  */
 bool isNewSegment(matrix_t const *mat, size_t idx);
 

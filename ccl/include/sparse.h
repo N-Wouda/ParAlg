@@ -5,7 +5,10 @@
 #include <stddef.h>
 
 /**
- * 3D matrix type. TODO
+ * Binary sparse 3D matrix. Has three indexed data members that together
+ * represent all non-zero elements: x, y, and z. These are all of the same
+ * length, indicated by the data member length. The n'th index is given by the
+ * triplet (x[n], y[n], z[n]), where n in {0, 1, ..., length - 1}.
  */
 struct matrix
 {
