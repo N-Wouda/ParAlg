@@ -20,7 +20,7 @@ struct segment
     size_t zLast;
 
     // Determines which component this segment belongs to. TODO
-    struct segment *parent;
+    size_t parent;
 };
 
 typedef struct segment segment_t;

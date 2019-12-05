@@ -1,8 +1,8 @@
 #include "main.h"
 
+#include "component.h"
 #include "segment.h"
 #include "sparse.h"
-#include "component.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,12 +27,12 @@ int main(int argc, char **argv)
 
     for (size_t idx = 0; idx != numSegments; ++idx)
         printf("SEGMENT: x=%zu, y=%zu, zFirst=%zu, zLast=%zu,"
-               " self=%p, parent=%p\n",
+               " self=%zu, parent=%zu\n",
                segments[idx].x,
                segments[idx].y,
                segments[idx].zFirst,
                segments[idx].zLast,
-               segments + idx,
+               idx,
                segments[idx].parent);
 
     makeComponents(segments, numSegments);

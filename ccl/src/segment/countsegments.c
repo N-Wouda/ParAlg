@@ -1,12 +1,8 @@
 #include "segment.h"
 
-#include <assert.h>
-
 
 size_t countSegments(matrix_t const *mat)
 {
-    assert(mat->length > 1);
-
     // Since the first segment cannot be compared (there's nothing before it),
     // we start at one, rather than zero.
     size_t count = 1;
