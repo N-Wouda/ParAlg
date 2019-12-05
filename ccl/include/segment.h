@@ -19,8 +19,10 @@ struct segment
     size_t zFirst;
     size_t zLast;
 
-    // Determines which component this segment belongs to. TODO
+    // Determines which component this segment belongs to, and how many jumps
+    // are required to reach the root.
     size_t parent;
+    size_t rank;
 };
 
 typedef struct segment segment_t;

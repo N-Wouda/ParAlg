@@ -12,4 +12,30 @@
  */
 void makeComponents(segment_t *segments, size_t numSegments);
 
+/**
+ * TODO
+ *
+ * @param segments
+ * @param segment
+ * @return
+ */
+segment_t *findSet(segment_t *segments, segment_t segment);
+
+/**
+ * TODO
+ *
+ * @param first
+ * @param second
+ */
+void link(segment_t *first, segment_t *second);
+
+/**
+ * TODO
+ *
+ * @param segments
+ * @param first
+ * @param second
+ */
+void merge(segment_t* segments, segment_t *first, segment_t *second);
+
 #endif  // COMPONENT_H

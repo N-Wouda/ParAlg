@@ -20,7 +20,8 @@ segment_t *computeSegments(matrix_t const *mat, size_t *numSegments)
                                    mat->y[0],
                                    mat->z[0],
                                    mat->z[0],
-                                   segIdx};
+                                   segIdx,
+                                   0};
 
     for (size_t matIdx = 1; matIdx != mat->length; ++matIdx)
         if (isNewSegment(mat, matIdx))
@@ -32,7 +33,8 @@ segment_t *computeSegments(matrix_t const *mat, size_t *numSegments)
                                            mat->y[matIdx],
                                            mat->z[matIdx],
                                            mat->z[matIdx],
-                                           segIdx};
+                                           segIdx,
+                                           0};
         }
         else
             segments[segIdx].zLast++;
