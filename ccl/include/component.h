@@ -36,6 +36,6 @@ void link(segment_t *first, segment_t *second);
  * @param first
  * @param second
  */
-void merge(segment_t* segments, segment_t *first, segment_t *second);
+void merge(segment_t *segments, segment_t *first, segment_t *second);
 
 #endif  // COMPONENT_H

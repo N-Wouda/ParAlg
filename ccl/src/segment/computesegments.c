@@ -16,12 +16,8 @@ segment_t *computeSegments(matrix_t const *mat, size_t *numSegments)
 
     // The very first segment is a bit unique, as it cannot be determined by
     // element-wise comparison like the others.
-    segments[segIdx] = (segment_t){mat->x[0],
-                                   mat->y[0],
-                                   mat->z[0],
-                                   mat->z[0],
-                                   segIdx,
-                                   0};
+    segments[segIdx]
+        = (segment_t){mat->x[0], mat->y[0], mat->z[0], mat->z[0], segIdx, 0};
 
     for (size_t matIdx = 1; matIdx != mat->length; ++matIdx)
         if (isNewSegment(mat, matIdx))
