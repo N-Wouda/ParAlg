@@ -44,6 +44,8 @@ matrix_t readMatrix(char const *location, bool *status)
             mat.x = malloc(mat.length * sizeof(size_t));
             mat.y = malloc(mat.length * sizeof(size_t));
             mat.z = malloc(mat.length * sizeof(size_t));
+
+            assert(mat.x != NULL && mat.y != NULL && mat.z != NULL);
         }
         else
         {
