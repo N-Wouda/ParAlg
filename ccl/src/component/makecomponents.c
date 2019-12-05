@@ -1,47 +1,33 @@
 #include "component.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 
-int cmp(void const *a, void const *b);
-
-
+// TODO: this is the obvious, but slow O(n^2) implementation. This should be
+// made to run in *at most* O(n log n) using .
 void makeComponents(segment_t *segments, size_t numSegments)
 {
-    // TODO: all this is really crap
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
-        segment_t const segment = segments[idx];
-        segment_t previous[2] = {{segment.x - 1, segment.y},
-                                 {segment.x, segment.y - 1}};
+        segment_t segment = segments[idx];
 
-        for (size_t prevIdx = 0; prevIdx != 2; ++prevIdx)
+        for (size_t parentIdx = 0; parentIdx != idx; ++parentIdx)
         {
-            void *res = bsearch(previous + prevIdx,
-                                segments,
-                                numSegments,
-                                sizeof(segment_t),
-                                cmp);
+            segment_t parSeg = segments[parentIdx];
 
-            if (res != NULL)
+            if (parSeg.x == segment.x - 1 && parSeg.y == segment.y
+                && parSeg.zFirst <= segment.zFirst
+                && parSeg.zLast >= segment.zFirst)
             {
-                printf("idx = %zu\n", idx);
+                merge(segments, &segment, &parSeg);
+                break;
+            }
+
+            if (parSeg.x == segment.x && parSeg.y == segment.y - 1
+                && parSeg.zFirst <= segment.zFirst
+                && parSeg.zLast >= segment.zFirst)
+            {
+                merge(segments, &segment, &parSeg);
+                break;
             }
         }
     }
-}
-
-int cmp(void const *a, void const *b)
-{
-    segment_t const key = *(segment_t *) a;
-    segment_t const elem = *(segment_t *) b;
-
-    if ((key.x < elem.x && key.y == elem.y)
-        || (key.x == elem.x && key.y < elem.y))
-        return -1;
-
-    if (key.x == elem.x && key.y == elem.y)
-        return 0;
-
-    return 1;
 }

@@ -37,6 +37,18 @@ int main(int argc, char **argv)
 
     makeComponents(segments, numSegments);
 
+    printf("--Components--\n");
+
+    for (size_t idx = 0; idx != numSegments; ++idx)
+        printf("SEGMENT: x=%zu, y=%zu, zFirst=%zu, zLast=%zu,"
+               " self=%zu, parent=%zu\n",
+               segments[idx].x,
+               segments[idx].y,
+               segments[idx].zFirst,
+               segments[idx].zLast,
+               idx,
+               segments[idx].parent);
+
     free(mat.x);
     free(mat.y);
     free(mat.z);
