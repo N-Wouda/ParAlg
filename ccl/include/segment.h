@@ -8,8 +8,8 @@
 
 /**
  * Segment structure. A segment is a single contiguous block of ones in the
- * z-dimension of the matrix. The contained elements are [zFirst, zLast]
- * (inclusive).
+ * z-dimension of the matrix. The contained elements are [zFirst, zLast)
+ * (exclusive).
  */
 struct segment
 {
@@ -23,9 +23,12 @@ struct segment
     // are required to reach the root.
     size_t parent;
     size_t rank;
+
+    long prevX;  // index to the start of x - 1 in the segments array.
+    long currX;  // index to the start of x in the segments array.
 };
 
-typedef struct segment segment_t;
+typedef struct segment segment;
 
 
 /**
@@ -36,7 +39,7 @@ typedef struct segment segment_t;
  *                      segments.
  * @return              Pointer to an array of segments of length numSegments.
  */
-segment_t *computeSegments(matrix_t const *mat, size_t *numSegments);
+segment *computeSegments(matrix const *mat, size_t *numSegments);
 
 /**
  * Counts the number of segments in the given sparse matrix.
@@ -44,7 +47,7 @@ segment_t *computeSegments(matrix_t const *mat, size_t *numSegments);
  * @param mat   Sparse 3D matrix.
  * @return      Number of segments.
  */
-size_t countSegments(matrix_t const *mat);
+size_t countSegments(matrix const *mat);
 
 /**
  * Determines if idx marks the start of a new segment, relative to idx - 1.
@@ -54,7 +57,7 @@ size_t countSegments(matrix_t const *mat);
  * @param idx   Index into the matrix.
  * @return      True if idx marks a new segment, false if not.
  */
-bool isNewSegment(matrix_t const *mat, size_t idx);
+bool isNewSegment(matrix const *mat, size_t idx);
 
 /**
  * Construct a new segment pointing to the indexed element in the 3D matrix.
@@ -64,6 +67,6 @@ bool isNewSegment(matrix_t const *mat, size_t idx);
  * @param parent    Index to the segment's parent.
  * @return          Segment.
  */
-segment_t makeSegment(matrix_t const *mat, size_t idx, size_t parent);
+segment makeSegment(matrix const *mat, size_t idx, size_t parent);
 
 #endif  // SEGMENT_H

@@ -6,9 +6,9 @@
 #include <string.h>
 
 
-matrix_t readMatrix(char const *location, bool *status)
+matrix readMatrix(char const *location, bool *status)
 {
-    matrix_t mat = {NULL, NULL, NULL, 0};
+    matrix mat = {NULL, NULL, NULL, 0};
     *status = false;
 
     FILE *file = fopen(location, "r");

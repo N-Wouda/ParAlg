@@ -17,13 +17,13 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
 
     bool status = true;
-    matrix_t const mat = readMatrix(location, &status);
+    matrix const mat = readMatrix(location, &status);
 
     if (!status)
         return EXIT_FAILURE;
 
     size_t numSegments;
-    segment_t *segments = computeSegments(&mat, &numSegments);
+    segment *segments = computeSegments(&mat, &numSegments);
 
     makeComponents(segments, numSegments);
 

@@ -1,7 +1,7 @@
 #include "segment.h"
 
 
-size_t countSegments(matrix_t const *mat)
+size_t countSegments(matrix const *mat)
 {
     // Since the first segment cannot be compared (there's nothing before it),
     // we start at one, rather than zero.

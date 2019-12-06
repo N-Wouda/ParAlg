@@ -4,7 +4,7 @@
 
 
 void writeSegments(char const *location,
-                   segment_t *segments,
+                   segment *segments,
                    size_t numSegments,
                    size_t numElements,
                    bool *status)
@@ -20,9 +20,9 @@ void writeSegments(char const *location,
 
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
-        segment_t const segment = segments[idx];
+        segment const segment = segments[idx];
 
-        for (size_t z = segment.zFirst; z != segment.zLast + 1; ++z)
+        for (size_t z = segment.zFirst; z != segment.zLast; ++z)
         {
             fprintf(file,
                     "%zu %zu %zu %zu\n",

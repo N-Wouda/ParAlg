@@ -5,13 +5,17 @@
 #include <stdlib.h>
 
 
-segment_t *computeSegments(matrix_t const *mat, size_t *numSegments)
+int compare(const void *a, const void *b);
+
+long offset(size_t key, segment *segments, size_t numSegments);
+
+segment *computeSegments(matrix const *mat, size_t *numSegments)
 {
     assert(mat->length > 1);
 
     *numSegments = countSegments(mat);
 
-    segment_t *segments = malloc((*numSegments) * sizeof(segment_t));
+    segment *segments = malloc((*numSegments) * sizeof(segment));
     size_t segIdx = 0;
 
     // The very first segment is a bit unique, as it cannot be determined by
@@ -24,6 +28,22 @@ segment_t *computeSegments(matrix_t const *mat, size_t *numSegments)
         {
             segIdx++;
             segments[segIdx] = makeSegment(mat, matIdx, segIdx);
+
+            // Computes offsets to the previous value of x in the segments
+            // array (prevX), and the current value (currX). This is used to
+            // efficiently compute components later. If the current x index is
+            // zero, there is no previous value and we use the dummy by default.
+
+            // clang-format off
+            segments[segIdx].prevX = mat->x[matIdx] > 0
+                ? offset(mat->x[matIdx] - 1, segments, segIdx + 1)
+                : -1;
+            // clang-format on
+
+            // TODO check current -1 for first segment, start from prevX idx?
+            segments[segIdx].currX = offset(mat->x[matIdx],
+                                            segments,
+                                            segIdx + 1);
         }
         else
             segments[segIdx].zLast++;
@@ -31,4 +51,25 @@ segment_t *computeSegments(matrix_t const *mat, size_t *numSegments)
     assert(segIdx + 1 == *numSegments);
 
     return segments;
+}
+
+int compare(void const *a, void const *b)
+{
+    size_t key = *((size_t *) a);
+    segment elem = *((segment *) b);
+
+    if (key == elem.x)
+        return 0;
+    else if (key < elem.x)
+        return -1;
+    else
+        return 1;
+}
+
+// TODO this is now a binary search, but I think we construct these offsets
+// in passing with the segments.
+long offset(size_t key, segment *segments, size_t numSegments)
+{
+    void *res = bsearch(&key, segments, numSegments, sizeof(segment), compare);
+    return res == NULL ? -1 : (segment *) res - segments;
 }

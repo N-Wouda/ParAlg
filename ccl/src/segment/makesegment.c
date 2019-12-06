@@ -1,12 +1,14 @@
 #include "segment.h"
 
 
-segment_t makeSegment(matrix_t const *mat, size_t idx, size_t parent)
+segment makeSegment(matrix const *mat, size_t idx, size_t parent)
 {
-    return (segment_t){mat->x[idx],
-                       mat->y[idx],
-                       mat->z[idx],
-                       mat->z[idx],
-                       parent,
-                       0};
+    return (segment){mat->x[idx],
+                     mat->y[idx],
+                     mat->z[idx],
+                     mat->z[idx] + 1,  // exclusive
+                     parent,
+                     0,
+                     -1,   // default dummy value
+                     -1};  // default dummy value
 }

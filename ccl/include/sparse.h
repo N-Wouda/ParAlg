@@ -19,6 +19,6 @@ struct matrix
     size_t length;
 };
 
-typedef struct matrix matrix_t;
+typedef struct matrix matrix;
 
 #endif  // SPARSE_H

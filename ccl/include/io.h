@@ -13,7 +13,7 @@
  * @param status    True if the matrix was correctly read, false otherwise.
  * @return          The matrix read from the passed-in location.
  */
-matrix_t readMatrix(char const *location, bool *status);
+matrix readMatrix(char const *location, bool *status);
 
 /**
  * Writes the labelled segments to the given file system location, as a sparse,
@@ -28,7 +28,7 @@ matrix_t readMatrix(char const *location, bool *status);
  * @param status        True if writing completed correctly, false otherwise.
  */
 void writeSegments(char const *location,
-                   segment_t *segments,
+                   segment *segments,
                    size_t numSegments,
                    size_t numElements,
                    bool *status);

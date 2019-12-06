@@ -1,9 +1,9 @@
 #include "component.h"
 
 
-segment_t *findSet(segment_t *segments, segment_t *candidate)
+segment *findSet(segment *segments, segment *candidate)
 {
-    segment_t segment = *candidate;
+    segment segment = *candidate;
 
     // As long as the currently considered segment is not its own parent, we
     // have yet to reach the root segment.

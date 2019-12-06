@@ -11,7 +11,7 @@
  * @param segments      Pointer to an array of segments.
  * @param numSegments   Number of segments.
  */
-void makeComponents(segment_t *segments, size_t numSegments);
+void makeComponents(segment *segments, size_t numSegments);
 
 /**
  * Finds the root element for the given candidate.
@@ -20,7 +20,7 @@ void makeComponents(segment_t *segments, size_t numSegments);
  * @param candidate Candidate to find the root element for.
  * @return          Pointer to the root element.
  */
-segment_t *findSet(segment_t *segments, segment_t *candidate);
+segment *findSet(segment *segments, segment *candidate);
 
 /**
  * Links two segment trees based on their rank, such that the smallest tree
@@ -31,7 +31,7 @@ segment_t *findSet(segment_t *segments, segment_t *candidate);
  * @param first     First segment to link.
  * @param second    Second segment to link.
  */
-void link(segment_t *first, segment_t *second);
+void link(segment *first, segment *second);
 
 /**
  * Merges the sets the first and second segment belong to. This is done using
@@ -43,6 +43,6 @@ void link(segment_t *first, segment_t *second);
  * @param first     First segment to link.
  * @param second    Second segment to link.
  */
-void merge(segment_t *segments, segment_t *first, segment_t *second);
+void merge(segment *segments, segment *first, segment *second);
 
 #endif  // COMPONENT_H
