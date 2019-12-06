@@ -9,6 +9,6 @@ segment makeSegment(matrix const *mat, size_t idx, size_t parent)
                      mat->z[idx] + 1,  // exclusive
                      parent,
                      0,
-                     -1,   // default dummy value
-                     -1};  // default dummy value
+                     -1,    // dummy value
+                     idx};  // default value
 }

@@ -2,8 +2,8 @@
 #include "sparse.h"
 
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
-
 
 int compare(const void *a, const void *b);
 
@@ -71,5 +71,16 @@ int compare(void const *a, void const *b)
 long offset(size_t key, segment *segments, size_t numSegments)
 {
     void *res = bsearch(&key, segments, numSegments, sizeof(segment), compare);
-    return res == NULL ? -1 : (segment *) res - segments;
+
+    if (res == NULL)
+        return -1;
+
+    segment *seg = (segment *) res;
+
+    // TODO this should be done by binary search, and not be needed after.
+    // Perhaps roll our own bsearch?
+    while (seg->x == key && seg >= segments)
+        seg--;
+
+    return seg - segments + 1;
 }
