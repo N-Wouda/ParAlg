@@ -6,13 +6,13 @@
  * Finds the first segment where x = xKey, and y = yKey, if it exists - else
  * returns NULL.
  */
-segment *find(segment *segments, size_t idx, size_t xKey, size_t yKey);
+segment *find(segment *low, segment *high, size_t xKey, size_t yKey);
 
 /**
  * Searches for and merges seg with the appropriate segments determined by xKey
  * and yKey.
  */
-void findAndMerge(segment *segments, size_t idx, size_t xKey, size_t yKey);
+void findAndMerge(segment *segments, segment *seg, size_t xKey, size_t yKey);
 
 /**
  * Merges appropriate segments in [parent, seg] in the segments array.
@@ -29,20 +29,19 @@ void makeComponents(segment *segments, size_t numSegments)
         // to (x - 1, y) or (x, y - 1): those have been considered before, as
         // the segments array is ordered.
         if (seg.x > 0)
-            findAndMerge(segments, idx, seg.x - 1, seg.y);
+            findAndMerge(segments, segments + idx, seg.x - 1, seg.y);
 
         if (seg.y > 0)
-            findAndMerge(segments, idx, seg.x, seg.y - 1);
+            findAndMerge(segments, segments + idx, seg.x, seg.y - 1);
     }
 }
 
-void findAndMerge(segment *segments, size_t idx, size_t xKey, size_t yKey)
+void findAndMerge(segment *segments, segment *seg, size_t xKey, size_t yKey)
 {
-    segment seg = segments[idx];
-    segment *offset = find(segments, idx, xKey, yKey);
+    segment *offset = find(segments, seg, xKey, yKey);
 
     if (offset != NULL)
-        mergeSegments(&seg, offset);
+        mergeSegments(seg, offset);
 }
 
 void mergeSegments(segment *seg, segment *parent)
@@ -70,34 +69,38 @@ void mergeSegments(segment *seg, segment *parent)
     }
 }
 
-segment *find(segment *segments, size_t idx, size_t xKey, size_t yKey)
+segment *find(segment *low, segment *high, size_t xKey, size_t yKey)
 {
-    size_t low = 0, high = idx;
-
     while (high >= low)
     {
-        size_t mid = low + (high - low) / 2;
+        segment *mid = low + (high - low) / 2;
 
         assert(mid >= low && mid <= high);
-        segment const curr = segments[mid];
+        segment const curr = *mid;
 
-        // If we're at the lower end we cannot dereference segments[mid - 1],
-        // so this check is needed here.
+        // Does curr equal the target segment?
+        bool currIsTarget = curr.x == xKey && curr.y == yKey;
+
+        // If we're at the lower end we cannot dereference mid - 1, so this
+        // check is needed here.
         if (mid == low)
-            return curr.x == xKey && curr.y == yKey ? segments + mid : NULL;
+            return currIsTarget ? mid : NULL;
 
         assert(mid - 1 >= low);
-        segment const prev = segments[mid - 1];
+        segment const prev = *(mid - 1);
 
-        // Whether the previous and currently considered segment are smaller
-        // than the searched-for segment.
-        bool prevSmaller = prev.x < xKey || (prev.x == xKey && prev.y < yKey);
-        bool currSmaller = curr.x < xKey || (curr.x == xKey && curr.y < yKey);
+        // Whether the previous and currently considered segments precede the
+        // searched-for segment.
+        bool prevBefore = prev.x < xKey || (prev.x == xKey && prev.y < yKey);
+        bool currBefore = curr.x < xKey || (curr.x == xKey && curr.y < yKey);
 
-        if (prevSmaller)
-            return segments + mid;
+        // We want the first matching target, so the previous segment must be
+        // different. It is not sufficient that the current segment matches the
+        // target (although that is of course also needed!).
+        if (prevBefore && currIsTarget)
+            return mid;
 
-        if (currSmaller)
+        if (currBefore)
             low = mid + 1;
         else
             high = mid - 1;
