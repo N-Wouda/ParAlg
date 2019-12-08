@@ -1,12 +1,23 @@
 #include "component.h"
 
 #include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-int cmp(const void *a, const void *b);
+/**
+ * Finds the first segment where x = xKey, and y = yKey, if it exists - else
+ * returns NULL.
+ */
+segment *find(segment *segments, size_t idx, size_t xKey, size_t yKey);
 
-long offs(size_t key, segment *segments, size_t numSegments);
+/**
+ * Searches for and merges seg with the appropriate segments determined by xKey
+ * and yKey.
+ */
+void findAndMerge(segment *segments, size_t idx, size_t xKey, size_t yKey);
+
+/**
+ * Merges appropriate segments in [parent, seg] in the segments array.
+ */
+void mergeSegments(segment *seg, segment *parent);
 
 void makeComponents(segment *segments, size_t numSegments)
 {
@@ -14,40 +25,83 @@ void makeComponents(segment *segments, size_t numSegments)
     {
         segment seg = segments[idx];
 
-        assert(seg.currX != -1);  // this would be very weird indeed.
+        // If this segment belongs to a component, that component must extend
+        // to (x - 1, y) or (x, y - 1): those have been considered before, as
+        // the segments array is ordered.
+        if (seg.x > 0)
+            findAndMerge(segments, idx, seg.x - 1, seg.y);
 
-        if (seg.prevX != -1)
-        {
-            long yMatch = offs(seg.y,
-                               segments + seg.prevX,
-                               seg.currX - seg.prevX + 1);
-
-            if (yMatch != -1)
-                printf("(x - 1, y) idx: %ld\n", seg.prevX + yMatch);
-        }
-
-        long yMatch = offs(seg.y - 1, segments + seg.currX, idx - seg.currX + 1);
-
-        if (yMatch != -1)
-            printf("(x, y - 1) idx: %ld\n", seg.currX + yMatch);
+        if (seg.y > 0)
+            findAndMerge(segments, idx, seg.x, seg.y - 1);
     }
 }
 
-int cmp(void const *a, void const *b)
+void findAndMerge(segment *segments, size_t idx, size_t xKey, size_t yKey)
 {
-    size_t key = *((size_t *) a);
-    segment elem = *((segment *) b);
+    segment seg = segments[idx];
+    segment *offset = find(segments, idx, xKey, yKey);
 
-    if (key == elem.x)
-        return 0;
-    else if (key < elem.x)
-        return -1;
-    else
-        return 1;
+    if (offset != NULL)
+        mergeSegments(&seg, offset);
 }
 
-long offs(size_t key, segment *segments, size_t numSegments)
+void mergeSegments(segment *seg, segment *parent)
 {
-    void *res = bsearch(&key, segments, numSegments, sizeof(segment), cmp);
-    return res == NULL ? -1 : (segment *) res - segments;
+    assert(parent <= seg);
+
+    size_t const x = parent->x;  // x and y to look for. These must remain
+    size_t const y = parent->y;  // the same during iteration.
+
+    while (parent != seg)
+    {
+        // Candidate parent starts beyond the currently considered segment,
+        // or the x and y don't match up anymore: these cannot be part of the
+        // same component.
+        if (parent->zFirst >= seg->zLast || parent->x != x || parent->y != y)
+            break;
+
+        // Candidate parent starts before the end (above check), and ends after
+        // currently considered segment. These must be part of the same
+        // component.
+        if (parent->zLast > seg->zFirst)
+            merge(seg, parent);
+
+        parent++;
+    }
+}
+
+segment *find(segment *segments, size_t idx, size_t xKey, size_t yKey)
+{
+    size_t low = 0, high = idx;
+
+    while (high >= low)
+    {
+        size_t mid = low + (high - low) / 2;
+
+        assert(mid >= low && mid <= high);
+        segment const curr = segments[mid];
+
+        // If we're at the lower end we cannot dereference segments[mid - 1],
+        // so this check is needed here.
+        if (mid == low)
+            return curr.x == xKey && curr.y == yKey ? segments + mid : NULL;
+
+        assert(mid - 1 >= low);
+        segment const prev = segments[mid - 1];
+
+        // Whether the previous and currently considered segment are smaller
+        // than the searched-for segment.
+        bool prevSmaller = prev.x < xKey || (prev.x == xKey && prev.y < yKey);
+        bool currSmaller = curr.x < xKey || (curr.x == xKey && curr.y < yKey);
+
+        if (prevSmaller)
+            return segments + mid;
+
+        if (currSmaller)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    return NULL;
 }

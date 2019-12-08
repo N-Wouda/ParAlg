@@ -21,11 +21,8 @@ struct segment
 
     // Determines which component this segment belongs to, and how many jumps
     // are required to reach the root.
-    size_t parent;
+    struct segment *parent;
     size_t rank;
-
-    long prevX;  // index to the start of x - 1 in the segments array.
-    long currX;  // index to the start of x in the segments array.
 };
 
 typedef struct segment segment;
@@ -64,9 +61,9 @@ bool isNewSegment(matrix const *mat, size_t idx);
  *
  * @param mat       Sparse 3D matrix.
  * @param idx       Index into the matrix.
- * @param parent    Index to the segment's parent.
+ * @param parent    Pointer to the segment's parent.
  * @return          Segment.
  */
-segment makeSegment(matrix const *mat, size_t idx, size_t parent);
+segment makeSegment(matrix const *mat, size_t idx, segment *parent);
 
 #endif  // SEGMENT_H

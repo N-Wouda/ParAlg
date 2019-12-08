@@ -21,16 +21,10 @@ void writeSegments(char const *location,
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
         segment const segment = segments[idx];
+        size_t const label = segment.parent - segments;
 
         for (size_t z = segment.zFirst; z != segment.zLast; ++z)
-        {
-            fprintf(file,
-                    "%zu %zu %zu %zu\n",
-                    segment.x,
-                    segment.y,
-                    z,
-                    segment.parent);
-        }
+            fprintf(file, "%zu %zu %zu %zu\n", segment.x, segment.y, z, label);
     }
 
     fclose(file);

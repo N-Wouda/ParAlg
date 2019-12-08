@@ -1,7 +1,7 @@
 #include "component.h"
 
 
-void merge(segment *segments, segment *first, segment *second)
+void merge(segment *first, segment *second)
 {
-    link(findSet(segments, first), findSet(segments, second));
+    link(findSet(first), findSet(second));
 }

@@ -16,11 +16,10 @@ void makeComponents(segment *segments, size_t numSegments);
 /**
  * Finds the root element for the given candidate.
  *
- * @param segments  Pointer to an array of segments.
  * @param candidate Candidate to find the root element for.
  * @return          Pointer to the root element.
  */
-segment *findSet(segment *segments, segment *candidate);
+segment *findSet(segment *candidate);
 
 /**
  * Links two segment trees based on their rank, such that the smallest tree
@@ -39,10 +38,9 @@ void link(segment *first, segment *second);
  *
  * See also CLRS, Introduction to Algorithms, 3rd Ed., p. 571.
  *
- * @param segments  Pointer to an array of segments.
  * @param first     First segment to link.
  * @param second    Second segment to link.
  */
-void merge(segment *segments, segment *first, segment *second);
+void merge(segment *first, segment *second);
 
 #endif  // COMPONENT_H
