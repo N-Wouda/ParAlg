@@ -9,13 +9,8 @@
 segment *find(segment *low, segment *high, size_t xKey, size_t yKey);
 
 /**
- * Searches for and merges seg with the appropriate segments determined by xKey
- * and yKey.
- */
-void findAndMerge(segment *segments, segment *seg, size_t xKey, size_t yKey);
-
-/**
- * Merges appropriate segments in [parent, seg] in the segments array.
+ * Merges appropriate segments in [parent, seg] in the segments array. If any
+ * pointer is NULL, nothing is done.
  */
 void mergeSegments(segment *seg, segment *parent);
 
@@ -29,23 +24,20 @@ void makeComponents(segment *segments, size_t numSegments)
         // to (x - 1, y) or (x, y - 1): those have been considered before, as
         // the segments array is ordered.
         if (seg.x > 0)
-            findAndMerge(segments, segments + idx, seg.x - 1, seg.y);
+            mergeSegments(&seg,
+                          find(segments, segments + idx, seg.x - 1, seg.y));
 
         if (seg.y > 0)
-            findAndMerge(segments, segments + idx, seg.x, seg.y - 1);
+            mergeSegments(&seg,
+                          find(segments, segments + idx, seg.x, seg.y - 1));
     }
-}
-
-void findAndMerge(segment *segments, segment *seg, size_t xKey, size_t yKey)
-{
-    segment *offset = find(segments, seg, xKey, yKey);
-
-    if (offset != NULL)
-        mergeSegments(seg, offset);
 }
 
 void mergeSegments(segment *seg, segment *parent)
 {
+    if (parent == NULL || seg == NULL)  // no-op.
+        return;
+
     assert(parent <= seg);
 
     size_t const x = parent->x;  // x and y to look for. These must remain
@@ -60,7 +52,7 @@ void mergeSegments(segment *seg, segment *parent)
             break;
 
         // Candidate parent starts before the end (above check), and ends after
-        // currently considered segment. These must be part of the same
+        // currently considered segment. Such parents must be part of the same
         // component.
         if (parent->zLast > seg->zFirst)
             merge(seg, parent);

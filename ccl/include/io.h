@@ -28,7 +28,7 @@ matrix readMatrix(char const *location, bool *status);
  * @param status        True if writing completed correctly, false otherwise.
  */
 void writeSegments(char const *location,
-                   segment *segments,
+                   segment const *segments,
                    size_t numSegments,
                    size_t numElements,
                    bool *status);

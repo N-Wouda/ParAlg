@@ -4,7 +4,7 @@
 
 
 void writeSegments(char const *location,
-                   segment *segments,
+                   segment const *segments,
                    size_t numSegments,
                    size_t numElements,
                    bool *status)

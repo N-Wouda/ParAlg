@@ -19,7 +19,7 @@ void makeComponents(segment *segments, size_t numSegments);
  * @param candidate Candidate to find the root element for.
  * @return          Pointer to the root element.
  */
-segment *findSet(segment *candidate);
+segment *findSet(segment const *candidate);
 
 /**
  * Links two segment trees based on their rank, such that the smallest tree

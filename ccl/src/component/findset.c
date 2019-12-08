@@ -1,7 +1,7 @@
 #include "component.h"
 
 
-segment *findSet(segment *candidate)
+segment *findSet(segment const *candidate)
 {
     segment segment = *candidate;
 
