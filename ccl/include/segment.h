@@ -22,7 +22,7 @@ struct segment
     // Determines which component this segment belongs to, and how many jumps
     // are required to reach the root.
     struct segment *parent;
-    size_t rank;
+    unsigned char rank;
 };
 
 typedef struct segment segment;

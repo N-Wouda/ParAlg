@@ -1,14 +1,15 @@
 #include "component.h"
 
 
-segment *findSet(segment const *candidate)
+segment *findSet(segment *candidate)
 {
-    segment segment = *candidate;
+    // One-pass path halving method. This ensures all nodes in the set point
+    // to the root node.
+    while (candidate->parent != candidate)
+    {
+        candidate->parent = candidate->parent->parent;
+        candidate = candidate->parent;
+    }
 
-    // As long as the currently considered segment is not its own parent, we
-    // have yet to reach the root segment.
-    while ((segment.parent)->parent != segment.parent)
-        segment = *segment.parent;
-
-    return segment.parent;
+    return candidate;
 }
