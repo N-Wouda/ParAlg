@@ -17,10 +17,10 @@ struct segment
     size_t y;
 
     size_t zFirst;
-    size_t zLast;
+    size_t zLast;  // exclusive
 
-    // Determines which component this segment belongs to, and how many jumps
-    // are required to reach the root.
+    // Determines which component this segment belongs to (parent), and how
+    // many jumps are at most required to reach the root (rank).
     struct segment *parent;
     unsigned char rank;
 };
