@@ -4,12 +4,11 @@
 
 Assignments for the Parallel Algorithms course, taken in Fall 2019. This
 repository consists of two parts,
- 
+
 1. An initial assignment `primes` where we develop a parallel prime number
    sieve.
-2. A final assignment `cat`, where we develop a parallel algorithm for 
-   detecting connected components in a 3D image (obtained from, e.g., a CAT 
-   scan).
+2. A final assignment `ccl`, where we develop a parallel algorithm for 
+   connected components labelling (CCL) in a binary 3D image.
 
 ## Primes
 
@@ -34,7 +33,7 @@ sieve of Eratosthenes. Several branches relate to this, as follows,
 Finally, we refer the reader to the paper in `primes/report.pdf`, which
 explains the various algorithms in considerably more detail.
 
-## CAT
+## CCL
 
 TODO
 
@@ -43,7 +42,7 @@ TODO
 Regarding development,
 
   * For `primes`, there was not really any one code style, though an attempt
-    was certainly made to be reasonable. For `cat`, the style is enforced by
+    was certainly made to be reasonable. For `ccl`, the style is enforced by
     `clang-format` - and a Travis check.
       
   * `CMake` is used as a build tool.
@@ -71,6 +70,6 @@ must be called with positive integer argument: the upper bound for the sieve
 Thus, ```bin/primes 100 -l 20 -p 3``` would run the parallel sieve over the 
 interval `[20, 100)`, dividing the work between three processors.
 
-### CAT
+### CCL
 
 TODO
