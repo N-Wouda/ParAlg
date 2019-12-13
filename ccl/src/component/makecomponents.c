@@ -2,22 +2,24 @@
 
 #include <assert.h>
 
-/**
- * Finds the first segment where x = target.x, y = y.target, if it exists - else
- * returns NULL.
- */
-segment *find(segment *low, segment *high, segment *target);
+_Thread_local segment NOT_FOUND = {};
 
 /**
- * Merges appropriate segments in [parent, seg] in the segments array. If any
- * pointer is NULL, nothing is done.
+ * Finds the first segment where x = target.x, y = y.target, if it exists - else
+ * returns NOT_FOUND.
  */
-void mergeSegments(segment *seg, segment *parent);
+static segment *findNeighbour(segment *low, segment *high, segment *target);
+
+/**
+ * Merges appropriate segments in [parent, seg] in the segments array. If the
+ * parent is NOT_FOUND, nothing is done.
+ */
+static void mergeSegments(segment *seg, segment *parent);
 
 /**
  * Checks if elem precedes target.
  */
-bool isBefore(segment const *elem, segment const *target);
+static bool isBefore(segment const *elem, segment const *target);
 
 void makeComponents(segment *segments, size_t numSegments)
 {
@@ -25,26 +27,29 @@ void makeComponents(segment *segments, size_t numSegments)
     {
         segment seg = segments[idx];
 
-        // If this segment belongs to a component, that component must extend
-        // to (x - 1, y) or (x, y - 1): those have been considered before, as
+        // If this segment belongs to an existing component, that component
+        // must extend to (x - 1, y) or (x, y - 1), and it needs to be a
+        // neighbour in the z-dimension: those have been considered before, as
         // the segments array is ordered.
         if (seg.x > 0)
         {
             segment target = {seg.x - 1, seg.y, seg.zFirst};
-            mergeSegments(&seg, find(segments, segments + idx, &target));
+            mergeSegments(&seg,
+                          findNeighbour(segments, segments + idx, &target));
         }
 
         if (seg.y > 0)
         {
             segment target = {seg.x, seg.y - 1, seg.zFirst};
-            mergeSegments(&seg, find(segments, segments + idx, &target));
+            mergeSegments(&seg,
+                          findNeighbour(segments, segments + idx, &target));
         }
     }
 }
 
-void mergeSegments(segment *seg, segment *parent)
+static void mergeSegments(segment *seg, segment *parent)
 {
-    if (parent == NULL || seg == NULL)  // no-op.
+    if (parent == &NOT_FOUND)  // no-op.
         return;
 
     assert(parent <= seg);
@@ -70,7 +75,7 @@ void mergeSegments(segment *seg, segment *parent)
     }
 }
 
-bool isBefore(segment const *elem, segment const *target)
+static bool isBefore(segment const *elem, segment const *target)
 {
     // clang-format off
     return elem->x < target->x
@@ -80,7 +85,7 @@ bool isBefore(segment const *elem, segment const *target)
     // clang-format on
 }
 
-segment *find(segment *low, segment *high, segment *target)
+static segment *findNeighbour(segment *low, segment *high, segment *target)
 {
     while (high >= low)
     {
@@ -97,7 +102,7 @@ segment *find(segment *low, segment *high, segment *target)
         // If we're at the lower end we cannot dereference mid - 1, so this
         // check is needed here.
         if (mid == low)
-            return currEqualsTarget ? mid : NULL;
+            return currEqualsTarget ? mid : &NOT_FOUND;
 
         assert(mid - 1 >= low);
         segment const prev = *(mid - 1);
@@ -114,5 +119,5 @@ segment *find(segment *low, segment *high, segment *target)
             high = mid - 1;
     }
 
-    return NULL;
+    return &NOT_FOUND;
 }
