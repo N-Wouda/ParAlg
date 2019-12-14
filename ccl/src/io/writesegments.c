@@ -1,5 +1,6 @@
-#include "io.h"
+#include "component.h"
 
+#include <assert.h>
 #include <stdio.h>
 
 
@@ -20,11 +21,15 @@ void writeSegments(char const *location,
 
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
-        segment const segment = segments[idx];
-        size_t const label = segment.parent - segments;
+        segment const seg = segments[idx];
+        segment const *root = findSet(seg.parent);
 
-        for (size_t z = segment.zFirst; z != segment.zLast; ++z)
-            fprintf(file, "%zu %zu %zu %zu\n", segment.x, segment.y, z, label);
+        assert(isRoot(root));
+
+        size_t const label = root - segments;
+
+        for (size_t z = seg.zFirst; z != seg.zLast; ++z)
+            fprintf(file, "%zu %zu %zu %zu\n", seg.x, seg.y, z, label);
     }
 
     fclose(file);

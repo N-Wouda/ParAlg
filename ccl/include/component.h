@@ -29,6 +29,14 @@ void makeComponents(segment *segments, size_t numSegments);
 segment *findSet(segment *candidate);
 
 /**
+ * Tests if the candidate segment is a component root.
+ *
+ * @param candidate Candidate root segment.
+ * @return          True when the root's parent points to itself, false if not.
+ */
+bool isRoot(segment const *candidate);
+
+/**
  * Links two segment trees based on their rank, such that the smallest tree
  * is linked to the largest.
  *
