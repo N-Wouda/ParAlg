@@ -1,29 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-# TODO all this library finding should be moved to a separate function.
-find_library(bsp REQUIRED
-		NAMES libbsp.a libbsp)
-
-if (NOT bsp)
-	message("-- Could not find BSP! Attempting to recover..")
-
-	find_path(bsp_path
-			NAMES bsp.h
-			PATHS ~/MulticoreBSP-for-C/
-			NO_DEFAULT_PATH)
-
-	if (bsp_path)
-		message("-- Recovered.")
-
-		include_directories(${bsp_path}/include)
-
-		find_library(bsp REQUIRED
-				NAMES libmcbsp2.0.4.a
-				PATHS ${bsp_path}/lib)
-	else()
-		message("-- Could not recover.")
-	endif()
-endif()
+find_package(BSP REQUIRED)
 
 add_subdirectory(component)
 add_subdirectory(segment)
@@ -35,4 +12,4 @@ set(SOURCE_FILES
 
 add_executable(ccl ${SOURCE_FILES})
 
-target_link_libraries(ccl io segment component ${bsp} pthread)
+target_link_libraries(ccl io segment component ${BSP} pthread)
