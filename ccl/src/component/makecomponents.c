@@ -34,14 +34,14 @@ void makeComponents(segment *segments, size_t numSegments)
         if (seg.x > 0)
         {
             segment target = {seg.x - 1, seg.y, seg.zFirst};
-            mergeSegments(&seg,
+            mergeSegments(segments + idx,
                           findNeighbour(segments, segments + idx, &target));
         }
 
         if (seg.y > 0)
         {
             segment target = {seg.x, seg.y - 1, seg.zFirst};
-            mergeSegments(&seg,
+            mergeSegments(segments + idx,
                           findNeighbour(segments, segments + idx, &target));
         }
     }
