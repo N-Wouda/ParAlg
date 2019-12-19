@@ -87,6 +87,8 @@ static bool isBefore(segment const *elem, segment const *target)
 
 static segment *findNeighbour(segment *low, segment *high, segment *target)
 {
+    // TODO this can probably be done with bsearch as well.
+
     while (high >= low)
     {
         segment *mid = low + (high - low) / 2;
