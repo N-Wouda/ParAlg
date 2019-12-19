@@ -3,12 +3,6 @@
 
 #include <stddef.h>
 
-struct bspSteps
-{
-    size_t numSteps;
-    void (*steps[])(void);
-};
-
 /**
  * TODO.
  */
@@ -20,8 +14,8 @@ void sendMatrices();
 void computeLabels();
 
 /**
- * Tracks the BSP super-steps.
+ * TODO.
  */
-extern struct bspSteps BSP_STEPS;
+void receiveSegments();
 
 #endif  // STEPS_H

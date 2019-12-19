@@ -8,11 +8,15 @@ void parallel()
 {
     bsp_begin(ARGUMENTS.numProcs);
 
-    for (size_t step = 0; step != BSP_STEPS.numSteps; ++step)
-    {
-        BSP_STEPS.steps[step]();
-        bsp_sync();
-    }
+    sendMatrices();  // first processor shares submatrices to others.
+    bsp_sync();
+
+    computeLabels();  // everyone labels their own matrix and shared boundary.
+    bsp_sync();
+
+    // TODO
+
+    receiveSegments();  // receive segments from others and write to file.
 
     bsp_end();
 }

@@ -22,7 +22,7 @@ void sendMatrices()
         bsp_abort("Something went wrong reading the matrix.\n");
     }
 
-    // TODO this might need more balancing than it currently has.
+    // TODO needs better balancing, and share a slice between processors.
     size_t const numItems = mat.length / ARGUMENTS.numProcs;
     size_t prev = 0;
     size_t idx = numItems;
@@ -32,17 +32,20 @@ void sendMatrices()
         if (idx >= mat.length)
             break;
 
+        // Find the first index where there is a break in the x-values.
         while (mat.x[idx - 1] == mat.x[idx] && idx < mat.length)
             idx++;
 
-        matrix submat = {mat.x + prev, mat.y + prev, mat.z + prev, idx - prev};
+        size_t const length = idx - prev;
 
-        bsp_send(proc, NULL, submat.x, submat.length * sizeof(size_t));
-        bsp_send(proc, NULL, submat.y, submat.length * sizeof(size_t));
-        bsp_send(proc, NULL, submat.z, submat.length * sizeof(size_t));
+        // Sends a submatrix to the other processor. This matrix is guaranteed
+        // to be split between x-values, not within.
+        bsp_send(proc, NULL, mat.x + prev, length * sizeof(size_t));
+        bsp_send(proc, NULL, mat.y + prev, length * sizeof(size_t));
+        bsp_send(proc, NULL, mat.z + prev, length * sizeof(size_t));
 
         prev = idx;
-        idx = prev + numItems;
+        idx += numItems;
     }
 
     free(mat.x);
