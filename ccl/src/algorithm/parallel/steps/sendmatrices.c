@@ -11,7 +11,7 @@ void sendMatrices()
         return;
 
     bool status;
-    matrix const mat = readMatrix(CCL_ARGUMENTS.inLocation, &status);
+    matrix const mat = readMatrix(ARGUMENTS.inLocation, &status);
 
     if (!status)
     {
@@ -23,7 +23,7 @@ void sendMatrices()
     }
 
     // TODO this might need more balancing than it currently has.
-    size_t const numItems = mat.length / CCL_ARGUMENTS.numProcs;
+    size_t const numItems = mat.length / ARGUMENTS.numProcs;
     size_t prev = 0;
     size_t idx = numItems;
 
@@ -37,14 +37,9 @@ void sendMatrices()
 
         matrix submat = {mat.x + prev, mat.y + prev, mat.z + prev, idx - prev};
 
-        enum tag xTag = X;
-        bsp_send(proc, &xTag, submat.x, submat.length * sizeof(size_t));
-
-        enum tag yTag = Y;
-        bsp_send(proc, &yTag, submat.y, submat.length * sizeof(size_t));
-
-        enum tag zTag = Z;
-        bsp_send(proc, &zTag, submat.z, submat.length * sizeof(size_t));
+        bsp_send(proc, NULL, submat.x, submat.length * sizeof(size_t));
+        bsp_send(proc, NULL, submat.y, submat.length * sizeof(size_t));
+        bsp_send(proc, NULL, submat.z, submat.length * sizeof(size_t));
 
         prev = idx;
         idx = prev + numItems;
