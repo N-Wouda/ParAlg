@@ -1,5 +1,6 @@
+#include "algorithm/parallel.h"
+
 #include "io.h"
-#include "parallel/steps.h"
 
 #include <bsp.h>
 
@@ -8,15 +9,16 @@ void parallel()
 {
     bsp_begin(ARGUMENTS.numProcs);
 
-    sendMatrices();  // first processor shares submatrices to others.
+    sendMatrices();  // Shares sub-matrices with other processors.
     bsp_sync();
 
-    computeLabels();  // everyone labels their own matrix and shared boundary.
+    determineComponents();  // Label own matrix and shared boundaries.
+    bsp_sync();             // Communicate shared boundary components.
+
+    determineLabels();  // Determine component structure for shared components.
     bsp_sync();
 
-    // TODO
-
-    receiveSegments();  // receive segments from others and write to file.
+    // TODO receive all segments at first processor and write to file?
 
     bsp_end();
 }

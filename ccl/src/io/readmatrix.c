@@ -16,14 +16,12 @@ matrix readMatrix(char const *location, bool *status)
     if (file == NULL)
         return mat;
 
-    // TODO: this is a bit too large for a single function - should perhaps be
-    // factored into multiple smaller ones.
-    char buffer[20];  // is this sufficient for a buffer?
+    char buffer[20];
     size_t idx = 0;
 
     while (fgets(buffer, sizeof(buffer), file) != NULL)
     {
-        // The buffer size is insufficient.
+        // The buffer size might be insufficient.
         assert(buffer[strlen(buffer) - 1] == '\n');
 
         char *line = buffer;

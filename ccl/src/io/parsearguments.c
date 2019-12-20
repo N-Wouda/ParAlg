@@ -26,7 +26,6 @@ bool parseArguments(int argc, char **argv)
     {
         if (option == 'p')  // `p' for processors.
             ARGUMENTS.numProcs = strtoull(optarg, NULL, 10);
-        // TODO switch if more than one option
     }
 
     return true;

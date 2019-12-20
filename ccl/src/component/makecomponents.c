@@ -44,6 +44,8 @@ void makeComponents(segment *segments, size_t numSegments)
             mergeSegments(segments + idx,
                           findNeighbour(segments, segments + idx, &target));
         }
+
+        seg.label = seg.parent - segments;
     }
 }
 
@@ -88,7 +90,6 @@ static bool isBefore(segment const *elem, segment const *target)
 static segment *findNeighbour(segment *low, segment *high, segment *target)
 {
     // TODO this can probably be done with bsearch as well.
-
     while (high >= low)
     {
         segment *mid = low + (high - low) / 2;

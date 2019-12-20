@@ -22,14 +22,9 @@ void writeSegments(char const *location,
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
         segment const seg = segments[idx];
-        segment const *root = findSet(seg.parent);
-
-        assert(isRoot(root));
-
-        size_t const label = root - segments;
 
         for (size_t z = seg.zFirst; z != seg.zLast; ++z)
-            fprintf(file, "%zu %zu %zu %zu\n", seg.x, seg.y, z, label);
+            fprintf(file, "%zu %zu %zu %zu\n", seg.x, seg.y, z, seg.label);
     }
 
     fclose(file);

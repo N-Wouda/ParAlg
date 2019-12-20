@@ -23,6 +23,8 @@ struct segment
     // many jumps are at most required to reach the root (rank).
     struct segment *parent;
     unsigned char rank;
+
+    size_t label;
 };
 
 typedef struct segment segment;

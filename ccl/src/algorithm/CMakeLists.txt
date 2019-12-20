@@ -11,4 +11,4 @@ target_link_libraries(algorithm
 		component
 		segment
 		io
-		steps)
+		parallel)
