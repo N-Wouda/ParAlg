@@ -17,7 +17,7 @@ segment *computeSegments(matrix const *mat, size_t *numSegments)
     // The very first segment is a bit unique, as it cannot be determined by
     // element-wise comparison like the others. Initially, each segment points
     // to itself (same below for other segments).
-    segments[segIdx] = makeSegment(mat, 0, segments + segIdx);
+    segments[segIdx] = makeSegment(mat, 0, segments);
 
     for (size_t matIdx = 1; matIdx != mat->length; ++matIdx)
         if (isNewSegment(mat, matIdx))

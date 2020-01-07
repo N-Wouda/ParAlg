@@ -44,8 +44,6 @@ void makeComponents(segment *segments, size_t numSegments)
             mergeSegments(segments + idx,
                           findNeighbour(segments, segments + idx, &target));
         }
-
-        seg.label = seg.parent - segments;
     }
 }
 

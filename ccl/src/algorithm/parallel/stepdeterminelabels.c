@@ -1,4 +1,4 @@
-void determineLabels()
+void stepDetermineLabels()
 {
     // TODO receive boundary component segments, compare to own and determine
     // actual label.

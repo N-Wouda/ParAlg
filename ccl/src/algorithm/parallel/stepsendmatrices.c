@@ -9,7 +9,7 @@
  */
 static void release(matrix const *mat);
 
-void sendMatrices()
+void stepSendMatrices()
 {
     if (bsp_pid() != 0)
         return;

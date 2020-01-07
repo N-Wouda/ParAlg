@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
 
 set(SOURCE_FILES
-		determinecomponents.c
-		determinelabels.c
-		sendmatrices.c)
+		stepdeterminecomponents.c
+		stepdeterminelabels.c
+		labelandsendboundary.c
+		stepsendmatrices.c)
 
 add_library(parallel ${SOURCE_FILES})
 target_link_libraries(parallel
