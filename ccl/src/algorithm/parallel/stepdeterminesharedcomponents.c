@@ -27,5 +27,11 @@ void stepDetermineSharedComponents()
 
     // TODO label received boundary segments.
 
+    // 1. Sort the segments so they admit the iteration order.
+    // 2. Re-use sequential algorithm to label them, but this will require a
+    //    bit of customization (if they already have the same labels, they're
+    //    neighbours too!).
+    // 3. Write final labelling to file?
+
     free(segments);
 }
