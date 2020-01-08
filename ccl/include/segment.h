@@ -49,6 +49,24 @@ segment *computeSegments(matrix const *mat, size_t *numSegments);
 size_t countSegments(matrix const *mat);
 
 /**
+ * Checks if candidate segment precedes the target segment in iteration order.
+ *
+ * @param candidate Candidate segment.
+ * @param target    Target segment.
+ * @return          True if candidate precedes target, false otherwise.
+ */
+bool isBefore(segment const *candidate, segment const *target);
+
+/**
+ * Checks if candidate segment is equal to the target segment.
+ *
+ * @param candidate Candidate segment.
+ * @param target    Target segment.
+ * @return          True if candidate is equal to target, false otherwise.
+ */
+bool isEqual(segment const *candidate, segment const *target);
+
+/**
  * Determines if idx marks the start of a new segment, relative to idx - 1.
  * Assumes the matrix has at least two elements.
  *

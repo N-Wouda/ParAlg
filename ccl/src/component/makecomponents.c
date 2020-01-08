@@ -16,11 +16,6 @@ static segment *findNeighbour(segment *low, segment *high, segment *target);
  */
 static void mergeSegments(segment *seg, segment *parent);
 
-/**
- * Checks if elem precedes target.
- */
-static bool isBefore(segment const *elem, segment const *target);
-
 void makeComponents(segment *segments, size_t numSegments)
 {
     for (size_t idx = 0; idx != numSegments; ++idx)
@@ -73,16 +68,6 @@ static void mergeSegments(segment *seg, segment *parent)
 
         parent++;
     }
-}
-
-static bool isBefore(segment const *elem, segment const *target)
-{
-    // clang-format off
-    return elem->x < target->x
-        || (elem->x == target->x && elem->y < target->y)
-        || (elem->x == target->x && elem->y == target->y
-            && elem->zLast - 1 < target->zFirst);  // since last is exclusive.
-    // clang-format on
 }
 
 static segment *findNeighbour(segment *low, segment *high, segment *target)
