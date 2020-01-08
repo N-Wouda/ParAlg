@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 
 set(SOURCE_FILES
 		stepdeterminecomponents.c
-		stepdeterminelabels.c
+		stepdeterminesharedcomponents.c
 		labelandsendboundary.c
 		stepsendmatrices.c)
 

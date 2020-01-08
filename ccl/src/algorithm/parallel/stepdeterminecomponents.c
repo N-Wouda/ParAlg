@@ -17,7 +17,7 @@ void stepDetermineComponents()
         bsp_abort("%u: expected 3 messages, got %u.\n", bsp_pid(), messages);
 
     // Number of bytes per dimension: x, y, z.
-    size_t numBytes = qSize / messages;
+    size_t const numBytes = qSize / messages;
 
     // The following is a bit abstract, but constructs a matrix from the
     // received dimension arrays. These are received in order of x, y, z.
@@ -33,8 +33,8 @@ void stepDetermineComponents()
 
         size_t mSize;
         bsp_get_tag(&mSize, NULL);
-
         assert(mSize == numBytes);
+
         bsp_move(*dimensions[idx], mSize);
     }
 
@@ -61,12 +61,12 @@ void stepDetermineComponents()
 
     if (bsp_pid() != bsp_nprocs() - 1)
     {
-        size_t idx = NUM_SEGMENTS - 1;
+        size_t from = NUM_SEGMENTS - 1;
 
         // Finds the first index of the last x-value we have.
-        while (SEGMENTS[idx - 1].x == SEGMENTS[idx].x && idx > 0)
-            idx--;
+        while (SEGMENTS[from - 1].x == SEGMENTS[from].x && from > 0)
+            from--;
 
-        labelAndSendBoundary(NUM_SEGMENTS - idx, idx);
+        labelAndSendBoundary(NUM_SEGMENTS - from, from);
     }
 }

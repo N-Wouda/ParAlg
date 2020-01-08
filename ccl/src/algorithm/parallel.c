@@ -17,7 +17,7 @@ void parallel()
     stepDetermineComponents();  // Label own matrix and shared boundaries.
     bsp_sync();                 // Communicate shared boundary components.
 
-    stepDetermineLabels();  // Determine component structure for shared components.
+    stepDetermineSharedComponents();  // Determine component structure for shared components.
     bsp_sync();
 
     // TODO receive all segments at first processor and write to file?

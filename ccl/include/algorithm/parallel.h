@@ -28,9 +28,10 @@ void stepSendMatrices();
 void stepDetermineComponents();
 
 /**
- * Has all processors decide, together, on a shared and consistent labelling.
+ * Has all processors decide, together, on a shared and consistent labelling
+ * for shared components.
  */
-void stepDetermineLabels();
+void stepDetermineSharedComponents();
 
 /**
  * Labels components on the boundary. The boundary is assumed to be numSegments
