@@ -12,9 +12,7 @@ int main(int argc, char **argv)
     if (!parseArguments(argc, argv))
         return EXIT_FAILURE;
 
-    if (ARGUMENTS.useParallel)
-        parallel();
-    else
+    if (!ARGUMENTS.useParallel)
     {
         bool status = true;
 
@@ -32,9 +30,12 @@ int main(int argc, char **argv)
                       mat.length,
                       &status);
 
-        if (!status)
-            return EXIT_FAILURE;
+        free(segments);
+        releaseMatrix(&mat);
+
+        return status ? EXIT_SUCCESS : EXIT_FAILURE;
     }
 
+    parallel();
     return EXIT_SUCCESS;
 }

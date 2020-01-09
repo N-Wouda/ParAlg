@@ -16,9 +16,9 @@ extern _Thread_local segment *SEGMENTS;
 extern _Thread_local size_t NUM_SEGMENTS;
 
 /**
- * Number of voxels in the target matrix.
+ * Number of voxels in the target matrix. Doubles as the label space.
  *
- * Note: this is only available on the first processor!
+ * Note: is made available on all other processors after the first sync.
  */
 extern _Thread_local size_t NUM_VOXELS;
 

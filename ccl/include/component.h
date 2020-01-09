@@ -37,6 +37,14 @@ segment *findSet(segment *candidate);
 bool isRoot(segment const *candidate);
 
 /**
+ * Relabels the passed-in segments with their root segment's label.
+ *
+ * @param segments      Segments to (re)label.
+ * @param numSegments   Number of segments.
+ */
+void labelSegments(segment *segments, size_t numSegments);
+
+/**
  * Links two segment trees based on their rank, such that the smallest tree
  * is linked to the largest.
  *

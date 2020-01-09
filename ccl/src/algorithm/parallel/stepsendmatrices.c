@@ -2,12 +2,7 @@
 #include "io.h"
 
 #include <bsp.h>
-#include <stdlib.h>
 
-/**
- * Releases heap-allocated memory for the passed-in matrix.
- */
-static void release(matrix const *mat);
 
 void stepSendMatrices()
 {
@@ -20,7 +15,7 @@ void stepSendMatrices()
 
     if (!status)
     {
-        release(&mat);
+        releaseMatrix(&mat);
         bsp_abort("Something went wrong reading the matrix.\n");
     }
 
@@ -30,6 +25,9 @@ void stepSendMatrices()
 
     for (size_t proc = 0; proc != bsp_nprocs(); ++proc)
     {
+        // This determines the label space available to each processor.
+        bsp_send(proc, NULL, &NUM_VOXELS, sizeof(size_t));
+
         if (idx >= NUM_VOXELS)
             break;
 
@@ -55,12 +53,5 @@ void stepSendMatrices()
         idx += numItems;
     }
 
-    release(&mat);
-}
-
-static void release(matrix const *mat)
-{
-    free(mat->x);
-    free(mat->y);
-    free(mat->z);
+    releaseMatrix(&mat);
 }

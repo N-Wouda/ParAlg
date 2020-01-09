@@ -9,5 +9,5 @@ segment makeSegment(matrix const *mat, size_t idx, segment *parent)
                      mat->z[idx] + 1,  // exclusive
                      parent,
                      0,
-                     0};
+                     idx};  // initially, each segment has its own label (index)
 }

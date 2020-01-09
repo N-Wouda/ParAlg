@@ -43,6 +43,13 @@ bool parseArguments(int argc, char **argv);
 matrix readMatrix(char const *location, bool *status);
 
 /**
+ * Releases heap-allocated memory for the passed-in matrix.
+ *
+ * @param mat   Matrix struct.
+ */
+void releaseMatrix(matrix const *mat);
+
+/**
  * Writes the labelled segments to the given file system location, as a sparse,
  * labelled 3D matrix.
  *

@@ -91,4 +91,11 @@ segment makeSegment(matrix const *mat, size_t idx, segment *parent);
  */
 int segCmp(void const *a, void const *b);
 
+/**
+ * Prints the passed-in segment to stdout, in a human-readable format.
+ *
+ * @param seg   Segment to print.
+ */
+void segPrint(segment const *seg);
+
 #endif  // SEGMENT_H

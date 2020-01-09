@@ -76,8 +76,8 @@ static segment *findNeighbour(segment *low, segment *high, segment *target)
     while (high >= low)
     {
         segment *mid = low + (high - low) / 2;
-
         assert(mid >= low && mid <= high);
+
         segment const curr = *mid;
 
         // The x's and y's need to agree, and the current segment must not be
@@ -85,8 +85,8 @@ static segment *findNeighbour(segment *low, segment *high, segment *target)
         bool currEqualsTarget = curr.x == target->x && curr.y == target->y
                                 && curr.zLast > target->zFirst;
 
-        // If we're at the lower end we cannot dereference mid - 1, so this
-        // check is needed here.
+        // TODO this sometimes makes a mistake on the first or last segment.
+        //  Fix it.
         if (mid == low)
             return currEqualsTarget ? mid : &NOT_FOUND;
 

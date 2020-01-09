@@ -51,8 +51,7 @@ void stepDetermineSharedComponents()
                 merge(first, second);
         }
 
-    for (size_t idx = 0; idx != numSegments; ++idx)
-        segments[idx].label = findSet(segments + idx)->label;
+    labelSegments(segments, numSegments);
 
     // TODO make this more efficient
     for (size_t i = 0; i != numSegments; ++i)
@@ -62,8 +61,10 @@ void stepDetermineSharedComponents()
             segment curr = SEGMENTS[j];
 
             if (isEqual(&seg, &curr))
-                curr.label = seg.label;
+                findSet(&curr)->label = seg.label;
         }
+
+    labelSegments(SEGMENTS, NUM_SEGMENTS);
 
     free(segments);
 }

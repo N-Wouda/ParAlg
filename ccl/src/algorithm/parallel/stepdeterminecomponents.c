@@ -1,5 +1,6 @@
 #include "algorithm.h"
 #include "algorithm/parallel.h"
+#include "io.h"
 #include "sparse.h"
 
 #include <assert.h>
@@ -13,11 +14,14 @@ void stepDetermineComponents()
     size_t qSize;
     bsp_qsize(&messages, &qSize);
 
-    if (messages != 3)  // should equal the number of dimensions: x, y, z.
-        bsp_abort("%u: expected 3 messages, got %u.\n", bsp_pid(), messages);
+    if (messages != 4)  // dimensions (x, y, and z), and the label space.
+        bsp_abort("%u: expected 4 messages, got %u.\n", bsp_pid(), messages);
+
+    // First message is the label space / number of voxels.
+    bsp_move(&NUM_VOXELS, sizeof(size_t));
 
     // Number of bytes per dimension: x, y, z.
-    size_t const numBytes = qSize / messages;
+    size_t const numBytes = (qSize - sizeof(size_t)) / 3;
 
     // The following is a bit abstract, but constructs a matrix from the
     // received dimension arrays. These are received in order of x, y, z.
@@ -41,9 +45,11 @@ void stepDetermineComponents()
     // Use the sequential algorithm to label the received matrix.
     SEGMENTS = sequential(&mat, &NUM_SEGMENTS);
 
-    free(mat.x);
-    free(mat.y);
-    free(mat.z);
+    // Guarantees we assign globally unique labels to each component.
+    for (size_t idx = 0; idx != NUM_SEGMENTS; ++idx)
+        SEGMENTS[idx].label += bsp_pid() * NUM_VOXELS;
+
+    releaseMatrix(&mat);
 
     // Determines the boundaries for the processor, and labels/sends the
     // appropriate boundary components to the other processors.

@@ -7,6 +7,7 @@ set(SOURCE_FILES
 		isequal.c
 		isnewsegment.c
 		makesegment.c
-		segcmp.c)
+		segcmp.c
+		segprint.c)
 
 add_library(segment ${SOURCE_FILES})
