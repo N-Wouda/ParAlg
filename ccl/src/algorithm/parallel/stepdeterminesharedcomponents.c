@@ -3,9 +3,11 @@
 #include <assert.h>
 #include <bsp.h>
 #include <component.h>
-#include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * Comparison helper for sorting segments.
+ */
 static int segCmp(void const *a, void const *b);
 
 void stepDetermineSharedComponents()
@@ -28,41 +30,43 @@ void stepDetermineSharedComponents()
         bsp_move(segments + idx, mSize);
     }
 
+    // Restore iteration order for the received segments.
+    qsort(segments, numSegments, sizeof(segment), segCmp);
+
     // Since these pointers reference objects on the other processors, we
     // should initially reset each segment to its own set.
     for (size_t idx = 0; idx != numSegments; ++idx)
         segments[idx].parent = segments + idx;
 
-    // TODO label received boundary segments.
-    qsort(segments, numSegments, sizeof(segment), segCmp);
+    // TODO make this use the sequential algorithm.
+    for (size_t i = 0; i != numSegments; ++i)
+        for (size_t j = 0; j != numSegments; ++j)
+        {
+            if (i == j)
+                continue;
 
-    for (size_t idx = 0; idx != numSegments; ++idx)
-        printf("%u: %zu - [%zu, %zu, %zu, %zu]\n",
-               bsp_pid(),
-               idx,
-               segments[idx].x,
-               segments[idx].y,
-               segments[idx].zFirst,
-               segments[idx].zLast);
+            segment *first = segments + i;
+            segment *second = segments + j;
 
-    // 1. Sort the segments so they admit the iteration order.
-    // 2. Re-use sequential algorithm to label them, but this will require a
-    //    bit of customization (if they already have the same labels, they're
-    //    neighbours too!).
-    // 3. Write final labelling to file?
+            // The segments overlap (shared boundary), or the labels need to
+            // agree (they are in the same component on the origin processor).
+            if (isEqual(first, second) || first->label == second->label)
+                merge(first, second);
+        }
+
+    // TODO set own segment labels to the shared labelling.
+    
+    // TODO write labelled segments to file?
 
     free(segments);
 }
 
 static int segCmp(void const *a, void const *b)
 {
-    segment *segA = (segment *) a;
-    segment *segB = (segment *) b;
-
-    if (isBefore(segA, segB))
+    if (isBefore(a, b))
         return -1;
 
-    if (isEqual(segA, segB))
+    if (isEqual(a, b))
         return 0;
 
     return 1;
