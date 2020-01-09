@@ -18,7 +18,7 @@ extern _Thread_local size_t NUM_SEGMENTS;
 /**
  * Number of voxels in the target matrix.
  *
- * Note: this is only available on P(0)!
+ * Note: this is only available on the first processor!
  */
 extern _Thread_local size_t NUM_VOXELS;
 
@@ -54,5 +54,10 @@ void stepReceiveAndWriteSegments();
  * @param from          Boundary index in the SEGMENTS array (first element).
  */
 void labelAndSendBoundary(size_t numSegments, size_t from);
+
+/**
+ * Returns the labelled segments to the first processor.
+ */
+void returnLabelledSegments();
 
 #endif  // STEPS_H

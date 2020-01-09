@@ -10,6 +10,7 @@ struct arguments
     size_t numProcs;
     char *inLocation;
     char *outLocation;
+    bool useParallel;
 };
 
 typedef struct arguments arguments;

@@ -18,14 +18,25 @@ bool parseArguments(int argc, char **argv)
 
     ARGUMENTS.inLocation = argv[1];
     ARGUMENTS.outLocation = argv[2];
-    ARGUMENTS.numProcs = bsp_nprocs();  // default value.
+
+    ARGUMENTS.numProcs = bsp_nprocs();  // default values.
+    ARGUMENTS.useParallel = true;
 
     int option;
 
-    while ((option = getopt(argc, argv, "p:")) != -1)
+    while ((option = getopt(argc, argv, "p:s")) != -1)
     {
-        if (option == 'p')  // `p' for processors.
-            ARGUMENTS.numProcs = strtoull(optarg, NULL, 10);
+        switch (option)
+        {
+            case 'p':
+                ARGUMENTS.numProcs = strtoull(optarg, NULL, 10);
+                break;
+            case 's':
+                ARGUMENTS.useParallel = false;
+                break;
+            default:
+                return false;
+        }
     }
 
     return true;

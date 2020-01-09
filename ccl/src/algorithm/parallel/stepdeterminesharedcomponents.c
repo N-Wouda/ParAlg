@@ -54,9 +54,16 @@ void stepDetermineSharedComponents()
     for (size_t idx = 0; idx != numSegments; ++idx)
         segments[idx].label = findSet(segments + idx)->label;
 
-    // TODO set own segment labels in SEGMENTS to the shared labelling.
+    // TODO make this more efficient
+    for (size_t i = 0; i != numSegments; ++i)
+        for (size_t j = 0; j != NUM_SEGMENTS; ++j)
+        {
+            segment const seg = segments[i];
+            segment curr = SEGMENTS[j];
 
-    bsp_send(0, NULL, &SEGMENTS, NUM_SEGMENTS * sizeof(segment));
+            if (isEqual(&seg, &curr))
+                curr.label = seg.label;
+        }
 
     free(segments);
 }

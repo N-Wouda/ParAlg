@@ -20,9 +20,10 @@ void parallel()
     bsp_sync();                 // Communicate shared boundary components.
 
     stepDetermineSharedComponents();  // Determine component structure for
-    bsp_sync();                       // shared components.
+    returnLabelledSegments();           // shared components. Sends the labelled
+    bsp_sync();                       // segments to the first processor.
 
-    // Receive segments at processor P(0) and write them to the outfile.
+    // Receive segments at P(0) and write them to the outfile.
     stepReceiveAndWriteSegments();
 
     free(SEGMENTS);

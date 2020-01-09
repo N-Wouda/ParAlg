@@ -5,7 +5,8 @@ set(SOURCE_FILES
 		stepdeterminesharedcomponents.c
 		labelandsendboundary.c
 		stepreceiveandwritesegments.c
-		stepsendmatrices.c)
+		stepsendmatrices.c
+		returnlabelledsegments.c)
 
 add_library(parallel ${SOURCE_FILES})
 target_link_libraries(parallel
