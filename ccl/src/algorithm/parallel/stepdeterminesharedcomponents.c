@@ -1,3 +1,4 @@
+#include "algorithm/parallel.h"
 #include "segment.h"
 
 #include <assert.h>
@@ -5,10 +6,6 @@
 #include <component.h>
 #include <stdlib.h>
 
-/**
- * Comparison helper for sorting segments.
- */
-static int segCmp(void const *a, void const *b);
 
 void stepDetermineSharedComponents()
 {
@@ -54,20 +51,12 @@ void stepDetermineSharedComponents()
                 merge(first, second);
         }
 
-    // TODO set own segment labels to the shared labelling.
-    
-    // TODO write labelled segments to file?
+    for (size_t idx = 0; idx != numSegments; ++idx)
+        segments[idx].label = findSet(segments + idx)->label;
+
+    // TODO set own segment labels in SEGMENTS to the shared labelling.
+
+    bsp_send(0, NULL, &SEGMENTS, NUM_SEGMENTS * sizeof(segment));
 
     free(segments);
-}
-
-static int segCmp(void const *a, void const *b)
-{
-    if (isBefore(a, b))
-        return -1;
-
-    if (isEqual(a, b))
-        return 0;
-
-    return 1;
 }

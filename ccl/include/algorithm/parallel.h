@@ -16,6 +16,13 @@ extern _Thread_local segment *SEGMENTS;
 extern _Thread_local size_t NUM_SEGMENTS;
 
 /**
+ * Number of voxels in the target matrix.
+ *
+ * Note: this is only available on P(0)!
+ */
+extern _Thread_local size_t NUM_VOXELS;
+
+/**
  * Reads the matrix file (command-line argument) and sends sub-matrices to each
  * processor.
  */
@@ -32,6 +39,12 @@ void stepDetermineComponents();
  * for shared components.
  */
 void stepDetermineSharedComponents();
+
+/**
+ * Receive all labelled segments at the first processor, and write them to the
+ * out file.
+ */
+void stepReceiveAndWriteSegments();
 
 /**
  * Labels components on the boundary. The boundary is assumed to be numSegments

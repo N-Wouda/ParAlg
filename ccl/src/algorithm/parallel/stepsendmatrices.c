@@ -16,6 +16,7 @@ void stepSendMatrices()
 
     bool status;
     matrix const mat = readMatrix(ARGUMENTS.inLocation, &status);
+    NUM_VOXELS = mat.length;
 
     if (!status)
     {
@@ -23,17 +24,17 @@ void stepSendMatrices()
         bsp_abort("Something went wrong reading the matrix.\n");
     }
 
-    size_t const numItems = mat.length / ARGUMENTS.numProcs;
+    size_t const numItems = NUM_VOXELS / ARGUMENTS.numProcs;
     size_t prev = 0;
     size_t idx = numItems;
 
     for (size_t proc = 0; proc != bsp_nprocs(); ++proc)
     {
-        if (idx >= mat.length)
+        if (idx >= NUM_VOXELS)
             break;
 
         // Find the first index where there is a break in the x-values.
-        while (mat.x[idx - 1] == mat.x[idx] && idx < mat.length)
+        while (mat.x[idx - 1] == mat.x[idx] && idx < NUM_VOXELS)
             idx++;
 
         size_t const numBytes = (idx - prev) * sizeof(size_t);

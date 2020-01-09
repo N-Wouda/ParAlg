@@ -7,7 +7,7 @@ segment *sequential(matrix const *mat, size_t *numSegments)
     makeComponents(segments, *numSegments);
 
     for (size_t idx = 0; idx != *numSegments; ++idx)
-        segments[idx].label = findSet(segments[idx].parent)->label;
+        segments[idx].label = findSet(segments + idx)->label;
 
     return segments;
 }

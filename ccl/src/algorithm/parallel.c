@@ -3,9 +3,11 @@
 #include "io.h"
 
 #include <bsp.h>
+#include <stdlib.h>
 
 _Thread_local segment *SEGMENTS;
 _Thread_local size_t NUM_SEGMENTS;
+_Thread_local size_t NUM_VOXELS;
 
 void parallel()
 {
@@ -20,7 +22,10 @@ void parallel()
     stepDetermineSharedComponents();  // Determine component structure for
     bsp_sync();                       // shared components.
 
-    // TODO receive all segments at first processor and write to file?
+    // Receive segments at processor P(0) and write them to the outfile.
+    stepReceiveAndWriteSegments();
+
+    free(SEGMENTS);
 
     bsp_end();
 }

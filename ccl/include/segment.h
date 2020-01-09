@@ -86,4 +86,9 @@ bool isNewSegment(matrix const *mat, size_t idx);
  */
 segment makeSegment(matrix const *mat, size_t idx, segment *parent);
 
+/**
+ * Comparison helper for sorting segments by their coordinates.
+ */
+int segCmp(void const *a, void const *b);
+
 #endif  // SEGMENT_H

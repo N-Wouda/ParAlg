@@ -28,8 +28,8 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
         segment seg = SEGMENTS[from + idx];
         segment copy = copies[idx];
 
-        segment *copyRoot = findSet(copy.parent);
-        segment *segRoot = findSet(seg.parent);
+        segment *copyRoot = findSet(&copy);
+        segment *segRoot = findSet(&seg);
 
         if (copyRoot != segRoot)
         {
