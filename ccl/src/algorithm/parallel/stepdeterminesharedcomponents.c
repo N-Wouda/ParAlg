@@ -32,21 +32,26 @@ void stepDetermineSharedComponents()
     qsort(segments, numSegments, sizeof(segment), segCoordCmp);
     makeSets(segments, numSegments);
 
-    // TODO make this use the sequential algorithm. (but how?)
     for (size_t outer = 0; outer != numSegments; ++outer)
-        for (size_t inner = 0; inner != numSegments; ++inner)
-        {
-            if (inner == outer)
-                continue;
+    {
+        segment first = segments[outer];
 
-            segment first = segments[outer];
+        for (size_t inner = outer + 1; inner != numSegments; ++inner)
+        {
             segment second = segments[inner];
+
+            // The second segment came from a processor that does not neighbour
+            // the first segment's processor. The coordinates and labels can
+            // never compare equal beyond this point, so we break.
+            if (second.label / NUM_VOXELS > 1 + first.label / NUM_VOXELS)
+                break;
 
             // The segments overlap (shared boundary), or the labels need to
             // agree (they are in the same component on the origin processor).
             if (isEqual(&first, &second) || first.label == second.label)
                 merge(&first, &second);
         }
+    }
 
     labelSegments(segments, numSegments);
 
