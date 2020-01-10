@@ -29,23 +29,23 @@ void stepDetermineSharedComponents()
 
     // Restore iteration order for the received segments and reset their set
     // associations.
-    qsort(segments, numSegments, sizeof(segment), segCmp);
+    qsort(segments, numSegments, sizeof(segment), segCoordCmp);
     makeSets(segments, numSegments);
 
-    // TODO make this use the sequential algorithm.
-    for (size_t i = 0; i != numSegments; ++i)
-        for (size_t j = 0; j != numSegments; ++j)
+    // TODO make this use the sequential algorithm. (but how?)
+    for (size_t outer = 0; outer != numSegments; ++outer)
+        for (size_t inner = 0; inner != numSegments; ++inner)
         {
-            if (i == j)
+            if (inner == outer)
                 continue;
 
-            segment *first = segments + i;
-            segment *second = segments + j;
+            segment first = segments[outer];
+            segment second = segments[inner];
 
             // The segments overlap (shared boundary), or the labels need to
             // agree (they are in the same component on the origin processor).
-            if (isEqual(first, second) || first->label == second->label)
-                merge(first, second);
+            if (isEqual(&first, &second) || first.label == second.label)
+                merge(&first, &second);
         }
 
     labelSegments(segments, numSegments);
@@ -57,7 +57,7 @@ void stepDetermineSharedComponents()
                                 SEGMENTS,
                                 NUM_SEGMENTS,
                                 sizeof(segment),
-                                segCmp);
+                                segCoordCmp);
 
         if (curr == NULL)  // We do not own this segment.
             continue;

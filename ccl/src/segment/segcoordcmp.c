@@ -1,7 +1,7 @@
 #include "segment.h"
 
 
-int segCmp(void const *a, void const *b)
+int segCoordCmp(void const *a, void const *b)
 {
     if (isBefore(a, b))
         return -1;

@@ -32,7 +32,7 @@ void stepReceiveAndWriteSegments()
     }
 
     // Restore iteration order.
-    qsort(segments, numSegments, sizeof(segment), segCmp);
+    qsort(segments, numSegments, sizeof(segment), segCoordCmp);
 
     bool status = true;
     writeSegments(ARGUMENTS.outLocation,
