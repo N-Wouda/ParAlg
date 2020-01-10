@@ -50,16 +50,20 @@ void stepDetermineSharedComponents()
 
     labelSegments(segments, numSegments);
 
-    // TODO make this more efficient
-    for (size_t i = 0; i != numSegments; ++i)
-        for (size_t j = 0; j != NUM_SEGMENTS; ++j)
-        {
-            segment const seg = segments[i];
-            segment curr = SEGMENTS[j];
+    // Update our segments with the new labelling.
+    for (size_t idx = 0; idx != numSegments; ++idx)
+    {
+        segment *curr = bsearch(segments + idx,
+                                SEGMENTS,
+                                NUM_SEGMENTS,
+                                sizeof(segment),
+                                segCmp);
 
-            if (isEqual(&seg, &curr))
-                findSet(&curr)->label = seg.label;
-        }
+        if (curr == NULL)  // We do not own this segment.
+            continue;
+
+        findSet(curr)->label = segments[idx].label;
+    }
 
     labelSegments(SEGMENTS, NUM_SEGMENTS);
 
