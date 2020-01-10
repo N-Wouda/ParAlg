@@ -45,6 +45,14 @@ bool isRoot(segment const *candidate);
 void labelSegments(segment *segments, size_t numSegments);
 
 /**
+ * Resets each segment to be in its own set.
+ *
+ * @param segments      Segments to make into sets.
+ * @param numSegments   Number of segments.
+ */
+void makeSets(segment *segments, size_t numSegments);
+
+/**
  * Links two segment trees based on their rank, such that the smallest tree
  * is linked to the largest.
  *

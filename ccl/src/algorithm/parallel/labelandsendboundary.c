@@ -15,9 +15,7 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
     memcpy(copies, SEGMENTS + from, numSegments * sizeof(segment));
 
     // Reset each copied segment to point to itself, and relabel the copies.
-    for (size_t idx = 0; idx != numSegments; ++idx)
-        copies[idx].parent = copies + idx;
-
+    makeSets(copies, numSegments);
     makeComponents(copies, numSegments);
 
     // We have a boundary-disjoint component only when the copies's root segment

@@ -6,6 +6,7 @@ set(SOURCE_FILES
 		labelsegments.c
 		link.c
 		makecomponents.c
+		makesets.c
 		merge.c)
 
 add_library(component ${SOURCE_FILES})

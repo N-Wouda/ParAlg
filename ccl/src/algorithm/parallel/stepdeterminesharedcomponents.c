@@ -27,13 +27,10 @@ void stepDetermineSharedComponents()
         bsp_move(segments + idx, mSize);
     }
 
-    // Restore iteration order for the received segments.
+    // Restore iteration order for the received segments and reset their set
+    // associations.
     qsort(segments, numSegments, sizeof(segment), segCmp);
-
-    // Since these pointers reference objects on the other processors, we
-    // should initially reset each segment to its own set.
-    for (size_t idx = 0; idx != numSegments; ++idx)
-        segments[idx].parent = segments + idx;
+    makeSets(segments, numSegments);
 
     // TODO make this use the sequential algorithm.
     for (size_t i = 0; i != numSegments; ++i)
