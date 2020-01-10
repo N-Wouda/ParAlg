@@ -16,6 +16,11 @@ static segment *findNeighbour(segment *low, segment *high, segment *target);
  */
 static void mergeSegments(segment *seg, segment *parent);
 
+/**
+ * Checks if candidate overlaps with target.
+ */
+static bool overlaps(segment const *candidate, segment const *target);
+
 void makeComponents(segment *segments, size_t numSegments)
 {
     for (size_t idx = 0; idx != numSegments; ++idx)
@@ -70,25 +75,41 @@ static void mergeSegments(segment *seg, segment *parent)
     }
 }
 
+static bool overlaps(segment const *candidate, segment const *target)
+{
+    // clang-format off
+    // The x's and y's need to agree, and the current segment must not be
+    // before the target.
+    return candidate->x == target->x
+        && candidate->y == target->y
+        && candidate->zLast > target->zFirst;
+    // clang-format on
+}
+
 static segment *findNeighbour(segment *low, segment *high, segment *target)
 {
-    // TODO this can probably be done with bsearch as well.
-    while (high >= low)
+    while (high >= low)  // high is inclusive.
     {
         segment *mid = low + (high - low) / 2;
         assert(mid >= low && mid <= high);
 
-        segment const curr = *mid;
-
-        // The x's and y's need to agree, and the current segment must not be
-        // before the target.
-        bool currEqualsTarget = curr.x == target->x && curr.y == target->y
-                                && curr.zLast > target->zFirst;
-
-        // TODO this sometimes makes a mistake on the first or last segment.
-        //  Fix it.
         if (mid == low)
-            return currEqualsTarget ? mid : &NOT_FOUND;
+        {
+            if (overlaps(mid, target))
+                return mid;
+            else
+            {
+                // If the element exists, it must be near (the range cannot be
+                // too large yet). So a simple linear search should be able to
+                // find it, and not raise the big-O complexity of the method.
+                for (segment *idx = low; idx <= high; ++idx)
+                    if (idx->x == target->x && idx->y == target->y
+                        && idx->zLast > target->zFirst)
+                        return idx;
+            }
+
+            return &NOT_FOUND;
+        }
 
         assert(mid - 1 >= low);
         segment const prev = *(mid - 1);
@@ -96,10 +117,10 @@ static segment *findNeighbour(segment *low, segment *high, segment *target)
         // We want the first matching target, so the previous segment must be
         // different. It is not sufficient that the current segment matches the
         // target (although that is of course also needed!).
-        if (isBefore(&prev, target) && currEqualsTarget)
+        if (isBefore(&prev, target) && overlaps(mid, target))
             return mid;
 
-        if (isBefore(&curr, target))
+        if (isBefore(mid, target))
             low = mid + 1;
         else
             high = mid - 1;
