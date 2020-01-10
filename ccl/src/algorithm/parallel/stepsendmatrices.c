@@ -28,12 +28,14 @@ void stepSendMatrices()
         // This determines the label space available to each processor.
         bsp_send(proc, NULL, &NUM_VOXELS, sizeof(size_t));
 
-        if (idx >= NUM_VOXELS)
-            break;
-
         // Find the first index where there is a break in the x-values.
         while (mat.x[idx - 1] == mat.x[idx] && idx < NUM_VOXELS)
             idx++;
+
+        // numItems rounds down, so this ensures the final few voxels all go
+        // to the last processor.
+        if (proc == bsp_nprocs() - 1)
+            idx = NUM_VOXELS;
 
         size_t const numBytes = (idx - prev) * sizeof(size_t);
 

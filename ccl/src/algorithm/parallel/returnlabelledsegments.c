@@ -5,16 +5,14 @@
 
 void returnLabelledSegments()
 {
+    size_t offset = bsp_pid() != 0;
+
     // We should not send the overlapping parts to the first processor twice.
     // This ensures we only send it once.
-    size_t offset = 0;
-
     if (bsp_pid() != 0)
-    {
-        while (SEGMENTS[offset].x == SEGMENTS[offset + 1].x
+        while (SEGMENTS[offset - 1].x == SEGMENTS[offset].x
                && offset < NUM_SEGMENTS)
             offset++;
-    }
 
     bsp_send(0,
              NULL,
