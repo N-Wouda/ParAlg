@@ -32,6 +32,8 @@ void stepDetermineSharedComponents()
     qsort(segments, numSegments, sizeof(segment), segCoordCmp);
     makeSets(segments, numSegments);
 
+    // TODO: this can *maybe* be done using the sequential algorithm in some
+    //  modified form. Think about it, if time permits.
     for (size_t outer = 0; outer != numSegments; ++outer)
     {
         segment first = segments[outer];
