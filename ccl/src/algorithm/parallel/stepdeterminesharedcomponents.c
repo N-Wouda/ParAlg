@@ -9,8 +9,8 @@
 
 void stepDetermineSharedComponents()
 {
-    unsigned int messages;
-    size_t qSize;
+    bsp_nprocs_t messages;
+    bsp_size_t qSize;
     bsp_qsize(&messages, &qSize);
 
     size_t const numSegments = qSize / sizeof(segment);
@@ -20,7 +20,7 @@ void stepDetermineSharedComponents()
 
     for (size_t idx = 0; idx != messages; ++idx)
     {
-        size_t mSize;
+        bsp_size_t mSize;
         bsp_get_tag(&mSize, NULL);
         assert(mSize == sizeof(segment));
 

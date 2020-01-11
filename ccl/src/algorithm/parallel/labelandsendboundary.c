@@ -33,7 +33,7 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
         {
             copyRoot->parent = segRoot;
 
-            for (size_t proc = 0; proc != bsp_nprocs(); ++proc)
+            for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
                 bsp_send(proc, NULL, &seg, sizeof(segment));
         }
     }

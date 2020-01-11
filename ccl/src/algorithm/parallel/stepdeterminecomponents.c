@@ -10,8 +10,8 @@
 
 void stepDetermineComponents()
 {
-    unsigned int messages;
-    size_t qSize;
+    bsp_nprocs_t messages;
+    bsp_size_t qSize;
     bsp_qsize(&messages, &qSize);
 
     if (messages != 4)  // dimensions (x, y, and z), and the label space.
@@ -21,7 +21,7 @@ void stepDetermineComponents()
     bsp_move(&NUM_VOXELS, sizeof(size_t));
 
     // Number of bytes per dimension: x, y, z.
-    size_t const numBytes = (qSize - sizeof(size_t)) / 3;
+    bsp_size_t const numBytes = (qSize - sizeof(size_t)) / 3;
 
     // The following is a bit abstract, but constructs a matrix from the
     // received dimension arrays. These are received in order of x, y, z.
@@ -35,7 +35,7 @@ void stepDetermineComponents()
         *dimensions[idx] = malloc(numBytes);
         assert(*dimensions[idx] != NULL);
 
-        size_t mSize;
+        bsp_size_t mSize;
         bsp_get_tag(&mSize, NULL);
         assert(mSize == numBytes);
 

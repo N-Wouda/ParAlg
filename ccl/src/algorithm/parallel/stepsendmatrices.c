@@ -19,11 +19,11 @@ void stepSendMatrices()
         bsp_abort("Something went wrong reading the matrix.\n");
     }
 
-    size_t const numItems = NUM_VOXELS / ARGUMENTS.numProcs;
-    size_t prev = 0;
-    size_t idx = numItems;
+    bsp_size_t const numItems = NUM_VOXELS / ARGUMENTS.numProcs;
+    bsp_size_t prev = 0;
+    bsp_size_t idx = numItems;
 
-    for (size_t proc = 0; proc != bsp_nprocs(); ++proc)
+    for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
     {
         // This determines the label space available to each processor.
         bsp_send(proc, NULL, &NUM_VOXELS, sizeof(size_t));
@@ -37,7 +37,7 @@ void stepSendMatrices()
         if (proc == bsp_nprocs() - 1)
             idx = NUM_VOXELS;
 
-        size_t const numBytes = (idx - prev) * sizeof(size_t);
+        bsp_size_t const numBytes = (idx - prev) * sizeof(size_t);
 
         // Sends a sub-matrix to the other processor. This matrix is guaranteed
         // to be split between x-values, not within.

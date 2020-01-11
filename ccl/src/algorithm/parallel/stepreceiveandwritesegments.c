@@ -11,8 +11,8 @@ void stepReceiveAndWriteSegments()
     if (bsp_pid() != 0)
         return;
 
-    unsigned int messages;
-    size_t qSize;
+    bsp_nprocs_t messages;
+    bsp_size_t qSize;
     bsp_qsize(&messages, &qSize);
 
     size_t const numSegments = qSize / sizeof(segment);
@@ -22,7 +22,7 @@ void stepReceiveAndWriteSegments()
 
     for (size_t message = 0; message != messages; ++message)
     {
-        size_t mSize;
+        bsp_size_t mSize;
         bsp_get_tag(&mSize, NULL);
 
         // After receiving mSize bytes, we must update the offset to just

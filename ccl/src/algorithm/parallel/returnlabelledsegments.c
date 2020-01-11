@@ -5,7 +5,7 @@
 
 void returnLabelledSegments()
 {
-    size_t offset = bsp_pid() != 0;
+    bsp_size_t offset = bsp_pid() != 0;
 
     // We should not send the overlapping parts to the first processor twice.
     // This ensures we only send it once.
