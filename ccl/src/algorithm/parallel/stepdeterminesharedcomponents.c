@@ -55,8 +55,6 @@ void stepDetermineSharedComponents()
         }
     }
 
-    labelSegments(segments, numSegments);
-
     // Update our segments with the new labelling.
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
@@ -69,7 +67,7 @@ void stepDetermineSharedComponents()
         if (curr == NULL)  // We do not own this segment.
             continue;
 
-        findSet(curr)->label = segments[idx].label;
+        findSet(curr)->label = findSet(segments + idx)->label;
     }
 
     labelSegments(SEGMENTS, NUM_SEGMENTS);

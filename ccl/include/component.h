@@ -53,19 +53,8 @@ void labelSegments(segment *segments, size_t numSegments);
 void makeSets(segment *segments, size_t numSegments);
 
 /**
- * Links two segment trees based on their rank, such that the smallest tree
- * is linked to the largest.
- *
- * See also CLRS, Introduction to Algorithms, 3rd Ed., ch. 21.
- *
- * @param first     First segment to link.
- * @param second    Second segment to link.
- */
-void link(segment *first, segment *second);
-
-/**
- * Merges the sets the first and second segment belong to. This is done using
- * the link method - cf. union in CLRS.
+ * Merges the sets the first and second segment belong to. Cf. union, link in
+ * CLRS.
  *
  * See also CLRS, Introduction to Algorithms, 3rd Ed., ch. 21.
  *

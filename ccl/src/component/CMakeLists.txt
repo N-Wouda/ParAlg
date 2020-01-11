@@ -4,7 +4,6 @@ set(SOURCE_FILES
 		findset.c
 		isroot.c
 		labelsegments.c
-		link.c
 		makecomponents.c
 		makesets.c
 		merge.c)
