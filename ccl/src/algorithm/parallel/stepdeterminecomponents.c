@@ -1,13 +1,12 @@
 #include "algorithm.h"
 #include "algorithm/parallel.h"
-#include "io.h"
+#include "component.h"
 #include "sparse.h"
 
 #include <assert.h>
 #include <bsp.h>
 #include <stdlib.h>
 
-static void handleMessages(size_t **dimensions[3], size_t numBytes);
 
 void stepDetermineComponents()
 {
@@ -15,33 +14,45 @@ void stepDetermineComponents()
     bsp_size_t qSize;
     bsp_qsize(&messages, &qSize);
 
-    if (messages != 4)  // dimensions (x, y, and z), and the label space.
-        bsp_abort("%u: expected 4 messages, got %u.\n", bsp_pid(), messages);
+    if (messages != 2)  // segments and the label space.
+        bsp_abort("%u: expected 2 messages, got %u.\n", bsp_pid(), messages);
 
-    // Number of bytes per dimension: x, y, z.
-    bsp_size_t const numBytes = (qSize - sizeof(size_t)) / 3;
-
-    // The following is a bit abstract, but constructs a matrix from the
-    // received dimension arrays. These are received in order of x, y, z.
-    matrix mat = {malloc(numBytes),
-                  malloc(numBytes),
-                  malloc(numBytes),
-                  numBytes / sizeof(size_t)};
-    assert(mat.x != NULL && mat.y != NULL && mat.z != NULL);
-
-    size_t **dimensions[3] = {&mat.x, &mat.y, &mat.z};
+    NUM_SEGMENTS = (qSize - sizeof(size_t)) / sizeof(segment);
 
     for (size_t idx = 0; idx != messages; ++idx)
-        handleMessages(dimensions, numBytes);
+    {
+        bsp_size_t mSize;
+        bsp_size_t tag;
+        bsp_get_tag(&mSize, &tag);
 
-    // Use the sequential algorithm to label the received matrix.
-    SEGMENTS = sequential(&mat, &NUM_SEGMENTS);
+        assert(tag == 0 || tag == 1);
+
+        if (tag == 0)   // segments
+        {
+            assert(mSize == qSize - sizeof(size_t));
+            assert(mSize == NUM_SEGMENTS * sizeof(segment));
+
+            SEGMENTS = malloc(mSize);
+            assert(SEGMENTS != NULL);
+
+            bsp_move(SEGMENTS, mSize);
+        }
+        else if (tag == 1) // label space
+        {
+            assert(mSize == sizeof(size_t));
+            bsp_move(&NUM_VOXELS, mSize);
+        }
+        else
+            bsp_abort("%u: tag %d not understood\n", bsp_pid(), tag);
+    }
+
+    makeSets(SEGMENTS, NUM_SEGMENTS);
+    makeComponents(SEGMENTS, NUM_SEGMENTS);
+    labelSegments(SEGMENTS, NUM_SEGMENTS);
 
     // Guarantees we assign globally unique labels to each component.
     for (size_t idx = 0; idx != NUM_SEGMENTS; ++idx)
         SEGMENTS[idx].label += bsp_pid() * NUM_VOXELS;
-
-    releaseMatrix(&mat);
 
     // Determines the boundaries for the processor, and labels/sends the
     // appropriate boundary components to the other processors.
@@ -66,22 +77,5 @@ void stepDetermineComponents()
             from--;
 
         labelAndSendBoundary(NUM_SEGMENTS - from, from);
-    }
-}
-
-static void handleMessages(size_t **dimensions[3], size_t numBytes)
-{
-    bsp_size_t mSize;
-    bsp_size_t tag;
-    bsp_get_tag(&mSize, &tag);
-
-    assert(0 <= tag && tag <= 3);
-
-    if (tag == 3)
-        bsp_move(&NUM_VOXELS, mSize);
-    else
-    {
-        assert(mSize == numBytes);
-        bsp_move(*dimensions[tag], mSize);
     }
 }

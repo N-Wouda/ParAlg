@@ -2,7 +2,7 @@
 #include "io.h"
 
 #include <bsp.h>
-
+#include <stdlib.h>
 
 void stepSendMatrices()
 {
@@ -19,40 +19,40 @@ void stepSendMatrices()
         bsp_abort("Something went wrong reading the matrix.\n");
     }
 
-    bsp_size_t const numItems = NUM_VOXELS / ARGUMENTS.numProcs;
+    SEGMENTS = computeSegments(&mat, &NUM_SEGMENTS);
+
+    releaseMatrix(&mat);
+
+    bsp_size_t const numItems = NUM_SEGMENTS / ARGUMENTS.numProcs;
     bsp_size_t prev = 0;
     bsp_size_t idx = numItems;
 
-    bsp_size_t const X = 0;
-    bsp_size_t const Y = 1;
-    bsp_size_t const Z = 2;
-    bsp_size_t const VOXELS = 3;
+    bsp_size_t const SEG = 0;  // tags.
+    bsp_size_t const LABEL = 1;
 
     for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
     {
         // This determines the label space available to each processor.
-        bsp_send(proc, &VOXELS, &NUM_VOXELS, sizeof(size_t));
+        bsp_send(proc, &LABEL, &NUM_VOXELS, sizeof(size_t));
 
         // Find the first index where there is a break in the x-values.
-        while (mat.x[idx - 1] == mat.x[idx] && idx < NUM_VOXELS)
+        while (SEGMENTS[idx - 1].x == SEGMENTS[idx].x && idx < NUM_SEGMENTS)
             idx++;
 
-        // numItems rounds down, so this ensures the final few voxels all go
+        // numItems rounds down, so this ensures the final few segments all go
         // to the last processor.
         if (proc == bsp_nprocs() - 1)
-            idx = NUM_VOXELS;
+            idx = NUM_SEGMENTS;
 
-        bsp_size_t const numBytes = (idx - prev) * sizeof(size_t);
+        bsp_size_t const numBytes = (idx - prev) * sizeof(segment);
 
-        // Sends a sub-matrix to the other processor. This matrix is guaranteed
-        // to be split between x-values, not within.
-        bsp_send(proc, &X, mat.x + prev, numBytes);
-        bsp_send(proc, &Y, mat.y + prev, numBytes);
-        bsp_send(proc, &Z, mat.z + prev, numBytes);
+        // Sends a sub-matrix of segments to the other processor. This is
+        // guaranteed to be split between x-values, not within.
+        bsp_send(proc, &SEG, SEGMENTS + prev, numBytes);
 
         // Ensure the the processors share an x-slice. This looks 'back' to
         // determine the slice's extent.
-        while (mat.x[idx - 2] == mat.x[idx - 1] && idx >= 2)
+        while (SEGMENTS[idx - 2].x == SEGMENTS[idx - 1].x && idx >= 2)
             idx--;
 
         // idx - 1 rather than idx, as we compare idx - 2 and idx - 1 above.
@@ -60,5 +60,5 @@ void stepSendMatrices()
         idx += numItems;
     }
 
-    releaseMatrix(&mat);
+    free(SEGMENTS);
 }
