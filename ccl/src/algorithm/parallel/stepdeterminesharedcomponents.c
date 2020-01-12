@@ -14,18 +14,18 @@ void stepDetermineSharedComponents()
     bsp_qsize(&messages, &qSize);
 
     size_t const numSegments = qSize / sizeof(segment);
-    assert(numSegments == messages);
-
     segment *segments = malloc(numSegments * sizeof(segment));
+
+    size_t offset = 0;
 
     for (size_t idx = 0; idx != messages; ++idx)
     {
         bsp_size_t mSize;
         bsp_size_t tag;
         bsp_get_tag(&mSize, &tag);
-        assert(mSize == sizeof(segment));
 
-        bsp_move(segments + idx, mSize);
+        bsp_move(segments + offset, mSize);
+        offset += mSize / sizeof(segment);
     }
 
     // Restore iteration order for the received segments and reset their set
