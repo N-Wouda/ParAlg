@@ -6,7 +6,7 @@
 #include <stddef.h>
 
 /**
- * Segments computed at determineComponents.
+ * Local segments.
  */
 extern _Thread_local segment *SEGMENTS;
 
@@ -23,10 +23,10 @@ extern _Thread_local size_t NUM_SEGMENTS;
 extern _Thread_local size_t NUM_VOXELS;
 
 /**
- * Reads the matrix file (command-line argument) and sends sub-matrices to each
- * processor.
+ * Reads the matrix file (command-line argument) and sends a slice of segments
+ * to each processor.
  */
-void stepSendMatrices();
+void stepSendSegments();
 
 /**
  * Has each processor compute local components, and communicate shared
