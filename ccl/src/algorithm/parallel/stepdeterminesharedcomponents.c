@@ -21,7 +21,8 @@ void stepDetermineSharedComponents()
     for (size_t idx = 0; idx != messages; ++idx)
     {
         bsp_size_t mSize;
-        bsp_get_tag(&mSize, NULL);
+        bsp_size_t tag;
+        bsp_get_tag(&mSize, &tag);
         assert(mSize == sizeof(segment));
 
         bsp_move(segments + idx, mSize);

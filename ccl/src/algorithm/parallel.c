@@ -13,6 +13,10 @@ void parallel()
 {
     bsp_begin(ARGUMENTS.numProcs);
 
+    bsp_size_t tagSize = sizeof(bsp_size_t);
+    bsp_set_tagsize(&tagSize);
+    bsp_sync();
+
     stepSendMatrices();  // Shares sub-matrices with other processors.
     bsp_sync();
 

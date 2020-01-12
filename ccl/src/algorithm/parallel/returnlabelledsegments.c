@@ -6,6 +6,7 @@
 void returnLabelledSegments()
 {
     bsp_size_t offset = bsp_pid() != 0;
+    bsp_size_t currProc = bsp_pid();
 
     // We should not send the overlapping parts to the first processor twice.
     // This ensures we only send it once.
@@ -15,7 +16,7 @@ void returnLabelledSegments()
             offset++;
 
     bsp_send(0,
-             NULL,
+             &currProc,
              SEGMENTS + offset,
              (NUM_SEGMENTS - offset) * sizeof(segment));
 }

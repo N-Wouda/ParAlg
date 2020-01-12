@@ -23,10 +23,15 @@ void stepSendMatrices()
     bsp_size_t prev = 0;
     bsp_size_t idx = numItems;
 
+    bsp_size_t const X = 0;
+    bsp_size_t const Y = 1;
+    bsp_size_t const Z = 2;
+    bsp_size_t const VOXELS = 3;
+
     for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
     {
         // This determines the label space available to each processor.
-        bsp_send(proc, NULL, &NUM_VOXELS, sizeof(size_t));
+        bsp_send(proc, &VOXELS, &NUM_VOXELS, sizeof(size_t));
 
         // Find the first index where there is a break in the x-values.
         while (mat.x[idx - 1] == mat.x[idx] && idx < NUM_VOXELS)
@@ -41,9 +46,9 @@ void stepSendMatrices()
 
         // Sends a sub-matrix to the other processor. This matrix is guaranteed
         // to be split between x-values, not within.
-        bsp_send(proc, NULL, mat.x + prev, numBytes);
-        bsp_send(proc, NULL, mat.y + prev, numBytes);
-        bsp_send(proc, NULL, mat.z + prev, numBytes);
+        bsp_send(proc, &X, mat.x + prev, numBytes);
+        bsp_send(proc, &Y, mat.y + prev, numBytes);
+        bsp_send(proc, &Z, mat.z + prev, numBytes);
 
         // Ensure the the processors share an x-slice. This looks 'back' to
         // determine the slice's extent.

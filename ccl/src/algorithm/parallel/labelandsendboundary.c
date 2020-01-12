@@ -18,6 +18,8 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
     makeSets(copies, numSegments);
     makeComponents(copies, numSegments);
 
+    bsp_size_t currProc = bsp_pid();
+
     // We have a boundary-disjoint component only when the copies's root segment
     // is different from the original root segment. These we communicate to all
     // processors.
@@ -34,7 +36,7 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
             copyRoot->parent = segRoot;
 
             for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
-                bsp_send(proc, NULL, &seg, sizeof(segment));
+                bsp_send(proc, &currProc, &seg, sizeof(segment));
         }
     }
 

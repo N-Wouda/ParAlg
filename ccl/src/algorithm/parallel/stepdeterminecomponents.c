@@ -7,6 +7,7 @@
 #include <bsp.h>
 #include <stdlib.h>
 
+static void handleMessages(size_t **dimensions[3], size_t numBytes);
 
 void stepDetermineComponents()
 {
@@ -17,30 +18,21 @@ void stepDetermineComponents()
     if (messages != 4)  // dimensions (x, y, and z), and the label space.
         bsp_abort("%u: expected 4 messages, got %u.\n", bsp_pid(), messages);
 
-    // First message is the label space / number of voxels.
-    bsp_move(&NUM_VOXELS, sizeof(size_t));
-
     // Number of bytes per dimension: x, y, z.
     bsp_size_t const numBytes = (qSize - sizeof(size_t)) / 3;
 
     // The following is a bit abstract, but constructs a matrix from the
     // received dimension arrays. These are received in order of x, y, z.
-    matrix mat = {NULL, NULL, NULL, numBytes / sizeof(size_t)};
+    matrix mat = {malloc(numBytes),
+                  malloc(numBytes),
+                  malloc(numBytes),
+                  numBytes / sizeof(size_t)};
+    assert(mat.x != NULL && mat.y != NULL && mat.z != NULL);
+
     size_t **dimensions[3] = {&mat.x, &mat.y, &mat.z};
 
-    for (size_t idx = 0; idx != 3; ++idx)
-    {
-        // Allocates some memory for the dimension, and then populates it from
-        // the received message.
-        *dimensions[idx] = malloc(numBytes);
-        assert(*dimensions[idx] != NULL);
-
-        bsp_size_t mSize;
-        bsp_get_tag(&mSize, NULL);
-        assert(mSize == numBytes);
-
-        bsp_move(*dimensions[idx], mSize);
-    }
+    for (size_t idx = 0; idx != messages; ++idx)
+        handleMessages(dimensions, numBytes);
 
     // Use the sequential algorithm to label the received matrix.
     SEGMENTS = sequential(&mat, &NUM_SEGMENTS);
@@ -74,5 +66,22 @@ void stepDetermineComponents()
             from--;
 
         labelAndSendBoundary(NUM_SEGMENTS - from, from);
+    }
+}
+
+static void handleMessages(size_t **dimensions[3], size_t numBytes)
+{
+    bsp_size_t mSize;
+    bsp_size_t tag;
+    bsp_get_tag(&mSize, &tag);
+
+    assert(0 <= tag && tag <= 3);
+
+    if (tag == 3)
+        bsp_move(&NUM_VOXELS, mSize);
+    else
+    {
+        assert(mSize == numBytes);
+        bsp_move(*dimensions[tag], mSize);
     }
 }
