@@ -4,7 +4,7 @@
 #include <bsp.h>
 #include <stdlib.h>
 
-void stepSendMatrices()
+void stepSendSegments()
 {
     if (bsp_pid() != 0)
         return;

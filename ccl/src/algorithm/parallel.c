@@ -17,7 +17,7 @@ void parallel()
     bsp_set_tagsize(&tagSize);
     bsp_sync();
 
-    stepSendMatrices();  // Shares sub-matrices with other processors.
+    stepSendSegments();  // Shares segments with other processors.
     bsp_sync();
 
     stepDetermineComponents();  // Label own matrix and shared boundaries.
