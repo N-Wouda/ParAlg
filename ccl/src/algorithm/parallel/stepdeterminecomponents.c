@@ -27,7 +27,7 @@ void stepDetermineComponents()
 
         assert(tag == 0 || tag == 1);
 
-        if (tag == 0)   // segments
+        if (tag == 0)  // segments
         {
             assert(mSize == qSize - sizeof(size_t));
             assert(mSize == NUM_SEGMENTS * sizeof(segment));
@@ -37,7 +37,7 @@ void stepDetermineComponents()
 
             bsp_move(SEGMENTS, mSize);
         }
-        else if (tag == 1) // label space
+        else if (tag == 1)  // label space
         {
             assert(mSize == sizeof(size_t));
             bsp_move(&NUM_VOXELS, mSize);
