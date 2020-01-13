@@ -29,19 +29,32 @@ void makeComponents(segment *segments, size_t numSegments);
 segment *findSet(segment *candidate);
 
 /**
- * Links two segment trees based on their rank, such that the smallest tree
- * is linked to the largest.
+ * Tests if the candidate segment is a component root.
  *
- * See also CLRS, Introduction to Algorithms, 3rd Ed., ch. 21.
- *
- * @param first     First segment to link.
- * @param second    Second segment to link.
+ * @param candidate Candidate root segment.
+ * @return          True when the root's parent points to itself, false if not.
  */
-void link(segment *first, segment *second);
+bool isRoot(segment const *candidate);
 
 /**
- * Merges the sets the first and second segment belong to. This is done using
- * the link method - cf. union in CLRS.
+ * Relabels the passed-in segments with their root segment's label.
+ *
+ * @param segments      Segments to (re)label.
+ * @param numSegments   Number of segments.
+ */
+void labelSegments(segment *segments, size_t numSegments);
+
+/**
+ * Resets each segment to be in its own set.
+ *
+ * @param segments      Segments to make into sets.
+ * @param numSegments   Number of segments.
+ */
+void makeSets(segment *segments, size_t numSegments);
+
+/**
+ * Merges the sets the first and second segment belong to. Cf. union, link in
+ * CLRS.
  *
  * See also CLRS, Introduction to Algorithms, 3rd Ed., ch. 21.
  *

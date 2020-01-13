@@ -1,43 +1,41 @@
-#include "main.h"
-
-#include "component.h"
+#include "algorithm.h"
 #include "io.h"
-#include "segment.h"
-#include "sparse.h"
 
+#include <bsp.h>
 #include <stdlib.h>
 
 
 int main(int argc, char **argv)
 {
-    char *location;
-    size_t numProcs;
+    bsp_init(parallel, argc, argv);
 
-    if (!arguments(argc, argv, &location, &numProcs))
+    if (!parseArguments(argc, argv))
         return EXIT_FAILURE;
 
-    bool status = true;
-    matrix const mat = readMatrix(location, &status);
+    if (!ARGUMENTS.useParallel)
+    {
+        bool status = true;
 
-    if (!status)
-        return EXIT_FAILURE;
+        matrix mat = readMatrix(ARGUMENTS.inLocation, &status);
 
-    size_t numSegments;
-    segment *segments = computeSegments(&mat, &numSegments);
+        if (!status)
+            return EXIT_FAILURE;
 
-    makeComponents(segments, numSegments);
+        size_t numSegments;
+        segment *segments = sequential(&mat, &numSegments);
 
-    // TODO make the output name link to the passed-in location
-    writeSegments("example.ccl", segments, numSegments, mat.length, &status);
+        writeSegments(ARGUMENTS.outLocation,
+                      segments,
+                      numSegments,
+                      mat.length,
+                      &status);
 
-    if (!status)
-        return EXIT_FAILURE;
+        free(segments);
+        releaseMatrix(&mat);
 
-    free(mat.x);
-    free(mat.y);
-    free(mat.z);
+        return status ? EXIT_SUCCESS : EXIT_FAILURE;
+    }
 
-    free(segments);
-
+    parallel();
     return EXIT_SUCCESS;
 }

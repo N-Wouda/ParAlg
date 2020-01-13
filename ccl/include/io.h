@@ -4,6 +4,33 @@
 #include "segment.h"
 #include "sparse.h"
 
+
+struct arguments
+{
+    size_t numProcs;
+    char *inLocation;
+    char *outLocation;
+    bool useParallel;
+};
+
+typedef struct arguments arguments;
+
+/**
+ * Struct populated with the relevant passed-in command-line arguments (or
+ * defaults).
+ */
+extern arguments ARGUMENTS;
+
+/**
+ * Parses the passed-in command-line arguments, and populates the ARGUMENTS
+ * struct.
+ *
+ * @param argc      Count of command-line arguments.
+ * @param argv      Command-line arguments.
+ * @return          True if arguments were parsed successfully, false if not.
+ */
+bool parseArguments(int argc, char **argv);
+
 /**
  * Reads a binary, sparse 3D matrix from the file system.
  *
@@ -14,6 +41,13 @@
  * @return          The matrix read from the passed-in location.
  */
 matrix readMatrix(char const *location, bool *status);
+
+/**
+ * Releases heap-allocated memory for the passed-in matrix.
+ *
+ * @param mat   Matrix struct.
+ */
+void releaseMatrix(matrix const *mat);
 
 /**
  * Writes the labelled segments to the given file system location, as a sparse,

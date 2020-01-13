@@ -56,6 +56,9 @@ dkms.conf
 
 # CMake
 cmake-build-debug/
+cmake-build-release/
+build/
 
 # These are external libraries, and likely platform-specific.
 external/
+

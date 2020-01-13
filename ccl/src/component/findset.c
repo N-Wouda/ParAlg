@@ -5,7 +5,7 @@ segment *findSet(segment *candidate)
 {
     // One-pass path halving method. This ensures all nodes in the set point
     // to the root node - eventually.
-    while (candidate->parent != candidate)
+    while (!isRoot(candidate))
     {
         candidate->parent = candidate->parent->parent;
         candidate = candidate->parent;
