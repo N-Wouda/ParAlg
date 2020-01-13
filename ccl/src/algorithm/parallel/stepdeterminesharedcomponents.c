@@ -59,14 +59,15 @@ void stepDetermineSharedComponents()
     // Update our segments with the new labelling.
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
+        if (segments[idx].label / NUM_VOXELS != bsp_pid())
+            continue;  // we do not own this segment.
+
         segment *curr = bsearch(segments + idx,
                                 SEGMENTS,
                                 NUM_SEGMENTS,
                                 sizeof(segment),
                                 segCoordCmp);
-
-        if (curr == NULL)  // We do not own this segment.
-            continue;
+        assert(curr != NULL);
 
         findSet(curr)->label = findSet(segments + idx)->label;
     }
