@@ -33,11 +33,10 @@ void stepSendSegments()
         // This determines the label space available to each processor.
         bsp_send(proc, &LABEL, &NUM_VOXELS, sizeof(size_t));
 
-        // This is a nominal slice. We subtract/add one to make sure the
-        // boundary always overlaps, even when this particular choice marks
-        // a break already.
-        size_t low = proc * numItems - (bsp_pid() != 0);
-        size_t high = (proc + 1) * numItems + 1;
+        // This is a nominal slice, but will be adjusted below to account for
+        // any breaks in x-values.
+        size_t low = proc * numItems;
+        size_t high = (proc + 1) * numItems;
 
         if (proc != 0)
             while (SEGMENTS[low - 1].x == SEGMENTS[low].x && low > 0)
@@ -59,5 +58,7 @@ void stepSendSegments()
         bsp_send(proc, &SEG, SEGMENTS + low, numBytes);
     }
 
+    // Release segments here. In the next superstep, we receive our local
+    // segments for P(0).
     free(SEGMENTS);
 }

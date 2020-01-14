@@ -20,6 +20,7 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
 
     bsp_size_t currProc = bsp_pid();
 
+    // There are at most as many roots as there are boundary segments.
     segment *roots = malloc(numSegments * sizeof(segment));
     assert(roots != NULL);
 
@@ -28,22 +29,19 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
         segment seg = SEGMENTS[from + idx];
-        segment copy = copies[idx];
-
-        segment *copyRoot = findSet(&copy);
+        segment *copyRoot = findSet(copies + idx);
         segment *segRoot = findSet(&seg);
 
         if (copyRoot != segRoot)
         {
             copyRoot->parent = segRoot;
-
-            roots[rootIdx] = seg;
-            rootIdx++;
+            roots[rootIdx++] = seg;
         }
     }
 
     for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
-        bsp_send(proc, &currProc, roots, (rootIdx + 1) * sizeof(segment));
+        // rootIdx doubles as the actual number of root segments.
+        bsp_send(proc, &currProc, roots, rootIdx * sizeof(segment));
 
     free(roots);
     free(copies);
