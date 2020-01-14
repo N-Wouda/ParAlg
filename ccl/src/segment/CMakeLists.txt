@@ -7,6 +7,7 @@ set(SOURCE_FILES
 		isequal.c
 		isnewsegment.c
 		makesegment.c
+		hasoverlap.c
 		segcoordcmp.c
 		segprint.c)
 

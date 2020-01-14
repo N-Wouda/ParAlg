@@ -14,6 +14,10 @@ void test_countSegments_contiguous();
 void test_countSegments_disjoint();
 void test_countSegments_one_voxel();
 
+void test_hasOverlap_true();
+void test_hasOverlap_false();
+void test_hasOverlap_fix_overlap_bug();
+
 void test_isBefore_x();
 void test_isBefore_y();
 void test_isBefore_z();

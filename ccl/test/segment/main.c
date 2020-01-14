@@ -16,6 +16,10 @@ int main()
     RUN_TEST(test_countSegments_disjoint);
     RUN_TEST(test_countSegments_one_voxel);
 
+    RUN_TEST(test_hasOverlap_true);  // for hasoverlap.c
+    RUN_TEST(test_hasOverlap_false);
+    RUN_TEST(test_hasOverlap_fix_overlap_bug);
+
     RUN_TEST(test_isBefore_x);  // for isbefore.c
     RUN_TEST(test_isBefore_y);
     RUN_TEST(test_isBefore_z);

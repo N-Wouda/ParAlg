@@ -4,6 +4,7 @@ set(SOURCE_FILES
 		main.c
 		test_computesegments.c
 		test_countsegments.c
+		test_hasoverlap.c
 		test_isbefore.c
 		test_isequal.c
 		test_isnewsegment.c

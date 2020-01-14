@@ -87,6 +87,16 @@ bool isNewSegment(matrix const *mat, size_t idx);
 segment makeSegment(matrix const *mat, size_t idx);
 
 /**
+ * Checks if candidate overlaps with target, that is, they (partially) occupy
+ * the same voxel space.
+ *
+ * @param candidate Candidate segment.
+ * @param target    Target segment.
+ * @return          True if candidate overlaps with target, false otherwise.
+ */
+bool hasOverlap(segment const *candidate, segment const *target);
+
+/**
  * Compares two segments by their coordinates.
  */
 int segCoordCmp(void const *a, void const *b);
