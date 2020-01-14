@@ -33,7 +33,10 @@ script:
   - cmake -DCMAKE_BUILD_TYPE=DEBUG ccl
   - make
 
-  # TODO tests
+  - bin/test_algorithm
+  - bin/test_segment
+  - bin/test_io
+  - bin/test_component
 
   # Format check for all code under /ccl.
   - scripts/format.sh
