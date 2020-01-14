@@ -15,6 +15,11 @@ void test_isRoot();
 void test_labelSegments_all_roots();
 void test_labelSegments_two_components();
 
+void test_makeComponents_3x3_example();
+void test_makeComponents_no_neighbours();
+void test_makeComponents_x0();
+void test_makeComponents_y0();
+
 void test_makeSets();
 
 void test_merge_same_root();

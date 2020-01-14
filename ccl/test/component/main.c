@@ -17,6 +17,11 @@ int main()
     RUN_TEST(test_labelSegments_all_roots);  // for labelsegments.c
     RUN_TEST(test_labelSegments_two_components);
 
+    RUN_TEST(test_makeComponents_3x3_example);  // for makecomponents.
+    RUN_TEST(test_makeComponents_no_neighbours);
+    RUN_TEST(test_makeComponents_x0);
+    RUN_TEST(test_makeComponents_y0);
+
     RUN_TEST(test_makeSets);  // for makesets.c
 
     RUN_TEST(test_merge_same_root);  // for merge.c

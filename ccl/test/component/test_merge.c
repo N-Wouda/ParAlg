@@ -29,8 +29,7 @@ void test_merge_same_root()
 
 void test_merge_equal_rank()
 {
-    segment segments[2] = {{0, 1, 2, 3, NULL, 0, 0},
-                           {0, 1, 2, 3, NULL, 0, 1}};
+    segment segments[2] = {{0, 1, 2, 3, NULL, 0, 0}, {0, 1, 2, 3, NULL, 0, 1}};
 
     makeSets(segments, 2);
 
@@ -52,8 +51,7 @@ void test_merge_equal_rank()
 
 void test_merge_unequal_rank()
 {
-    segment segments[2] = {{0, 1, 2, 3, NULL, 0, 0},
-                           {0, 1, 2, 3, NULL, 1, 1}};
+    segment segments[2] = {{0, 1, 2, 3, NULL, 0, 0}, {0, 1, 2, 3, NULL, 1, 1}};
 
     makeSets(segments, 2);
 
