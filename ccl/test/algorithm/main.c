@@ -8,7 +8,7 @@ int main()
 {
     UNITY_BEGIN();
 
-    // TODO
+    RUN_TEST(test_sequential_3x3_example);  // for sequential.c
 
     return UNITY_END();
 }

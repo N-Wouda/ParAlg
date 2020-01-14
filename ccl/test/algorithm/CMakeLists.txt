@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 
 set(SOURCE_FILES
-		main.c)
+		main.c
+		test_sequential.c)
 
 add_executable(test_algorithm ${SOURCE_FILES})
 
