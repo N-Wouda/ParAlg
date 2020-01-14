@@ -22,12 +22,9 @@ void stepDetermineComponents()
     for (size_t idx = 0; idx != messages; ++idx)
     {
         bsp_size_t mSize;
-        bsp_size_t tag;
-        bsp_get_tag(&mSize, &tag);
+        bsp_get_tag(&mSize, NULL);
 
-        assert(tag == 0 || tag == 1);
-
-        if (tag == 0)  // segments
+        if (mSize != sizeof(size_t))  // segments
         {
             assert(mSize == qSize - sizeof(size_t));
             assert(mSize == NUM_SEGMENTS * sizeof(segment));
@@ -37,13 +34,11 @@ void stepDetermineComponents()
 
             bsp_move(SEGMENTS, mSize);
         }
-        else if (tag == 1)  // label space
+        else  // label space
         {
             assert(mSize == sizeof(size_t));
             bsp_move(&NUM_VOXELS, mSize);
         }
-        else
-            bsp_abort("%u: tag %d not understood\n", bsp_pid(), tag);
     }
 
     makeSets(SEGMENTS, NUM_SEGMENTS);

@@ -23,11 +23,8 @@ void stepReceiveAndWriteSegments()
     for (size_t message = 0; message != messages; ++message)
     {
         bsp_size_t mSize;
-        bsp_size_t tag;
-        bsp_get_tag(&mSize, &tag);
+        bsp_get_tag(&mSize, NULL);
 
-        // After receiving mSize bytes, we must update the offset to just
-        // beyond these, such that the next message may be received properly.
         bsp_move(segments + offset, mSize);
         offset += mSize / sizeof(segment);
     }

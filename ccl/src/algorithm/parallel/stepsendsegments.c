@@ -25,13 +25,10 @@ void stepSendSegments()
 
     bsp_size_t const numItems = NUM_SEGMENTS / bsp_nprocs();
 
-    bsp_size_t const SEG = 0;  // tags.
-    bsp_size_t const LABEL = 1;
-
     for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
     {
         // This determines the label space available to each processor.
-        bsp_send(proc, &LABEL, &NUM_VOXELS, sizeof(size_t));
+        bsp_send(proc, NULL, &NUM_VOXELS, sizeof(size_t));
 
         // This is a nominal slice, but will be adjusted below to account for
         // any breaks in x-values.
@@ -55,7 +52,7 @@ void stepSendSegments()
 
         // Sends a sub-matrix of segments to the other processor. This is
         // guaranteed to be split between x-values, not within.
-        bsp_send(proc, &SEG, SEGMENTS + low, numBytes);
+        bsp_send(proc, NULL, SEGMENTS + low, numBytes);
     }
 
     // Release segments here. In the next superstep, we receive our local
