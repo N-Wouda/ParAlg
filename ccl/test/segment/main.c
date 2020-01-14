@@ -8,10 +8,9 @@ int main()
 {
     UNITY_BEGIN();
 
-    RUN_TEST(test_computeSegments_one_segment);  // for computesegments.c
+    RUN_TEST(test_computeSegments_contiguous);  // for computesegments.c
     RUN_TEST(test_computeSegments_one_voxel);
-    RUN_TEST(test_computeSegments_random);
-    RUN_TEST(test_computeSegments_small);
+    RUN_TEST(test_computeSegments_3x3_example);
 
     RUN_TEST(test_countSegments_contiguous);  // for countsegments.c
     RUN_TEST(test_countSegments_disjoint);

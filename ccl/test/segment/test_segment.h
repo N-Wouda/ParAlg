@@ -6,10 +6,9 @@
 #include <unity.h>
 
 
-void test_computeSegments_one_segment();
+void test_computeSegments_contiguous();
 void test_computeSegments_one_voxel();
-void test_computeSegments_random();
-void test_computeSegments_small();
+void test_computeSegments_3x3_example();
 
 void test_countSegments_contiguous();
 void test_countSegments_disjoint();
