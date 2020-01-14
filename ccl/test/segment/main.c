@@ -29,7 +29,6 @@ int main()
     RUN_TEST(test_isNewSegment_z);
 
     RUN_TEST(test_makeSegment);  // for makesegment.c
-    RUN_TEST(test_makeSegment_parent);
 
     RUN_TEST(test_segCoordCmp_x);  // for segcoordcmp.c
     RUN_TEST(test_segCoordCmp_y);

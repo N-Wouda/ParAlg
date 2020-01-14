@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
 
 set(SOURCE_FILES
-		main.c)
+		main.c
+		test_findset.c
+		test_isroot.c
+		test_makesets.c)
 
 add_executable(test_component ${SOURCE_FILES})
 

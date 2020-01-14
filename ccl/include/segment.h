@@ -78,13 +78,13 @@ bool isNewSegment(matrix const *mat, size_t idx);
 
 /**
  * Construct a new segment pointing to the indexed element in the 3D matrix.
+ * The returned segment does not have a parent, this field points to NULL.
  *
  * @param mat       Sparse 3D matrix.
  * @param idx       Index into the matrix.
- * @param parent    Pointer to the segment's parent.
  * @return          Segment.
  */
-segment makeSegment(matrix const *mat, size_t idx, segment *parent);
+segment makeSegment(matrix const *mat, size_t idx);
 
 /**
  * Compares two segments by their coordinates.

@@ -27,7 +27,6 @@ void test_isNewSegment_y();
 void test_isNewSegment_z();
 
 void test_makeSegment();
-void test_makeSegment_parent();
 
 void test_segCoordCmp_x();
 void test_segCoordCmp_y();
