@@ -7,7 +7,7 @@
 
 segment *computeSegments(matrix const *mat, size_t *numSegments)
 {
-    assert(mat->length > 1);
+    assert(mat->length > 0);
 
     *numSegments = countSegments(mat);
 
