@@ -4,9 +4,9 @@
 void test_makeSets()
 {
     segment segments[4] = {{0, 0, 1, 3, NULL},
-                            {0, 1, 1, 3, NULL},
-                            {1, 0, 1, 3, NULL},
-                            {2, 0, 1, 3, NULL}};
+                           {0, 1, 1, 3, NULL},
+                           {1, 0, 1, 3, NULL},
+                           {2, 0, 1, 3, NULL}};
 
     makeSets(segments, 4);
 
