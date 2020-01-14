@@ -18,7 +18,7 @@ void test_findSet_all_roots()
     }
 }
 
-void test_findSet_linked_list()
+void test_findSet_one_component()
 {
     segment segments[3] = {{0, 1, 2, 3, NULL},
                            {0, 1, 2, 3, NULL},
@@ -37,7 +37,7 @@ void test_findSet_linked_list()
         TEST_ASSERT_EQUAL(segments, findSet(segments + idx));
 }
 
-void test_findSet_two_roots()
+void test_findSet_two_components()
 {
     segment segments[5] = {{0, 1, 2, 3, NULL},
                            {0, 1, 2, 3, NULL},

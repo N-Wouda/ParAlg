@@ -49,7 +49,7 @@ void makeComponents(segment *segments, size_t numSegments)
 
 static void mergeSegments(segment *seg, segment *parent)
 {
-    if (parent == &NOT_FOUND)  // no-op.
+    if (parent == &NOT_FOUND)  // no-op
         return;
 
     assert(parent <= seg);
