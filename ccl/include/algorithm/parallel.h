@@ -86,14 +86,15 @@ segment *receiveSegments(size_t *numSegments);
 size_t getOwningProcessor(segment const *candidate, size_t labelSpace);
 
 /**
- * TODO
+ * Determines the segment slice indices [low, high) to allocate to processor
+ * proc, given that there are numSegments segments and numProcs processors.
  *
- * @param segments
- * @param numSegments
- * @param proc
- * @param numProcs
- * @param low
- * @param high
+ * @param segments      Segments array.
+ * @param numSegments   Number of segments.
+ * @param proc          Candidate processor.
+ * @param numProcs      Number of processors.
+ * @param low           Lower bound index, inclusive.
+ * @param high          Upper bound index, exclusive.
  */
 void determineSegmentSlice(segment const *segments,
                            size_t numSegments,

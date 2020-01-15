@@ -36,4 +36,9 @@ void test_segCoordCmp_x();
 void test_segCoordCmp_y();
 void test_segCoordCmp_z();
 
+void test_segLabelCmp();
+
+void test_segTotalCmp_coordinate();
+void test_segTotalCmp_label();
+
 #endif  // TEST_SEGMENT_H

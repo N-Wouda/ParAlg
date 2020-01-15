@@ -38,5 +38,10 @@ int main()
     RUN_TEST(test_segCoordCmp_y);
     RUN_TEST(test_segCoordCmp_z);
 
+    RUN_TEST(test_segLabelCmp);
+
+    RUN_TEST(test_segTotalCmp_coordinate);
+    RUN_TEST(test_segTotalCmp_label);
+
     return UNITY_END();
 }
