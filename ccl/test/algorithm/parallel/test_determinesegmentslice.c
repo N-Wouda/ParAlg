@@ -73,11 +73,6 @@ void test_determineSegmentSlice_3x3_example_two_processors()
     free(segments);
 }
 
-void test_determineSegmentSlice_3x3_example_four_processors()
-{
-    // TODO
-}
-
 void test_determineSegmentSlice_hilbert2_two_processors()
 {
     size_t numSegments;
@@ -107,10 +102,10 @@ void test_determineSegmentSlice_hilbert2_four_processors()
                                            "ccl/examples/hilbert2.mat");
 
     // These offsets were carefully vetted to ensure the boundaries are correct.
-    size_t procOffsets[4][2] = {{0, 434},
-                                {423, 861},
-                                {860, 1300},
-                                {1289, numSegments}};
+    size_t offets[4][2] = {{0, 434},
+                           {423, 861},
+                           {860, 1300},
+                           {1289, numSegments}};
 
     for (size_t proc = 0; proc != 4; ++proc)
     {
@@ -119,8 +114,8 @@ void test_determineSegmentSlice_hilbert2_four_processors()
 
         determineSegmentSlice(segments, numSegments, proc, 4, &low, &high);
 
-        TEST_ASSERT_EQUAL(procOffsets[proc][0], low);
-        TEST_ASSERT_EQUAL(procOffsets[proc][1], high);
+        TEST_ASSERT_EQUAL(offets[proc][0], low);
+        TEST_ASSERT_EQUAL(offets[proc][1], high);
     }
 
     free(segments);

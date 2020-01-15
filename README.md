@@ -87,6 +87,6 @@ line indicates the number of non-zeroes, each subsequent line a tuple of
   * `s`, run the sequential algorithm, rather than the parallel one. If both `p`
     and `s` are passed, `s` takes precedence.
 
-Thus, ```bin/ccl ccl/examples/3x3_example.mat 3x3_example.ccl -p 4``` would run
-the parallel algorithm with four processes on `ccl/examples/3x3_example.mat`,
-and output the result to `3x3_example.ccl`.
+Thus, ```bin/ccl ccl/examples/hilbert2.mat hilbert2.ccl -p 4``` would run
+the parallel algorithm with four processes on `ccl/examples/hilbert2.mat`,
+and output the result to `hilbert2.ccl`.
