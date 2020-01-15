@@ -14,7 +14,7 @@ void stepDetermineSharedComponents()
 
     // Restore iteration order for the received segments and reset their set
     // associations.
-    qsort(segments, numSegments, sizeof(segment), segCoordCmp);
+    qsort(segments, numSegments, sizeof(segment), segTotalCmp);
     makeSets(segments, numSegments);
 
     // TODO: can be done using the sequential algorithm in some modified form?

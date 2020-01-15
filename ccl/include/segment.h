@@ -102,6 +102,17 @@ bool hasOverlap(segment const *candidate, segment const *target);
 int segCoordCmp(void const *a, void const *b);
 
 /**
+ * Compares two segments by their label.
+ */
+int segLabelCmp(void const *a, void const *b);
+
+/**
+ * Compares two segments by their coordinates, and, if they share the same
+ * coordinate, by their label.
+ */
+int segTotalCmp(void const *a, void const *b);
+
+/**
  * Prints the passed-in segment to stdout, in a human-readable format.
  *
  * @param seg   Segment to print.

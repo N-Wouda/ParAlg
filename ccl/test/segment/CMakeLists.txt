@@ -9,7 +9,9 @@ set(SOURCE_FILES
 		test_isequal.c
 		test_isnewsegment.c
 		test_makesegment.c
-		test_segcoordcmp.c)
+		test_segcoordcmp.c
+		test_seglabelcmp.c
+		test_segtotalcmp.c)
 
 add_executable(test_segment ${SOURCE_FILES})
 

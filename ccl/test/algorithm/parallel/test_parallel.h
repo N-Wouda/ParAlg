@@ -8,6 +8,7 @@
 
 void test_determineSegmentSlice_3x3_example_one_processor();
 void test_determineSegmentSlice_3x3_example_two_processors();
+void test_determineSegmentSlice_3x3_example_four_processors();
 void test_determineSegmentSlice_hilbert2_two_processors();
 void test_determineSegmentSlice_hilbert2_four_processors();
 

@@ -9,6 +9,8 @@ set(SOURCE_FILES
 		makesegment.c
 		hasoverlap.c
 		segcoordcmp.c
-		segprint.c)
+		seglabelcmp.c
+		segprint.c
+		segtotalcmp.c)
 
 add_library(segment ${SOURCE_FILES})
