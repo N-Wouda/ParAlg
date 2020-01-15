@@ -11,23 +11,8 @@ void stepReceiveAndWriteSegments()
     if (bsp_pid() != 0)
         return;
 
-    bsp_nprocs_t messages;
-    bsp_size_t qSize;
-    bsp_qsize(&messages, &qSize);
-
-    size_t const numSegments = qSize / sizeof(segment);
-    segment *segments = malloc(qSize);
-
-    size_t offset = 0;
-
-    for (size_t message = 0; message != messages; ++message)
-    {
-        bsp_size_t mSize;
-        bsp_get_tag(&mSize, NULL);
-
-        bsp_move(segments + offset, mSize);
-        offset += mSize / sizeof(segment);
-    }
+    size_t numSegments;
+    segment *segments = receiveSegments(&numSegments);
 
     // Restore iteration order.
     qsort(segments, numSegments, sizeof(segment), segCoordCmp);

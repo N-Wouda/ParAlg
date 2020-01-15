@@ -2,17 +2,19 @@
 #include "component.h"
 
 #include <assert.h>
-#include <bsp.h>
 #include <stdlib.h>
 #include <string.h>
 
 
-void labelAndSendBoundary(size_t numSegments, size_t from)
+segment *labelBoundary(segment const *segments,
+                       size_t numSegments,
+                       size_t from,
+                       size_t *numRoots)
 {
     segment *copies = malloc(numSegments * sizeof(segment));
     assert(copies != NULL);
 
-    memcpy(copies, SEGMENTS + from, numSegments * sizeof(segment));
+    memcpy(copies, segments + from, numSegments * sizeof(segment));
 
     // Reset each copied segment to point to itself, and relabel the copies.
     makeSets(copies, numSegments);
@@ -26,10 +28,15 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
 
     for (size_t idx = 0; idx != numSegments; ++idx)
     {
-        segment seg = SEGMENTS[from + idx];
+        segment seg = segments[from + idx];
         segment *copyRoot = findSet(copies + idx);
         segment *segRoot = findSet(&seg);
 
+        // If we have a copyRoot that's not the same as the segRoot, it must be
+        // a (new) boundary-disjoint component. This implies seg is in a
+        // boundary-disjoint set. Updating the copyRoot to point to the segRoot
+        // ensures we do not find any other segments in this boundary-disjoint
+        // component.
         if (copyRoot != segRoot)
         {
             copyRoot->parent = segRoot;
@@ -37,10 +44,8 @@ void labelAndSendBoundary(size_t numSegments, size_t from)
         }
     }
 
-    for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
-        // rootIdx doubles as the actual number of root segments.
-        bsp_send(proc, NULL, roots, rootIdx * sizeof(segment));
-
-    free(roots);
     free(copies);
+
+    *numRoots = rootIdx;
+    return roots;
 }

@@ -8,6 +8,8 @@
 #include <stdlib.h>
 
 
+static void processBoundary(size_t numSegments, size_t from);  // helper method
+
 void stepDetermineComponents()
 {
     bsp_nprocs_t messages;
@@ -57,7 +59,7 @@ void stepDetermineComponents()
                && numSegments < NUM_SEGMENTS)
             numSegments++;
 
-        labelAndSendBoundary(numSegments, 0);
+        processBoundary(numSegments, 0);
     }
 
     if (bsp_pid() != bsp_nprocs() - 1)
@@ -68,6 +70,17 @@ void stepDetermineComponents()
         while (SEGMENTS[from - 1].x == SEGMENTS[from].x && from > 0)
             from--;
 
-        labelAndSendBoundary(NUM_SEGMENTS - from, from);
+        processBoundary(NUM_SEGMENTS - from, from);
     }
+}
+
+static void processBoundary(size_t numSegments, size_t from)
+{
+    size_t numRoots;
+    segment *roots = labelBoundary(SEGMENTS, numSegments, from, &numRoots);
+
+    for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
+        bsp_send(proc, NULL, roots, numRoots * sizeof(segment));
+
+    free(roots);
 }
