@@ -11,7 +11,7 @@ void test_readMatrix_3x3_example()
     matrix const groundTruth = {x, y, z, 8};
 
     bool status;
-    matrix const mat = readMatrix("examples/3x3_example.mat", &status);
+    matrix const mat = readMatrix("ccl/examples/3x3_example.mat", &status);
 
     TEST_ASSERT_TRUE(status);
     TEST_ASSERT_EQUAL(groundTruth.length, mat.length);

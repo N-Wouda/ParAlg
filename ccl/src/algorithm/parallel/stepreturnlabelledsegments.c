@@ -3,7 +3,7 @@
 #include <bsp.h>
 
 
-void returnLabelledSegments()
+void stepReturnLabelledSegments()
 {
     bsp_size_t offset = bsp_pid() != 0;
 

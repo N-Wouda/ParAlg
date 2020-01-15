@@ -7,7 +7,7 @@
 void test_sequential_3x3_example()
 {
     bool status;
-    matrix const mat = readMatrix("examples/3x3_example.mat", &status);
+    matrix const mat = readMatrix("ccl/examples/3x3_example.mat", &status);
 
     TEST_ASSERT_TRUE(status);
 

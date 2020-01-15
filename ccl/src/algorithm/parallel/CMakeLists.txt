@@ -9,7 +9,7 @@ set(SOURCE_FILES
 		stepdeterminesharedcomponents.c
 		stepreceiveandwritesegments.c
 		stepsendsegments.c
-		returnlabelledsegments.c)
+		stepreturnlabelledsegments.c)
 
 add_library(parallel ${SOURCE_FILES})
 target_link_libraries(parallel

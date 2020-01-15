@@ -65,7 +65,7 @@ segment *labelBoundary(segment const *segments,
 /**
  * Returns the labelled segments to the first processor.
  */
-void returnLabelledSegments();
+void stepReturnLabelledSegments();
 
 /**
  * Wrapper around <code>bsp_move</code> and queue handling. Receives passed-in
