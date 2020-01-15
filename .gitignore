@@ -64,4 +64,6 @@ external/
 
 # .mat and .ccl files are CCL-based data files
 *.mat
+!ccl/examples/*.mat
+
 *.ccl

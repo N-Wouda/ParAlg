@@ -20,7 +20,7 @@ before_install:
 
 script:
   # Make and test the /primes code.
-  - cmake -DCMAKE_BUILD_TYPE=DEBUG primes
+  - cmake primes -DCMAKE_BUILD_TYPE=DEBUG
   - make
 
   - bin/test_sieve
@@ -30,12 +30,13 @@ script:
   - git clean -f
 
   # Make and test the /ccl code.
-  - cmake -DCMAKE_BUILD_TYPE=DEBUG ccl
+  - cmake ccl -DCMAKE_BUILD_TYPE=DEBUG
   - make
 
   - bin/test_algorithm
-  - bin/test_segment
   - bin/test_component
+  - bin/test_io
+  - bin/test_segment
 
   # Format check for all code under /ccl.
   - scripts/format.sh

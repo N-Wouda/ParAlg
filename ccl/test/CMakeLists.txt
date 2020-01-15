@@ -6,4 +6,5 @@ add_definitions(-DCCL_TEST)
 
 add_subdirectory(algorithm)
 add_subdirectory(component)
+add_subdirectory(io)
 add_subdirectory(segment)

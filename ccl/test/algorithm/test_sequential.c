@@ -1,3 +1,4 @@
+#include "io.h"
 #include "test_algorithm.h"
 
 #include <stdlib.h>
@@ -5,12 +6,10 @@
 
 void test_sequential_3x3_example()
 {
-    // The familiar 3 x 3 example from our report.
-    size_t x[8] = {0, 0, 0, 1, 2, 2, 2, 2};
-    size_t y[8] = {0, 0, 0, 2, 0, 2, 2, 2};
-    size_t z[8] = {0, 1, 2, 2, 0, 0, 1, 2};
+    bool status;
+    matrix const mat = readMatrix("examples/3x3_example.mat", &status);
 
-    matrix const mat = {x, y, z, 8};
+    TEST_ASSERT_TRUE(status);
 
     // Ground truths for the segments in the 3 x 3 example. They form three
     // components, as [0], [2], and [1, 3].
@@ -48,5 +47,6 @@ void test_sequential_3x3_example()
     TEST_ASSERT_EQUAL(segments + 1, segments[3].parent);  // [3]
     TEST_ASSERT_EQUAL(3, segments[3].label);
 
+    releaseMatrix(&mat);
     free(segments);
 }
