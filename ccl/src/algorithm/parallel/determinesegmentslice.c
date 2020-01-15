@@ -1,5 +1,7 @@
 #include "algorithm/parallel.h"
 
+#include <assert.h>
+
 
 void determineSegmentSlice(segment const *segments,
                            size_t numSegments,
@@ -8,6 +10,10 @@ void determineSegmentSlice(segment const *segments,
                            size_t *low,
                            size_t *high)
 {
+    assert(numSegments > 0);
+    assert(proc >= 0);
+    assert(proc < numProcs);
+
     size_t const numItems = numSegments / numProcs;
 
     // This is a nominal slice, but will be adjusted below to account for
@@ -30,4 +36,7 @@ void determineSegmentSlice(segment const *segments,
         // numItems rounds down, so this ensures the final few segments all
         // go to the last processor.
         *high = numSegments;
+
+    assert(0 <= *low);
+    assert(*high <= numSegments);
 }
