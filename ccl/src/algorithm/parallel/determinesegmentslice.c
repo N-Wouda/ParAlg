@@ -24,13 +24,13 @@ void determineSegmentSlice(segment const *segments,
     if (proc != 0)
         // If this is not the first processor, we have a boundary with the
         // preceding processor and should determine an overlapping slice.
-        while (segments[*low - 1].x == segments[*low].x && *low > 0)
+        while (*low > 0 && segments[*low - 1].x == segments[*low].x)
             (*low)--;
 
     if (proc != numProcs - 1)
         // A similar argument holds when this is not the last processor, but
         // now the overlap is with the succeeding processor.
-        while (segments[*high - 1].x == segments[*high].x && *high < numSegments)
+        while (*high < numSegments && segments[*high - 1].x == segments[*high].x)
             (*high)++;
     else
         // numItems rounds down, so this ensures the final few segments all

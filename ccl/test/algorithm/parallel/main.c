@@ -10,6 +10,8 @@ int main()
 
     RUN_TEST(test_determineSegmentSlice_3x3_example_one_processor);
     RUN_TEST(test_determineSegmentSlice_3x3_example_two_processors);
+    RUN_TEST(test_determineSegmentSlice_hilbert2_two_processors);
+    RUN_TEST(test_determineSegmentSlice_hilbert2_four_processors);
 
     RUN_TEST(test_getOwningProcessor_label_trick);
 
