@@ -10,4 +10,3 @@ int segTotalCmp(void const *a, void const *b)
 
     return segLabelCmp(a, b);
 }
-
