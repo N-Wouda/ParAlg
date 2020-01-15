@@ -19,7 +19,7 @@ void determineSegmentSlice(segment const *segments,
     // This is a nominal slice, but will be adjusted below to account for
     // any breaks in x-values.
     *low = proc * numItems;
-    *high = (proc + 1) * numItems;
+    *high = (proc + 1) * numItems + (proc != numProcs - 1);
 
     if (proc != 0)
         // If this is not the first processor, we have a boundary with the

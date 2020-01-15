@@ -8,33 +8,33 @@ int main()
 {
     UNITY_BEGIN();
 
-    RUN_TEST(test_computeSegments_contiguous);  // for computesegments.c
+    RUN_TEST(test_computeSegments_contiguous);
     RUN_TEST(test_computeSegments_one_voxel);
     RUN_TEST(test_computeSegments_3x3_example);
 
-    RUN_TEST(test_countSegments_contiguous);  // for countsegments.c
+    RUN_TEST(test_countSegments_contiguous);
     RUN_TEST(test_countSegments_disjoint);
     RUN_TEST(test_countSegments_one_voxel);
 
-    RUN_TEST(test_hasOverlap_true);  // for hasoverlap.c
+    RUN_TEST(test_hasOverlap_true);
     RUN_TEST(test_hasOverlap_false);
     RUN_TEST(test_hasOverlap_fix_overlap_bug);
 
-    RUN_TEST(test_isBefore_x);  // for isbefore.c
+    RUN_TEST(test_isBefore_x);
     RUN_TEST(test_isBefore_y);
     RUN_TEST(test_isBefore_z);
 
-    RUN_TEST(test_isEqual_x);  // for isequal.c
+    RUN_TEST(test_isEqual_x);
     RUN_TEST(test_isEqual_y);
     RUN_TEST(test_isEqual_z);
 
-    RUN_TEST(test_isNewSegment_x);  // for isnewsegment.c
+    RUN_TEST(test_isNewSegment_x);
     RUN_TEST(test_isNewSegment_y);
     RUN_TEST(test_isNewSegment_z);
 
-    RUN_TEST(test_makeSegment);  // for makesegment.c
+    RUN_TEST(test_makeSegment);
 
-    RUN_TEST(test_segCoordCmp_x);  // for segcoordcmp.c
+    RUN_TEST(test_segCoordCmp_x);
     RUN_TEST(test_segCoordCmp_y);
     RUN_TEST(test_segCoordCmp_z);
 

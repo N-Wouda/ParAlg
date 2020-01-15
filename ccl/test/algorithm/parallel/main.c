@@ -8,7 +8,10 @@ int main()
 {
     UNITY_BEGIN();
 
-    RUN_TEST(test_getOwningProcessor_label_trick);  // for getowningprocessor.c
+    RUN_TEST(test_determineSegmentSlice_3x3_example_one_processor);
+    RUN_TEST(test_determineSegmentSlice_3x3_example_two_processors);
+
+    RUN_TEST(test_getOwningProcessor_label_trick);
 
     return UNITY_END();
 }
