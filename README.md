@@ -8,7 +8,7 @@ repository consists of two parts,
 1. An initial assignment `primes` where we develop a parallel prime number
    sieve.
 2. A final assignment `ccl`, where we develop a parallel algorithm for 
-   connected components labelling (CCL) in a binary 3D image.
+   connected components labelling (CCL) in a binary, sparse 3D image.
 
 ## Primes
 
@@ -35,7 +35,10 @@ explains the various algorithms in considerably more detail.
 
 ## CCL
 
-TODO
+In `/ccl`, we provide a sequential and parallel implementation of a connected
+component labelling (CCL) algorithm. All relevant code is in the `master` 
+branch. We refer the reader to the paper in `ccl/report.pdf`, which explains the
+various algorithms in considerably more detail.
 
 ## Developing
 
@@ -72,4 +75,18 @@ interval `[20, 100)`, dividing the work between three processors.
 
 ### CCL
 
-TODO
+First run _e.g._ `cmake ccl` and `make`. This produces an executable, which
+must be called with two file arguments: the input and output files. Some example
+input files are given in `/ccl/examples`, with the `.mat` extension. The first
+line indicates the number of non-zeroes, each subsequent line a tuple of 
+`x y z` indices. Several optional arguments are available:
+
+  * `p`, a value for the number of processors to use. When left unspecified, this
+    defaults to the maximal number available.
+  
+  * `s`, run the sequential algorithm, rather than the parallel one. If both `p`
+    and `s` are passed, `s` takes precedence.
+
+Thus, ```bin/ccl ccl/examples/3x3_example.mat 3x3_example.ccl -p 4``` would run
+the parallel algorithm with four processes on `ccl/examples/3x3_example.mat`,
+and output the result to `3x3_example.ccl`.

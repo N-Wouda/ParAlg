@@ -18,10 +18,16 @@ void makeComponents(segment *segments, size_t numSegments);
  * assigns all parent nodes to this root. Uses an efficient one-pass path
  * halving method, due to Tarjan and Van Leeuwen (1984).
  *
- * References:
- *  - CLRS, Introduction to Algorithms, 3rd Ed., ch. 21.
- *  - Tarjan and Van Leeuwen, "Worst-case Analysis of Set Union Algorithms",
- *    J. ACM, 1984, pp. 245-281.
+ * <b>References</b>
+ * <ul>
+ * <li>
+ *      CLRS, Introduction to Algorithms, 3rd Ed., ch. 21.
+ * </li>
+ * <li>
+ *      Tarjan and Van Leeuwen, "Worst-case Analysis of Set Union Algorithms",
+ *      J. ACM, 1984, pp. 245-281.
+ * </li>
+ * </ul>
  *
  * @param candidate Candidate to find the root element for.
  * @return          Pointer to the root element.

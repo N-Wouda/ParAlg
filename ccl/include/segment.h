@@ -78,18 +78,39 @@ bool isNewSegment(matrix const *mat, size_t idx);
 
 /**
  * Construct a new segment pointing to the indexed element in the 3D matrix.
+ * The returned segment does not have a parent, this field points to NULL.
  *
  * @param mat       Sparse 3D matrix.
  * @param idx       Index into the matrix.
- * @param parent    Pointer to the segment's parent.
  * @return          Segment.
  */
-segment makeSegment(matrix const *mat, size_t idx, segment *parent);
+segment makeSegment(matrix const *mat, size_t idx);
+
+/**
+ * Checks if candidate overlaps with target, that is, they (partially) occupy
+ * the same voxel space.
+ *
+ * @param candidate Candidate segment.
+ * @param target    Target segment.
+ * @return          True if candidate overlaps with target, false otherwise.
+ */
+bool hasOverlap(segment const *candidate, segment const *target);
 
 /**
  * Compares two segments by their coordinates.
  */
 int segCoordCmp(void const *a, void const *b);
+
+/**
+ * Compares two segments by their label.
+ */
+int segLabelCmp(void const *a, void const *b);
+
+/**
+ * Compares two segments by their coordinates, and, if they share the same
+ * coordinate, by their label.
+ */
+int segTotalCmp(void const *a, void const *b);
 
 /**
  * Prints the passed-in segment to stdout, in a human-readable format.

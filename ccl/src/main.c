@@ -15,7 +15,6 @@ int main(int argc, char **argv)
     if (!ARGUMENTS.useParallel)
     {
         bool status = true;
-
         matrix mat = readMatrix(ARGUMENTS.inLocation, &status);
 
         if (!status)

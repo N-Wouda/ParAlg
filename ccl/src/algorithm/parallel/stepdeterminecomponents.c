@@ -8,6 +8,8 @@
 #include <stdlib.h>
 
 
+static void processBoundary(size_t numSegments, size_t from);  // helper method
+
 void stepDetermineComponents()
 {
     bsp_nprocs_t messages;
@@ -22,12 +24,11 @@ void stepDetermineComponents()
     for (size_t idx = 0; idx != messages; ++idx)
     {
         bsp_size_t mSize;
-        bsp_size_t tag;
-        bsp_get_tag(&mSize, &tag);
+        bsp_get_tag(&mSize, NULL);
 
-        assert(tag == 0 || tag == 1);
-
-        if (tag == 0)  // segments
+        if (mSize == sizeof(size_t))  // label space
+            bsp_move(&NUM_VOXELS, mSize);
+        else  // segments
         {
             assert(mSize == qSize - sizeof(size_t));
             assert(mSize == NUM_SEGMENTS * sizeof(segment));
@@ -37,13 +38,6 @@ void stepDetermineComponents()
 
             bsp_move(SEGMENTS, mSize);
         }
-        else if (tag == 1)  // label space
-        {
-            assert(mSize == sizeof(size_t));
-            bsp_move(&NUM_VOXELS, mSize);
-        }
-        else
-            bsp_abort("%u: tag %d not understood\n", bsp_pid(), tag);
     }
 
     makeSets(SEGMENTS, NUM_SEGMENTS);
@@ -61,11 +55,11 @@ void stepDetermineComponents()
         size_t numSegments = 1;
 
         // Find the last index of the first x-value we have.
-        while (SEGMENTS[numSegments - 1].x == SEGMENTS[numSegments].x
-               && numSegments < NUM_SEGMENTS)
+        while (numSegments != NUM_SEGMENTS
+               && SEGMENTS[numSegments - 1].x == SEGMENTS[numSegments].x)
             numSegments++;
 
-        labelAndSendBoundary(numSegments, 0);
+        processBoundary(numSegments, 0);
     }
 
     if (bsp_pid() != bsp_nprocs() - 1)
@@ -73,9 +67,20 @@ void stepDetermineComponents()
         size_t from = NUM_SEGMENTS - 1;
 
         // Finds the first index of the last x-value we have.
-        while (SEGMENTS[from - 1].x == SEGMENTS[from].x && from > 0)
+        while (from > 0 && SEGMENTS[from - 1].x == SEGMENTS[from].x)
             from--;
 
-        labelAndSendBoundary(NUM_SEGMENTS - from, from);
+        processBoundary(NUM_SEGMENTS - from, from);
     }
+}
+
+static void processBoundary(size_t numSegments, size_t from)
+{
+    size_t numRoots;
+    segment *roots = labelBoundary(SEGMENTS, numSegments, from, &numRoots);
+
+    for (bsp_pid_t proc = 0; proc != bsp_nprocs(); ++proc)
+        bsp_send(proc, NULL, roots, numRoots * sizeof(segment));
+
+    free(roots);
 }
