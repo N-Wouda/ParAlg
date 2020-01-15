@@ -67,7 +67,7 @@ void stepDetermineComponents()
         size_t from = NUM_SEGMENTS - 1;
 
         // Finds the first index of the last x-value we have.
-        while (from > 0 && SEGMENTS[from - 1].x == SEGMENTS[from].x)
+        while (from != 0 && SEGMENTS[from - 1].x == SEGMENTS[from].x)
             from--;
 
         processBoundary(NUM_SEGMENTS - from, from);
