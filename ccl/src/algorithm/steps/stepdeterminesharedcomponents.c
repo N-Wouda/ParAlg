@@ -1,9 +1,9 @@
 #include "algorithm/parallel.h"
-#include "segment.h"
+#include "algorithm/steps.h"
+#include "component.h"
 
 #include <assert.h>
 #include <bsp.h>
-#include <component.h>
 #include <stdlib.h>
 
 

@@ -13,9 +13,6 @@ set(SOURCE_FILES
 add_executable(ccl ${SOURCE_FILES})
 
 target_link_libraries(ccl
-		io
-		segment
-		component
 		algorithm
 		${BSP}
 		pthread)

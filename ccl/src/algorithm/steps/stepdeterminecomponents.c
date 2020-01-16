@@ -1,5 +1,5 @@
-#include "algorithm.h"
 #include "algorithm/parallel.h"
+#include "algorithm/steps.h"
 #include "component.h"
 #include "sparse.h"
 
