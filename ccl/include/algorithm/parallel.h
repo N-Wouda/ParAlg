@@ -22,15 +22,6 @@ segment *labelBoundary(segment const *segments,
                        size_t *numRoots);
 
 /**
- * Wrapper around <code>bsp_move</code> and queue handling. Receives passed-in
- * segments from the other processors.
- *
- * @param numSegments   Number of segments received.
- * @return              Array of segments.
- */
-segment *receiveSegments(size_t *numSegments);
-
-/**
  * Determines the processor that owns this segment, using the 'label trick'.
  *
  * @param candidate     Candidate segment.

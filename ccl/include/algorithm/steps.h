@@ -23,6 +23,16 @@ extern _Thread_local size_t NUM_SEGMENTS;
  */
 extern _Thread_local size_t NUM_VOXELS;
 
+
+/**
+ * Wrapper around <code>bsp_move</code> and queue handling. Receives passed-in
+ * segments from the other processors.
+ *
+ * @param numSegments   Number of segments received.
+ * @return              Array of segments.
+ */
+segment *receiveSegments(size_t *numSegments);
+
 /**
  * Reads the matrix file (command-line argument) and sends a slice of segments
  * to each processor.
