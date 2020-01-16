@@ -11,6 +11,6 @@ set(SOURCE_FILES
 add_library(steps ${SOURCE_FILES})
 target_link_libraries(steps
 		component
-		algorithm
+		parallel
 		segment
 		io)
