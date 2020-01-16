@@ -15,4 +15,4 @@ set(SOURCE_FILES
 
 add_executable(test_segment ${SOURCE_FILES})
 
-target_link_libraries(test_segment segment io unity)
+target_link_libraries(test_segment segment io unity testtools)

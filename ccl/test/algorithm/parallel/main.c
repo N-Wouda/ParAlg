@@ -15,5 +15,8 @@ int main()
 
     RUN_TEST(test_getOwningProcessor_label_trick);
 
+    RUN_TEST(test_labelBoundary_two_components);
+    RUN_TEST(test_labelBoundary_hilbert2_example);
+
     return UNITY_END();
 }

@@ -8,4 +8,4 @@ set(SOURCE_FILES
 
 add_executable(test_parallel ${SOURCE_FILES})
 
-target_link_libraries(test_parallel parallel io unity)
+target_link_libraries(test_parallel parallel io unity testtools)

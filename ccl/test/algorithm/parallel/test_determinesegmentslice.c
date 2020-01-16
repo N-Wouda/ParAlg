@@ -4,25 +4,11 @@
 #include <stdlib.h>
 
 
-segment *getExampleSegments(size_t *numSegments, char const *location)
-{
-    bool status;
-    matrix mat = readMatrix(location, &status);
-
-    TEST_ASSERT_TRUE(status);
-
-    segment *segments = computeSegments(&mat, numSegments);
-
-    releaseMatrix(&mat);
-
-    return segments;
-}
-
 void test_determineSegmentSlice_3x3_example_one_processor()
 {
     size_t numSegments;
-    segment *segments = getExampleSegments(&numSegments,
-                                           "ccl/examples/3x3_example.mat");
+    segment *segments = getExampleSegments("ccl/examples/3x3_example.mat",
+                                           &numSegments);
 
     size_t low;
     size_t high;
@@ -44,8 +30,8 @@ void test_determineSegmentSlice_3x3_example_one_processor()
 void test_determineSegmentSlice_3x3_example_two_processors()
 {
     size_t numSegments;
-    segment *segments = getExampleSegments(&numSegments,
-                                           "ccl/examples/3x3_example.mat");
+    segment *segments = getExampleSegments("ccl/examples/3x3_example.mat",
+                                           &numSegments);
 
     size_t low;
     size_t high;
@@ -76,8 +62,8 @@ void test_determineSegmentSlice_3x3_example_two_processors()
 void test_determineSegmentSlice_hilbert2_two_processors()
 {
     size_t numSegments;
-    segment *segments = getExampleSegments(&numSegments,
-                                           "ccl/examples/hilbert2.mat");
+    segment *segments = getExampleSegments("ccl/examples/hilbert2.mat",
+                                           &numSegments);
 
     size_t low;
     size_t high;
@@ -98,8 +84,8 @@ void test_determineSegmentSlice_hilbert2_two_processors()
 void test_determineSegmentSlice_hilbert2_four_processors()
 {
     size_t numSegments;
-    segment *segments = getExampleSegments(&numSegments,
-                                           "ccl/examples/hilbert2.mat");
+    segment *segments = getExampleSegments("ccl/examples/hilbert2.mat",
+                                           &numSegments);
 
     // These offsets were carefully vetted to ensure the boundaries are correct.
     size_t offets[4][2] = {{0, 434},
