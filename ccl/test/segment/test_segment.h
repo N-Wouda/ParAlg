@@ -1,8 +1,8 @@
 #ifndef TEST_SEGMENT_H
 #define TEST_SEGMENT_H
 
-#include "testtools.h"
 #include "segment.h"
+#include "testtools.h"
 
 #include <unity.h>
 
