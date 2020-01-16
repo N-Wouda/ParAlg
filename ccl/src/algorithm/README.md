@@ -10,7 +10,7 @@ over two subdirectories, `/parallel` and `/steps`:
   the core algorithm.
 * `/steps` contains all code for the BSP supersteps. This includes code that
   depends on _e.g._ the BSP library, global state and/or all things God hath
-  forbidden Man. This is fairly hard to bring  under test, hence the distinction
+  forbidden Man. This is fairly hard to bring under test, hence the distinction
   between `/parallel` and `/steps`.
 
 ## Sequential

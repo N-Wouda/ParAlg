@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+
 /**
  * Local segments.
  */
@@ -22,7 +23,6 @@ extern _Thread_local size_t NUM_SEGMENTS;
  * Note: is made available on all other processors after the first sync.
  */
 extern _Thread_local size_t NUM_VOXELS;
-
 
 /**
  * Wrapper around <code>bsp_move</code> and queue handling. Receives passed-in
