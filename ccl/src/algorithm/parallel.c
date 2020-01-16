@@ -1,9 +1,8 @@
-#include "algorithm/parallel.h"
-
-#include "io.h"
+#include "algorithm/steps.h"
 
 #include <bsp.h>
 #include <stdlib.h>
+
 
 _Thread_local segment *SEGMENTS;
 _Thread_local size_t NUM_SEGMENTS;

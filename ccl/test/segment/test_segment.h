@@ -2,6 +2,7 @@
 #define TEST_SEGMENT_H
 
 #include "segment.h"
+#include "testtools.h"
 
 #include <unity.h>
 

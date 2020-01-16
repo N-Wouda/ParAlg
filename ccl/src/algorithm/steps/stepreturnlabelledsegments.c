@@ -1,4 +1,4 @@
-#include "algorithm/parallel.h"
+#include "algorithm/steps.h"
 
 #include <bsp.h>
 

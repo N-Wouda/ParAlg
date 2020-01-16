@@ -1,8 +1,8 @@
 #include "algorithm/parallel.h"
-#include "segment.h"
+#include "algorithm/steps.h"
+#include "io.h"
 
 #include <bsp.h>
-#include <io.h>
 #include <stdlib.h>
 
 

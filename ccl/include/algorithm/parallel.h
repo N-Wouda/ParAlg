@@ -1,50 +1,9 @@
-#ifndef STEPS_H
-#define STEPS_H
+#ifndef PARALLEL_H
+#define PARALLEL_H
 
 #include "segment.h"
 
 #include <stddef.h>
-
-/**
- * Local segments.
- */
-extern _Thread_local segment *SEGMENTS;
-
-/**
- * Number of segments in SEGMENTS.
- */
-extern _Thread_local size_t NUM_SEGMENTS;
-
-/**
- * Number of voxels in the target matrix. Doubles as the label space.
- *
- * Note: is made available on all other processors after the first sync.
- */
-extern _Thread_local size_t NUM_VOXELS;
-
-/**
- * Reads the matrix file (command-line argument) and sends a slice of segments
- * to each processor.
- */
-void stepSendSegments();
-
-/**
- * Has each processor compute local components, and communicate shared
- * components.
- */
-void stepDetermineComponents();
-
-/**
- * Has all processors decide, together, on a shared and consistent labelling
- * for shared components.
- */
-void stepDetermineSharedComponents();
-
-/**
- * Receive all labelled segments at the first processor, and write them to the
- * out file.
- */
-void stepReceiveAndWriteSegments();
 
 /**
  * Labels components on the boundary. The boundary is assumed to be numSegments
@@ -61,20 +20,6 @@ segment *labelBoundary(segment const *segments,
                        size_t numSegments,
                        size_t from,
                        size_t *numRoots);
-
-/**
- * Returns the labelled segments to the first processor.
- */
-void stepReturnLabelledSegments();
-
-/**
- * Wrapper around <code>bsp_move</code> and queue handling. Receives passed-in
- * segments from the other processors.
- *
- * @param numSegments   Number of segments received.
- * @return              Array of segments.
- */
-segment *receiveSegments(size_t *numSegments);
 
 /**
  * Determines the processor that owns this segment, using the 'label trick'.
@@ -103,4 +48,4 @@ void determineSegmentSlice(segment const *segments,
                            size_t *low,
                            size_t *high);
 
-#endif  // STEPS_H
+#endif  // PARALLEL_H

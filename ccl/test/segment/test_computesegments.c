@@ -13,15 +13,14 @@ void test_computeSegments_contiguous()
                         (size_t[3]){1, 2, 3},
                         3};
 
+    segment const groundTruth = {1, 2, 1, 4};
+
     size_t numSegments;
     segment *segments = computeSegments(&mat, &numSegments);
 
     TEST_ASSERT_EQUAL(1, numSegments);
 
-    TEST_ASSERT_EQUAL(1, segments[0].x);
-    TEST_ASSERT_EQUAL(2, segments[0].y);
-    TEST_ASSERT_EQUAL(1, segments[0].zFirst);
-    TEST_ASSERT_EQUAL(4, segments[0].zLast);  // exclusive, so + 1
+    compareSegmentCoords(&groundTruth, segments);
 
     free(segments);
 }
@@ -31,15 +30,14 @@ void test_computeSegments_one_voxel()
     // Single voxel matrix should consist of only one segment.
     matrix const mat = {(size_t[1]){1}, (size_t[1]){2}, (size_t[1]){3}, 1};
 
+    segment const groundTruth = {1, 2, 3, 4};
+
     size_t numSegments;
     segment *segments = computeSegments(&mat, &numSegments);
 
     TEST_ASSERT_EQUAL(1, numSegments);
 
-    TEST_ASSERT_EQUAL(1, segments[0].x);
-    TEST_ASSERT_EQUAL(2, segments[0].y);
-    TEST_ASSERT_EQUAL(3, segments[0].zFirst);
-    TEST_ASSERT_EQUAL(4, segments[0].zLast);  // exclusive, so + 1
+    compareSegmentCoords(&groundTruth, segments);
 
     free(segments);
 }
@@ -63,12 +61,7 @@ void test_computeSegments_3x3_example()
     TEST_ASSERT_EQUAL(4, numSegments);
 
     for (size_t idx = 0; idx != numSegments; ++idx)
-    {
-        TEST_ASSERT_EQUAL(groundTruth[idx].x, segments[idx].x);
-        TEST_ASSERT_EQUAL(groundTruth[idx].y, segments[idx].y);
-        TEST_ASSERT_EQUAL(groundTruth[idx].zFirst, segments[idx].zFirst);
-        TEST_ASSERT_EQUAL(groundTruth[idx].zLast, segments[idx].zLast);
-    }
+        compareSegmentCoords(groundTruth + idx, segments + idx);
 
     releaseMatrix(&mat);
     free(segments);
