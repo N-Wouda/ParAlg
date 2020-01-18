@@ -11,7 +11,6 @@ void determineSegmentSlice(segment const *segments,
                            size_t *high)
 {
     assert(numSegments > 0);
-    assert(proc >= 0);
     assert(proc < numProcs);
 
     size_t const numItems = numSegments / numProcs;
@@ -38,6 +37,5 @@ void determineSegmentSlice(segment const *segments,
         // go to the last processor.
         *high = numSegments;
 
-    assert(0 <= *low);
     assert(*high <= numSegments);
 }
