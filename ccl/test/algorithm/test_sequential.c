@@ -24,27 +24,22 @@ void test_sequential_3x3_example()
     TEST_ASSERT_EQUAL(4, numSegments);
 
     for (size_t idx = 0; idx != 4; ++idx)  // tests the segmentation.
-    {
-        TEST_ASSERT_EQUAL(groundTruth[idx].x, segments[idx].x);
-        TEST_ASSERT_EQUAL(groundTruth[idx].y, segments[idx].y);
-        TEST_ASSERT_EQUAL(groundTruth[idx].zFirst, segments[idx].zFirst);
-        TEST_ASSERT_EQUAL(groundTruth[idx].zLast, segments[idx].zLast);
-    }
+        compareSegmentCoords(groundTruth + idx, segments + idx);
 
     // Test components. The initial labelling is based on the root segment's
     // first voxel's index in mat, which is 0 for [0], 4 for [2], and
     // 3 for [1, 3] (based on the component root [1]). This is less complicated
     // than it seems.
-    TEST_ASSERT_EQUAL(segments, segments[0].parent);  // [0]
+    TEST_ASSERT_EQUAL(segments, segments[0].parent);
     TEST_ASSERT_EQUAL(0, segments[0].label);
 
-    TEST_ASSERT_EQUAL(segments + 2, segments[2].parent);  // [2]
+    TEST_ASSERT_EQUAL(segments + 2, segments[2].parent);
     TEST_ASSERT_EQUAL(4, segments[2].label);
 
-    TEST_ASSERT_EQUAL(segments + 1, segments[1].parent);  // [1]
+    TEST_ASSERT_EQUAL(segments + 1, segments[1].parent);
     TEST_ASSERT_EQUAL(3, segments[1].label);
 
-    TEST_ASSERT_EQUAL(segments + 1, segments[3].parent);  // [3]
+    TEST_ASSERT_EQUAL(segments + 1, segments[3].parent);
     TEST_ASSERT_EQUAL(3, segments[3].label);
 
     releaseMatrix(&mat);

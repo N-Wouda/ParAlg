@@ -2,6 +2,7 @@
 #define TEST_ALGORITHM_H
 
 #include "algorithm.h"
+#include "testtools.h"
 
 #include <unity.h>
 
